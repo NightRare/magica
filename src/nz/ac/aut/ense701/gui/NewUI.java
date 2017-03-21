@@ -9,6 +9,7 @@ import java.awt.Canvas;
 import java.awt.Dimension;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import nz.ac.aut.ense701.gameModel.Game;
 
 /**
  *
@@ -21,11 +22,14 @@ public class NewUI {
     
     private JFrame testFrame;
     
-    public NewUI() {
+    public NewUI(Game game) {
         //converter
         //scaler
         
         createDisplay();
+        
+        KiwiCountUI oldUI = new KiwiCountUI(game);
+        oldUI.setVisible(true);
     }
     
     private void createDisplay() {
@@ -47,19 +51,19 @@ public class NewUI {
         frame.setVisible(true);
         
         
-        // test second frame in case we need to place inventory/display panel in separate frame (I have not experimented with adding to original frame)
-        testFrame = new JFrame("Testing Second Frame");
-        testFrame.setSize(Globals.width/3, Globals.height);
-        testFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        testFrame.setResizable(false);
-//        testFrame.setLocationRelativeTo(null);
-        
-        
-        JButton randomButton = new JButton();
-        randomButton.setText("RANDOM BUTTON!!");
-        testFrame.add(randomButton);
-
-        testFrame.setVisible(true);
+//        // test second frame in case we need to place inventory/display panel in separate frame (I have not experimented with adding to original frame)
+//        testFrame = new JFrame("Testing Second Frame");
+//        testFrame.setSize(Globals.width/3, Globals.height);
+//        testFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        testFrame.setResizable(false);
+////        testFrame.setLocationRelativeTo(null);
+//        
+//        
+//        JButton randomButton = new JButton();
+//        randomButton.setText("RANDOM BUTTON!!");
+//        testFrame.add(randomButton);
+//
+//        testFrame.setVisible(true);
     }
 
     public Canvas getCanvas() {

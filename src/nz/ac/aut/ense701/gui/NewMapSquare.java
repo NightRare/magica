@@ -23,7 +23,7 @@ public class NewMapSquare {
     // recommend getting a field for the background texture (image object of some sort...buffered image?)
     // get a list of buffered images in the order they are to be drawn. This way the RenderingEngine can grab the list and draw them in order.
     // Temp Fields
-    private Color colour;
+    private Color tileColour;
     private String label;
 
     public NewMapSquare(Game game, int row, int column) {
@@ -39,6 +39,8 @@ public class NewMapSquare {
 
         boolean squareVisible = game.isVisible(row, column);
         boolean squareExplored = game.isExplored(row, column);
+        
+        Color colour;
 
         switch (terrain) {
             case SAND:
@@ -64,7 +66,7 @@ public class NewMapSquare {
         // This code needs to be changed eventually once colours are moved away from
         if (squareExplored || squareVisible) {
             
-            label = new String(game.getOccupantStringRepresentation(row,column));
+            label = game.getOccupantStringRepresentation(row,column);
             
             if ( squareVisible && !squareExplored ) 
             {
@@ -73,10 +75,13 @@ public class NewMapSquare {
                                   Math.min(255, colour.getGreen() + 128), 
                                   Math.min(255, colour.getBlue()  + 128));
             }
+            tileColour = colour;
         } else {
             
             // This needs to assign string to "" normally
-            label = game.getOccupantStringRepresentation(row,column);
+//            label = game.getOccupantStringRepresentation(row,column);
+            label = "";
+            tileColour = Color.BLACK;
         }
     }
 
@@ -93,7 +98,7 @@ public class NewMapSquare {
     }
 
     public Color getColour() {
-        return colour;
+        return tileColour;
     }
     
     

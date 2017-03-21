@@ -30,7 +30,6 @@ public class KiwiCountUI
         this.game = game;
         setAsGameListener();
         initComponents();
-        initIslandGrid();
         update();
     }
     
@@ -79,16 +78,6 @@ public class KiwiCountUI
      */
     private void update()
     {
-        // update the grid square panels
-        Component[] components = pnlIsland.getComponents();
-        for ( Component c : components )
-        {
-            // all components in the panel are GridSquarePanels,
-            // so we can safely cast
-            GridSquarePanel gsp = (GridSquarePanel) c;
-            gsp.update();
-        }
-        
         // update player information
         int[] playerValues = game.getPlayerValues();
         txtPlayerName.setText(game.getPlayerName());
@@ -135,7 +124,6 @@ public class KiwiCountUI
         java.awt.GridBagConstraints gridBagConstraints;
 
         javax.swing.JPanel pnlContent = new javax.swing.JPanel();
-        pnlIsland = new javax.swing.JPanel();
         javax.swing.JPanel pnlControls = new javax.swing.JPanel();
         javax.swing.JPanel pnlPlayer = new javax.swing.JPanel();
         javax.swing.JPanel pnlPlayerData = new javax.swing.JPanel();
@@ -172,19 +160,6 @@ public class KiwiCountUI
 
         pnlContent.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10));
         pnlContent.setLayout(new java.awt.BorderLayout(10, 0));
-
-        javax.swing.GroupLayout pnlIslandLayout = new javax.swing.GroupLayout(pnlIsland);
-        pnlIsland.setLayout(pnlIslandLayout);
-        pnlIslandLayout.setHorizontalGroup(
-            pnlIslandLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 540, Short.MAX_VALUE)
-        );
-        pnlIslandLayout.setVerticalGroup(
-            pnlIslandLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 618, Short.MAX_VALUE)
-        );
-
-        pnlContent.add(pnlIsland, java.awt.BorderLayout.CENTER);
 
         pnlControls.setLayout(new java.awt.GridBagLayout());
 
@@ -580,27 +555,6 @@ public class KiwiCountUI
         game.countKiwi();
     }//GEN-LAST:event_btnCountActionPerformed
     
-    /**
-     * Creates and initialises the island grid.
-     */
-    private void initIslandGrid()
-    {
-        // Add the grid
-        int rows    = game.getNumRows();
-        int columns = game.getNumColumns();
-        // set up the layout manager for the island grid panel
-        pnlIsland.setLayout(new GridLayout(rows, columns));
-        // create all the grid square panels and add them to the panel
-        // the layout manager of the panel takes care of assigning them to the
-        // the right position
-        for ( int row = 0 ; row < rows ; row++ )
-        {
-            for ( int col = 0 ; col < columns ; col++ )
-            {
-                pnlIsland.add(new GridSquarePanel(game, row, col));
-            }
-        }
-    }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCollect;
@@ -615,7 +569,6 @@ public class KiwiCountUI
     private javax.swing.JLabel lblPredators;
     private javax.swing.JList listInventory;
     private javax.swing.JList listObjects;
-    private javax.swing.JPanel pnlIsland;
     private javax.swing.JProgressBar progBackpackSize;
     private javax.swing.JProgressBar progBackpackWeight;
     private javax.swing.JProgressBar progPlayerStamina;

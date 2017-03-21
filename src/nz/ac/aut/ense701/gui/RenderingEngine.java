@@ -44,8 +44,8 @@ public class RenderingEngine {
 
         g2d.setPaint(square.getColour());
         g2d.fill(new RoundRectangle2D.Double(xToRenderAt, yToRenderAt,
-                100,
-                100,
+                Globals.getSquareWidth(),
+                Globals.getSquareHeight(),
                 10, 10));
 
         g2d.setColor(Color.RED);

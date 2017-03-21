@@ -31,7 +31,7 @@ public class GameLoop implements Runnable{
     private ArrayList<NewMapSquare> mapSquareList;
 
     public GameLoop(Game game) {
-        assert game != null : "Make sure game object is created before UI";
+//        assert game != null : "Make sure game object is created before UI";
         this.game = game;
         this.running = false;
         tickMachine = new TickMachine(this);
@@ -96,7 +96,7 @@ public class GameLoop implements Runnable{
     }
     
     private void initialise() {
-        newUI = new NewUI();
+        newUI = new NewUI(game);
         
         // Initialise Assets
         
