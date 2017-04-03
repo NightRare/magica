@@ -9,7 +9,8 @@ import java.util.ArrayList;
 import nz.ac.aut.ense701.gameModel.Game;
 
 /**
- *
+ * Responsible for making updates required before rendering each frame
+ * 
  * @author Sam
  */
 public class TickMachine {
@@ -22,8 +23,8 @@ public class TickMachine {
 
     public void tick() {
         
+        // Updates each map square to reflect any changes in Game Model
         ArrayList<NewMapSquare> squareList = loop.getMapSquareList();
-
         for (NewMapSquare square : squareList) {
             square.initialiseOrRefresh();
         }

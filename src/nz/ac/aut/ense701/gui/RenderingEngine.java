@@ -13,7 +13,8 @@ import java.util.ArrayList;
 import nz.ac.aut.ense701.gameModel.Game;
 
 /**
- *
+ * RenderingEngine is responsible for all graphics rendering
+ * 
  * @author Sam
  */
 public class RenderingEngine {
@@ -25,6 +26,10 @@ public class RenderingEngine {
         this.loop = loop;
     }
 
+    /**
+     * Renders game onto a graphics object
+     * @param g2d graphics2D reference
+     */
     public void render(Graphics2D g2d) {
         
         ArrayList<NewMapSquare> squareList = loop.getMapSquareList();
@@ -35,6 +40,12 @@ public class RenderingEngine {
 
     }
 
+    /**
+     * Renders a map square
+     * 
+     * @param g2d graphics2D reference
+     * @param square MapSquare to render
+     */
     private void renderMapSquare(Graphics2D g2d, NewMapSquare square) {
         
         int xToRenderAt = Globals.colToX(square.getColumn());

@@ -10,7 +10,7 @@ import nz.ac.aut.ense701.gameModel.Game;
 import nz.ac.aut.ense701.gameModel.Terrain;
 
 /**
- *
+ * Replaces GridSquarePanel
  * @author Sam
  */
 public class NewMapSquare {
@@ -19,10 +19,7 @@ public class NewMapSquare {
     private int row;
     private int column;
 
-    // New Fields needed
-    // recommend getting a field for the background texture (image object of some sort...buffered image?)
-    // get a list of buffered images in the order they are to be drawn. This way the RenderingEngine can grab the list and draw them in order.
-    // Temp Fields
+    
     private Color tileColour;
     private String label;
 
@@ -34,6 +31,9 @@ public class NewMapSquare {
         initialiseOrRefresh();
     }
 
+    /**
+     * Initialises the NewMapSquare or Refreshes it to sync with model
+     */
     public void initialiseOrRefresh() {
         Terrain terrain = game.getTerrain(row, column);
 
@@ -78,8 +78,6 @@ public class NewMapSquare {
             tileColour = colour;
         } else {
             
-            // This needs to assign string to "" normally
-//            label = game.getOccupantStringRepresentation(row,column);
             label = "";
             tileColour = Color.BLACK;
         }

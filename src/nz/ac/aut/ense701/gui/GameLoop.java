@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import nz.ac.aut.ense701.gameModel.Game;
 
 /**
- *
+ * GameLoop class implements a game loop to update and render game
  * @author Sam
  */
 public class GameLoop implements Runnable{
@@ -20,9 +20,11 @@ public class GameLoop implements Runnable{
     private NewUI newUI;
     private Thread thread;
     
+    // The graphics 2D will be taken from the canvas of the user interface and a bufferstrategy applied
     private BufferStrategy bs;
     private Graphics2D g2d;
     
+    // Tick machine will be responsible for updating data and rendering engine will draw the game to the graphics2D object
     private TickMachine tickMachine;
     private RenderingEngine renderingEngine;
     
@@ -30,8 +32,11 @@ public class GameLoop implements Runnable{
     
     private ArrayList<NewMapSquare> mapSquareList;
 
+    /**
+     * The constructor for GameLoop takes a game object. Game represents the game model.
+     * @param game 
+     */
     public GameLoop(Game game) {
-//        assert game != null : "Make sure game object is created before UI";
         this.game = game;
         this.running = false;
         tickMachine = new TickMachine(this);
@@ -75,10 +80,16 @@ public class GameLoop implements Runnable{
         stop();
     }
     
+    /**
+     * Makes any updates required before rendering
+     */
     private void tick() {
         tickMachine.tick();
     }
     
+    /**
+     * Renders the game
+     */
     private void render() {
         bs = newUI.getCanvas().getBufferStrategy();
         if (bs == null) {
@@ -95,16 +106,18 @@ public class GameLoop implements Runnable{
         g2d.dispose();
     }
     
+    /**
+     * Initialises the UI and Assets
+     */
     private void initialise() {
         newUI = new NewUI(game);
         
         // Initialise Assets
-        
-        // Initialise RenderingEngine and TickMachine if neccessary (will come back to this once understood)
-        
-        // Create link between this GameLoop (or Game?) and the NewUI so that there is a connection between inputs from mouse etc and the game
     }
     
+    /**
+     * Starts the game loop
+     */
     public void start() {
         if (running) {
             return;
@@ -114,6 +127,9 @@ public class GameLoop implements Runnable{
         thread.start();
     }
     
+    /**
+     * Stops the game loop
+     */
     private void stop() {
         running = false;
         if (!running) {
@@ -126,6 +142,9 @@ public class GameLoop implements Runnable{
         }
     }
     
+    /**
+     * Initialises a collection of Map Squares
+     */
     private void initialiseMapSquareList() {
         mapSquareList = new ArrayList();
         
@@ -137,7 +156,6 @@ public class GameLoop implements Runnable{
             for ( int col = 0 ; col < columns ; col++ )
             {
                 mapSquareList.add(new NewMapSquare(game, row, col));
-//                System.out.println(row + col);
             }
         }
     }
