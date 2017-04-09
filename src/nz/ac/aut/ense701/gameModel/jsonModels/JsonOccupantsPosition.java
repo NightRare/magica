@@ -14,19 +14,11 @@ import nz.ac.aut.ense701.gameModel.*;
  */
 public class JsonOccupantsPosition {
     
-    Position position;
-    List<String> occupants;
+    public final Position position;
+    public final List<String> occupants;
     
     public JsonOccupantsPosition(Position position, List<String> occupants) {
         this.position = position;
         this.occupants = occupants;
-    }
-    
-    public Position position() {
-        return position;
-    }
-    
-    public List<String> occupantNames() {
-        return occupants;
     }
 }

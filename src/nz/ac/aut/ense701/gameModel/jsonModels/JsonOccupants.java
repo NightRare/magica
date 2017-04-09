@@ -15,12 +15,12 @@ import nz.ac.aut.ense701.gameModel.*;
  */
 public class JsonOccupants {
     
-    private List<Food> food;
-    private List<Tool> tools;
-    private List<Fauna> faunae;
-    private List<Kiwi> kiwis;
-    private List<Predator> predators;
-    private List<Hazard> hazards;
+    public final List<Food> food;
+    public final List<Tool> tools;
+    public final List<Fauna> faunae;
+    public final List<Kiwi> kiwis;
+    public final List<Predator> predators;
+    public final List<Hazard> hazards;
     
     public JsonOccupants(List<Food> food, List<Tool> tools, List<Fauna> faunae,
         List<Kiwi> kiwis, List<Predator> predators, List<Hazard> hazards) {
@@ -30,29 +30,5 @@ public class JsonOccupants {
         this.kiwis = kiwis;
         this.predators = predators;
         this.hazards = hazards;
-    }
-    
-    public List<Food> food() {
-        return food;
-    }
-    
-    public List<Tool> tools() {
-        return tools;
-    }
-    
-    public List<Fauna> faunae() {
-        return faunae;
-    }
-    
-    public List<Kiwi> kiwis() {
-        return kiwis;
-    }
-    
-    public List<Predator> predators() {
-        return predators;
-    }
-    
-    public List<Hazard> hazards() {
-        return hazards;
     }
 }

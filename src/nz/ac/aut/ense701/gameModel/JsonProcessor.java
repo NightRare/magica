@@ -75,11 +75,11 @@ public class JsonProcessor implements IDataManager{
         Set<Occupant> occupants = new HashSet();
         for(JsonOccupantsPosition jop : jsonOccupantsMap) {
         //better to change the equals() method of Position and Island to compare later
-            if(jop.position().getRow() != position.getRow()
-                    || jop.position().getColumn() != position.getColumn())
+            if(jop.position.getRow() != position.getRow()
+                    || jop.position.getColumn() != position.getColumn())
                 continue;
             
-            for(String name : jop.occupantNames()) {
+            for(String name : jop.occupants) {
                 // clone from a "prototype"
                 Occupant o = cloneOccupant(occupantsDictionary.get(name));
                 o.setPosition(position);
@@ -94,12 +94,12 @@ public class JsonProcessor implements IDataManager{
     private static Map<String, Occupant> makeOccupantDictionary(JsonOccupants occupantTypes) {
         Map<String, Occupant> occupantsDictionary = new HashMap();
         List<Occupant> allOccupants = new LinkedList();
-        allOccupants.addAll(occupantTypes.food());
-        allOccupants.addAll(occupantTypes.faunae());
-        allOccupants.addAll(occupantTypes.hazards());
-        allOccupants.addAll(occupantTypes.kiwis());
-        allOccupants.addAll(occupantTypes.predators());
-        allOccupants.addAll(occupantTypes.tools());
+        allOccupants.addAll(occupantTypes.food);
+        allOccupants.addAll(occupantTypes.faunae);
+        allOccupants.addAll(occupantTypes.hazards);
+        allOccupants.addAll(occupantTypes.kiwis);
+        allOccupants.addAll(occupantTypes.predators);
+        allOccupants.addAll(occupantTypes.tools);
         
         for(Occupant o : allOccupants) {
             occupantsDictionary.put(o.getName(), o);
