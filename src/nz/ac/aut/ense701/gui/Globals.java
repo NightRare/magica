@@ -19,13 +19,15 @@ public class Globals {
     private static int rows = 10;
     private static int columns = 10;
     
+    private static ScalingAssistant scalingAssistant= ScalingAssistant.getScalingAssistant();
+    
     /**
      * Converts the row number to a y coordinate
      * @param row row number
      * @return starting y coordinate of square
      */
     public static int rowToY(int row) {
-        return (height / rows) * row;
+        return scalingAssistant.scale((height / rows) * row);
     }
     
     /**
@@ -34,20 +36,20 @@ public class Globals {
      * @return starting x coordinate of square
      */
     public static int colToX(int col) {
-        return (width / columns) * col;
+        return scalingAssistant.scale((width / columns) * col);
     }
     
     /**
      * @return height of the squares 
      */
     public static int getSquareHeight() {
-        return height / rows;
+        return scalingAssistant.scale(height / rows);
     }
     
     /**
      * @return width of the squares
      */
     public static int getSquareWidth() {
-        return width / columns;
+        return scalingAssistant.scale(width / columns);
     }
 }

@@ -10,7 +10,6 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.geom.RoundRectangle2D;
 import java.util.ArrayList;
-import nz.ac.aut.ense701.gameModel.Game;
 
 /**
  * RenderingEngine is responsible for all graphics rendering
