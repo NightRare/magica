@@ -39,43 +39,16 @@ public class ScalingAssistantTest {
     }
 
     /**
-     * Test of getScalingAssistant method, of class ScalingAssistant.
-     */
-    @Test
-    public void testGetScalingAssistant() {
-        System.out.println("getScalingAssistant");
-        ScalingAssistant expResult = null;
-        ScalingAssistant result = ScalingAssistant.getScalingAssistant();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of setScale method, of class ScalingAssistant.
-     */
-    @Test
-    public void testSetScale() {
-        System.out.println("setScale");
-        int scale = 0;
-        ScalingAssistant instance = null;
-        instance.setScale(scale);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
      * Test of getScale method, of class ScalingAssistant.
      */
     @Test
-    public void testGetScale() {
-        System.out.println("getScale");
-        ScalingAssistant instance = null;
-        int expResult = 0;
+    public void testSetAndGetScale() {
+        System.out.println("setAndGetScale");
+        ScalingAssistant instance = ScalingAssistant.getScalingAssistant();
+        instance.setScale(120);
+        int expResult = 120;
         int result = instance.getScale();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -84,29 +57,17 @@ public class ScalingAssistantTest {
     @Test
     public void testScale() {
         System.out.println("scale");
-        int input = 0;
-        ScalingAssistant instance = null;
-        int expResult = 0;
+        int input = 200;
+        ScalingAssistant instance = ScalingAssistant.getScalingAssistant();
+        int expResult = 240;
+        
+        // check that NOT scaled before scale called
         int result = instance.scale(input);
+        assertFalse(result == expResult);
+        
+        // check that IS scaled after scale called
+        instance.setScale(120);
+        result = instance.scale(input);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
-
-    /**
-     * Test of getScaledImage method, of class ScalingAssistant.
-     */
-    @Test
-    public void testGetScaledImage() {
-        System.out.println("getScaledImage");
-        BufferedImage src = null;
-        int percentage = 0;
-        ScalingAssistant instance = null;
-        BufferedImage expResult = null;
-        BufferedImage result = instance.getScaledImage(src, percentage);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-    
 }
