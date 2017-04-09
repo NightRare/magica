@@ -1,0 +1,18 @@
+{
+	"tools":
+	[
+		{
+			"name":"Trap",
+			"description":"A trap for predators",
+			"weight":1.0,
+			"size":1.0,
+			"portrait":""
+		}
+	],
+
+	"food": [],
+	"faunae": [],
+	"predators": [],
+	"hazards": [],
+	"kiwis": []
+}
