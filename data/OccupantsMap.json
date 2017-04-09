@@ -1,0 +1,411 @@
+[
+	{
+		"position":{
+			"row":0,
+			"column":3
+		},
+
+		"occupants":[
+			"Oystercatcher"
+		]
+	},
+
+	{
+		"position":{
+			"row":0,
+			"column":7
+		},
+
+		"occupants":[
+			"Kiwi",
+			"Cat"
+		]
+	},
+
+	{
+		"position":{
+			"row":0,
+			"column":4
+		},
+
+		"occupants":[
+			"Trap"
+		]
+	},
+
+	{
+		"position":{
+			"row":1,
+			"column":4
+		},
+
+		"occupants":[
+			"Fall"
+		]
+	},
+
+	{
+		"position":{
+			"row":2,
+			"column":2
+		},
+
+		"occupants":[
+			"Pond"
+		]
+	},
+
+	{
+		"position":{
+			"row":2,
+			"column":4
+		},
+
+		"occupants":[
+			"Sandwich"
+		]
+	},
+
+	{
+		"position":{
+			"row":2,
+			"column":6
+		},
+
+		"occupants":[
+			"Rat"
+		]
+	},
+
+	{
+		"position":{
+			"row":2,
+			"column":8
+		},
+
+		"occupants":[
+			"Kiwi"
+		]
+	},
+
+	{
+		"position":{
+			"row":3,
+			"column":0
+		},
+
+		"occupants":[
+			"Trap"
+		]
+	},
+
+	{
+		"position":{
+			"row":3,
+			"column":4
+		},
+
+		"occupants":[
+			"Kiore"
+		]
+	},
+
+	{
+		"position":{
+			"row":3,
+			"column":5
+		},
+
+		"occupants":[
+			"Rock"
+		]
+	},
+
+	{
+		"position":{
+			"row":4,
+			"column":0
+		},
+
+		"occupants":[
+			"Crab"
+		]
+	},
+
+	{
+		"position":{
+			"row":4,
+			"column":1
+		},
+
+		"occupants":[
+			"Stoat"
+		]
+	},
+
+	{
+		"position":{
+			"row":4,
+			"column":6
+		},
+
+		"occupants":[
+			"Fernbird"
+		]
+	},
+
+	{
+		"position":{
+			"row":5,
+			"column":0
+		},
+
+		"occupants":[
+			"Sunburn"
+		]
+	},
+
+	{
+		"position":{
+			"row":5,
+			"column":2
+		},
+
+		"occupants":[
+			"Possum"
+		]
+	},
+
+	{
+		"position":{
+			"row":5,
+			"column":3
+		},
+
+		"occupants":[
+			"Screwdriver"
+		]
+	},
+
+	{
+		"position":{
+			"row":5,
+			"column":4
+		},
+
+		"occupants":[
+			"Muesli Bar"
+		]
+	},
+
+
+	{
+		"position":{
+			"row":6,
+			"column":2
+		},
+
+		"occupants":[
+			"Kiwi"
+		]
+	},
+
+	{
+		"position":{
+			"row":6,
+			"column":4
+		},
+
+		"occupants":[
+			"Rat"
+		]
+	},
+
+	{
+		"position":{
+			"row":6,
+			"column":5
+		},
+
+		"occupants":[
+			"Small cliff"
+		]
+	},
+
+
+	{
+		"position":{
+			"row":6,
+			"column":6
+		},
+
+		"occupants":[
+			"Kiwi"
+		]
+	},
+
+	{
+		"position":{
+			"row":6,
+			"column":7
+		},
+
+		"occupants":[
+			"Apple"
+		]
+	},
+
+	{
+		"position":{
+			"row":6,
+			"column":8
+		},
+
+		"occupants":[
+			"Heron"
+		]
+	},
+
+	{
+		"position":{
+			"row":7,
+			"column":0
+		},
+
+		"occupants":[
+			"Kiwi"
+		]
+	},
+
+	{
+		"position":{
+			"row":7,
+			"column":3
+		},
+
+		"occupants":[
+			"Robin"
+		]
+	},
+
+	{
+		"position":{
+			"row":7,
+			"column":4
+		},
+
+		"occupants":[
+			"Cliff"
+		]
+	},
+
+	{
+		"position":{
+			"row":7,
+			"column":6
+		},
+
+		"occupants":[
+			"Broken trap"
+		]
+	},
+
+	{
+		"position":{
+			"row":7,
+			"column":7
+		},
+
+		"occupants":[
+			"Kiwi"
+		]
+	},
+
+	{
+		"position":{
+			"row":7,
+			"column":8
+		},
+
+		"occupants":[
+			"Trap"
+		]
+	},
+
+	{
+		"position":{
+			"row":8,
+			"column":2
+		},
+
+		"occupants":[
+			"Orange Juice"
+		]
+	},
+
+	{
+		"position":{
+			"row":8,
+			"column":3
+		},
+
+		"occupants":[
+			"Kiwi"
+		]
+	},
+
+	{
+		"position":{
+			"row":8,
+			"column":8
+		},
+
+		"occupants":[
+			"Tui"
+		]
+	},
+
+	{
+		"position":{
+			"row":9,
+			"column":3
+		},
+
+		"occupants":[
+			"Kiwi"
+		]
+	},
+
+	{
+		"position":{
+			"row":9,
+			"column":4
+		},
+
+		"occupants":[
+			"Kiwi"
+		]
+	},
+
+	{
+		"position":{
+			"row":9,
+			"column":6
+		},
+
+		"occupants":[
+			"Kiwi"
+		]
+	},
+
+	{
+		"position":{
+			"row":9,
+			"column":7
+		},
+
+		"occupants":[
+			"Possum"
+		]
+	}
+]

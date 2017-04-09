@@ -1,0 +1,193 @@
+{
+	"food":
+	[
+		{
+			"name":"Sandwich",
+			"description":"A nice and healthy sandwich",
+			"weight":2.0,
+			"size":1.0,
+			"energy":50.0,
+			"portrait":""
+		},
+
+		{
+			"name":"Muesli Bar",
+			"description":"A juicy and nutricious muesli bar",
+			"weight":1.0,
+			"size":1.0,
+			"energy":50.0,
+			"portrait":""
+		},
+
+		{
+			"name":"Apple",
+			"description":"A juicy apple",
+			"weight":2.0,
+			"size":3.0,
+			"energy":50.0,
+			"portrait":""
+		},
+
+		{
+			"name":"Orange Juice",
+			"description":"A bottle of juice",
+			"weight":2.0,
+			"size":3.0,
+			"energy":50.0,
+			"portrait":""
+		}
+	],
+
+	"tools":
+	[
+		{
+			"name":"Trap",
+			"description":"A trap for predators",
+			"weight":1.0,
+			"size":1.0,
+			"portrait":""
+		},
+
+		{
+			"name":"Screwdriver",
+			"description":"A screwdriver that is useful for fixing traps",
+			"weight":0.5,
+			"size":0.75,
+			"portrait":""
+		}
+	],
+
+	"faunae":
+	[
+		{
+			"name":"Oystercatcher",
+			"description":"A variable oystercatcher sitting on sand",
+			"portrait":""
+		},
+
+		{
+			"name":"Crab",
+			"description":"A scuttling crab",
+			"portrait":""
+		},
+
+		{
+			"name":"Fernbird",
+			"description":"A shy fernbird",
+			"portrait":""
+		},
+
+		{
+			"name":"Heron",
+			"description":"A white-faced heron",
+			"portrait":""
+		},
+
+		{
+			"name":"Robin",
+			"description":"A black robin",
+			"portrait":""
+		},
+
+		{
+			"name":"Tui",
+			"description":"A singing tui",
+			"portrait":""
+		}
+	],
+
+	"kiwis":
+	[
+		{
+			"name":"Kiwi",
+			"description":"A large brown kiwi",
+			"portrait":""
+		}
+	],
+
+
+	"predators":
+	[
+		{
+			"name":"Rat",
+			"description":"A Norwegian rat",
+			"portrait":""
+		},
+
+		{
+			"name":"Cat",
+			"description":"A wild cat",
+			"portrait":""
+		},
+
+		{
+			"name":"Kiore",
+			"description":"A pacific rat",
+			"portrait":""
+		},
+
+		{
+			"name":"Stoat",
+			"description":"A brown and white stoat",
+			"portrait":""
+		},
+
+		{
+			"name":"Possum",
+			"description":"A bushy tailed possum",
+			"portrait":""
+		}
+	],
+
+	"hazards":
+	[
+		{
+			"name":"Cliff",
+			"description":"A fall down a steep rocky cliff",
+			"impact":1.0,
+			"portrait":""
+		},
+
+		{
+			"name":"Pond",
+			"description":"A fall into a deep pond",
+			"impact":1.0,
+			"portrait":""
+		},
+
+		{
+			"name":"Rock",
+			"description":"A large falling rock",
+			"impact":1.0,
+			"portrait":""
+		},
+
+		{
+			"name":"Sunburn",
+			"description":"Too much sun has given you bad sunburn and",
+			"impact":0.3,
+			"portrait":""
+		},
+
+		{
+			"name":"Fall",
+			"description":"Tripping on roots hurt your ankle and",
+			"impact":0.5,
+			"portrait":""
+		},
+
+		{
+			"name":"Small cliff",
+			"description":"A fall down a small cliff",
+			"impact":0.3,
+			"portrait":""
+		},		
+
+		{
+			"name":"Broken trap",
+			"description":"Your predator trap has broken",
+			"impact":0.0,
+			"portrait":""
+		}
+	]
+}
