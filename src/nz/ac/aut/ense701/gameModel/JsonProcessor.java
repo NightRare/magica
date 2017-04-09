@@ -17,6 +17,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Map;
+import java.util.Objects;
 import nz.ac.aut.ense701.gameModel.jsonModels.*;
 
 /**
@@ -55,15 +56,29 @@ public class JsonProcessor implements IDataManager{
         JsonOccupants jo;
         try(Reader reader = new FileReader(occupantsFilePath)) {
             jo = gson.fromJson(reader, JsonOccupants.class);
+            requireDataIntegrity(jo);
+        } catch (NullPointerException ex) {
+            throw new IllegalStateException(occupantsFilePath + " " + ex.getMessage());
         }
         
         LinkedList<JsonOccupantsPosition> jom;
         try(Reader reader = new FileReader(occupantsMapFilePath)) {            
             Type dataType = new TypeToken<LinkedList<JsonOccupantsPosition>>(){}.getType();
             jom = gson.fromJson(reader, dataType);
-        }
+            for(JsonOccupantsPosition jop : jom) {
+                requireDataIntegrity(jop);
+            }
+        } catch (NullPointerException ex) {
+            throw new IllegalStateException(occupantsMapFilePath + " " + ex.getMessage());
+        } 
         
-        Map<String, Occupant> od = makeOccupantDictionary(jo);
+        Map<String, Occupant> od;
+        try {
+            od = makeOccupantDictionary(jo);
+        } catch (NullPointerException ex) {
+            throw new IllegalStateException("Occupant data damaged. " + ex.getMessage());
+        }
+
         return new JsonProcessor(od, jom);
     }
     
@@ -102,6 +117,7 @@ public class JsonProcessor implements IDataManager{
         allOccupants.addAll(occupantTypes.tools);
         
         for(Occupant o : allOccupants) {
+            requireDataIntegerity(o);
             occupantsDictionary.put(o.getName(), o);
         }
         
@@ -153,5 +169,64 @@ public class JsonProcessor implements IDataManager{
         
         throw new IllegalArgumentException("An Occupant (abstract class) object "
                 + "cannot be cloned.");
+    }
+    
+    /**
+     * Checks whether the deserialised JsonOccupants contains non-nullable fields
+     * 
+     * @param occupantTypes 
+     */
+    private static void requireDataIntegrity(JsonOccupants occupantTypes) {
+        Objects.requireNonNull(occupantTypes.food, "did not include \"food\"");
+        Objects.requireNonNull(occupantTypes.faunae, "did not include \"faunae\"");
+        Objects.requireNonNull(occupantTypes.tools, "did not include \"tools\"");
+        Objects.requireNonNull(occupantTypes.hazards, "did not include \"hazards\"");
+        Objects.requireNonNull(occupantTypes.predators, "did not include \"predators\"");
+        Objects.requireNonNull(occupantTypes.kiwis, "did not include \"kiwis\"");        
+    }
+    
+    /**
+     * Checks whether any of the deserialised JsonOccupantsPositions contains 
+     * non-nullable fields
+     * 
+     * @param occupantsPosition 
+     */
+    private static void requireDataIntegrity(JsonOccupantsPosition occupantsPosition) {
+        Objects.requireNonNull(occupantsPosition.occupants, "did not include \"occupants\""); 
+        Objects.requireNonNull(occupantsPosition.position, "did not include \"position\"");
+    }
+    
+    /**
+     * Checks whether any of the deserialised Occupants contains 
+     * non-nullable fields
+     * 
+     * @param occupantsPosition 
+     */
+    private static void requireDataIntegerity(Occupant occupant) {
+        if(occupant.getName() == null || occupant.getName().isEmpty())
+            throw new NullPointerException("did not include \"name\"");
+        if(occupant.getDescription() == null || occupant.getDescription().isEmpty())
+            throw new NullPointerException(
+                    "did not include \"description\" for " + occupant.getName());
+        
+        if(occupant instanceof Item) {
+            Item item = (Item) occupant;
+            Objects.requireNonNull(item.getWeight(), 
+                    "did not include \"weight\" for " + occupant.getName());
+            Objects.requireNonNull(item.getSize(), 
+                    "did not include \"size\" for " + occupant.getName());
+            
+            if(item instanceof Food) {
+                Food food = (Food) item;
+                Objects.requireNonNull(food.getEnergy(), 
+                        "did not include \"energy\" for " + occupant.getName());
+            }
+        }
+        
+        if(occupant instanceof Hazard) {
+            Hazard hazard = (Hazard) occupant;
+            Objects.requireNonNull(hazard.getImpact(), 
+                    "did not include \"impact\" for " + occupant.getName());
+        }
     }
 }
