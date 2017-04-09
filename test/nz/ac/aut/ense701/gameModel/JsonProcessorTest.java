@@ -15,7 +15,7 @@ import org.junit.Test;
 
 /**
  *
- * @author Vince
+ * @author Yuan
  */
 public class JsonProcessorTest extends junit.framework.TestCase {
     
