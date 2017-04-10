@@ -124,7 +124,80 @@ public class JsonProcessorTest extends junit.framework.TestCase {
     
     @Test
     public void testDataIntegrity() {
-        // to be implemented
+        
+        // hazards missed
+        occupantsJson = "{\n" +
+                        "	\"tools\":[],\n" +
+                        "	\"food\": [],\n" +
+                        "	\"faunae\": [],\n" +
+                        "	\"predators\": [],\n" +
+                        "	\"kiwis\": []\n" +
+                        "}";
+        
+        writeJsonToFiles(occupantsJson, OCCUPANTS_FILEPATH);
+        
+        try {
+            dataManager = JsonProcessor.make(OCCUPANTS_FILEPATH, OCCUPANTSMAP_FILEPATH);
+            
+            fail("Should have thrown Exception");
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (IllegalStateException e) {
+            // pass test
+        }
+        
+        // description missed
+        occupantsJson = "{\n" +
+                        "	\"tools\":\n" +
+                        "	[\n" +
+                        "		{\n" +
+                        "			\"name\":\"Trap\",\n" +
+                        "                       \"weight\":1.0,\n" +
+                        "			\"size\":1.0,\n" +
+                        "			\"portrait\":\"\"\n" +
+                        "		}\n" +
+                        "	],\n" +
+                        "\n" +
+                        "	\"food\": [],\n" +
+                        "	\"faunae\": [],\n" +
+                        "	\"predators\": [],\n" +
+                        "	\"hazards\": [],\n" +
+                        "	\"kiwis\": []\n" +
+                        "}";
+        
+        writeJsonToFiles(occupantsJson, OCCUPANTS_FILEPATH);
+        
+        try {
+            dataManager = JsonProcessor.make(OCCUPANTS_FILEPATH, OCCUPANTSMAP_FILEPATH);
+            
+//            fail("Should have thrown Exception");
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (IllegalStateException e) {
+            // pass test
+        }
+    
+                
+        // position missed
+        occupantsJson = "[\n" +
+                        "	{\n" +
+                        "		\"occupants\":[\n" +
+                        "			\"Trap\"\n" +
+                        "		]\n" +
+                        "	}\n" +
+                        "]";
+        
+        writeJsonToFiles(occupantsJson, OCCUPANTSMAP_FILEPATH);
+        
+        try {
+            dataManager = JsonProcessor.make(OCCUPANTS_FILEPATH, OCCUPANTSMAP_FILEPATH);
+            
+            fail("Should have thrown Exception");
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (IllegalStateException e) {
+            // pass test
+        }
     }
     
     
@@ -147,7 +220,7 @@ public class JsonProcessorTest extends junit.framework.TestCase {
                 Assert.assertEquals("Column number should be 4", 4, tool.getPosition().getColumn());
             }
         } catch (IOException ex) {
-            Logger.getLogger(JsonProcessorTest.class.getName()).log(Level.SEVERE, null, ex);
+            
         }        
     }
     

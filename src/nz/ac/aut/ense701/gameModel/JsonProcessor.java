@@ -45,7 +45,7 @@ public class JsonProcessor implements IDataManager{
      * @throws IllegalArgumentException if any of the arguments is {@code null} or empty.
      * @throws IOException if IO errors happen when reading files of the given paths.
      * @throws IllegalStateException if the data integrity of any of the Json files 
-     *          is corrupted.
+     *          is corrupted; currently this only supports non-primitive type fileds.
      */
     public static IDataManager make(String occupantsFilePath, String occupantsMapFilePath) 
             throws IOException {
@@ -210,25 +210,5 @@ public class JsonProcessor implements IDataManager{
         if(occupant.getDescription() == null || occupant.getDescription().isEmpty())
             throw new NullPointerException(
                     "did not include \"description\" for " + occupant.getName());
-        
-        if(occupant instanceof Item) {
-            Item item = (Item) occupant;
-            Objects.requireNonNull(item.getWeight(), 
-                    "did not include \"weight\" for " + occupant.getName());
-            Objects.requireNonNull(item.getSize(), 
-                    "did not include \"size\" for " + occupant.getName());
-            
-            if(item instanceof Food) {
-                Food food = (Food) item;
-                Objects.requireNonNull(food.getEnergy(), 
-                        "did not include \"energy\" for " + occupant.getName());
-            }
-        }
-        
-        if(occupant instanceof Hazard) {
-            Hazard hazard = (Hazard) occupant;
-            Objects.requireNonNull(hazard.getImpact(), 
-                    "did not include \"impact\" for " + occupant.getName());
-        }
     }
 }
