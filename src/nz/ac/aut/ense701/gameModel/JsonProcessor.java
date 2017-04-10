@@ -44,6 +44,8 @@ public class JsonProcessor implements IDataManager{
      * @return an instance of IDataManager.
      * @throws IllegalArgumentException if any of the arguments is {@code null} or empty.
      * @throws IOException if IO errors happen when reading files of the given paths.
+     * @throws IllegalStateException if the data integrity of any of the Json files 
+     *          is corrupted.
      */
     public static IDataManager make(String occupantsFilePath, String occupantsMapFilePath) 
             throws IOException {
