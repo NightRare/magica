@@ -31,9 +31,22 @@ public class Game
     /**
      * A new instance of Kiwi island that reads data from "IslandData.txt".
      */
+    @Deprecated
     public Game() 
     {   
         eventListeners = new HashSet<GameEventListener>();
+        fToggle = new FeatureToggle(false);
+        
+        createNewGame();
+    }
+    
+    
+    public Game(FeatureToggle fToggle, IDataManager dataManager) {
+        if(fToggle == null || dataManager == null) 
+            throw new IllegalArgumentException("The fToggle and dataManager cannot be null.");
+        eventListeners = new HashSet<GameEventListener>();
+        this.fToggle = fToggle;
+        this.dataManager = dataManager;
 
         createNewGame();
     }
@@ -732,9 +745,15 @@ public class Game
             setUpPlayer(input);
 
             // read and setup the occupants
-            setUpOccupants(input);
-
-            input.close();
+            //check feature toggle whether read from file or use IDataManager
+            if(fToggle.isUsingIDataManager()) {
+                input.close();
+                setUpOccupants();
+            }
+            else {
+                setUpOccupants(input);
+                input.close();
+            }
         }
         catch(FileNotFoundException e)
         {
@@ -745,6 +764,7 @@ public class Game
             System.err.println("Problem encountered processing file.");
         }
     }
+
 
     /**
      * Reads terrain data and creates the terrain.
@@ -839,6 +859,28 @@ public class Game
         }
     }    
 
+    /**
+     * An overloading method to setup occupants by using IDataManager instead of 
+     * the old txt file.
+     */
+    private void setUpOccupants() {
+
+        for(int r = 0; r < island.getNumRows(); r++) {
+            for(int c = 0; c < island.getNumColumns(); c++) {
+                Position pos = new Position(island, r, c);
+                Set<Occupant> occupants = dataManager.getOccupantsInPosition(
+                        pos);
+
+                for(Occupant o : occupants) {
+                    if(o instanceof Kiwi)
+                        totalKiwis++;
+                    if(o instanceof Predator)
+                        totalPredators++;
+                    island.addOccupant(pos, o);
+                }
+            }
+        }
+    }
 
     private Island island;
     private Player player;
@@ -856,7 +898,8 @@ public class Game
     private String playerMessage  = "";   
 
     
-
+    private FeatureToggle fToggle;
+    private IDataManager dataManager;
 
 
 }

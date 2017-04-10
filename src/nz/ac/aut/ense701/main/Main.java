@@ -1,8 +1,10 @@
 package nz.ac.aut.ense701.main;
 
-import nz.ac.aut.ense701.gameModel.Game;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import nz.ac.aut.ense701.gameModel.*;
 import nz.ac.aut.ense701.gui.GameLoop;
-import nz.ac.aut.ense701.gui.KiwiCountUI;
 
 /**
  * Kiwi Count Project
@@ -32,11 +34,22 @@ public class Main
 //                gui.setVisible(true);
 //            }
 //        });
-        
-        Game game = new Game();
-        GameLoop gameLoop = new GameLoop(game);
-        
-        gameLoop.start();
+
+        try {
+            // initialise FeatureToggle
+            FeatureToggle ft = new FeatureToggle(true);
+
+            // initialise IDataManager
+            IDataManager dm = JsonProcessor.make("data/Occupants.json", "data/OccupantsMap.json");
+
+            Game game = new Game(ft, dm);
+            GameLoop gameLoop = new GameLoop(game);
+
+            gameLoop.start();
+        } catch (IOException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
 
 }
