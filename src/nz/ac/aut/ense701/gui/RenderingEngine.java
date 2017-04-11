@@ -52,13 +52,13 @@ public class RenderingEngine {
         
         int yLowered = yToRenderAt + Globals.getSquareHeight()/2;
 
-        g2d.setPaint(square.getColour());
         g2d.fill(new RoundRectangle2D.Double(xToRenderAt, yToRenderAt,
                 Globals.getSquareWidth(),
                 Globals.getSquareHeight(),
                 10, 10));
+        
+        g2d.drawImage(square.getTexture(), null, xToRenderAt, yToRenderAt); 
 
-        g2d.setColor(Color.RED);
         g2d.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 30));
         g2d.drawString(square.getLabel(), xToRenderAt, yLowered);
        

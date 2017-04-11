@@ -6,6 +6,7 @@
 package nz.ac.aut.ense701.gui;
 
 import java.awt.Color;
+import java.awt.image.BufferedImage;
 import nz.ac.aut.ense701.gameModel.Game;
 import nz.ac.aut.ense701.gameModel.Terrain;
 
@@ -19,15 +20,20 @@ public class NewMapSquare {
     private int row;
     private int column;
 
+    private BufferedImage texture;
+
     
     private Color tileColour;
     private String label;
+    
+    public BufferedImage water, scrub, wetland, forest, sand, player = null;
 
     public NewMapSquare(Game game, int row, int column) {
         this.game = game;
         this.row = row;
         this.column = column;
         
+        textureLoad();
         initialiseOrRefresh();
     }
 
@@ -59,25 +65,28 @@ public class NewMapSquare {
         boolean squareExplored = game.isExplored(row, column);
         
         Color colour;
+        
+        BufferedImage image;
 
         switch (terrain) {
+                       
             case SAND:
-                colour = Color.YELLOW;
+                image = sand;
                 break;
             case FOREST:
-                colour = Color.GREEN;
+                image = forest;
                 break;
             case WETLAND:
-                colour = Color.BLUE;
+                image = wetland;
                 break;
             case SCRUB:
-                colour = Color.DARK_GRAY;
+                image = scrub;
                 break;
             case WATER:
-                colour = Color.CYAN;
+                image = water;
                 break;
             default:
-                colour = Color.LIGHT_GRAY;
+                image = water;
                 break;
         }
 
@@ -88,16 +97,17 @@ public class NewMapSquare {
             
             if ( squareVisible && !squareExplored ) 
             {
-                // When explored the colour is brighter
-                colour = new Color(Math.min(255, colour.getRed()   + 128), 
-                                  Math.min(255, colour.getGreen() + 128), 
-                                  Math.min(255, colour.getBlue()  + 128));
+              
             }
-            tileColour = colour;
+            texture = image;
+                
+            if(game.hasPlayer(row, column)){
+                texture = player;
+            }
         } else {
             
             label = "";
-            tileColour = Color.BLACK;
+           
         }
     }
 
@@ -116,6 +126,11 @@ public class NewMapSquare {
     public Color getColour() {
         return tileColour;
     }
+    
+     public BufferedImage getTexture(){
+        return texture;
+    }
+    
     
     
 }
