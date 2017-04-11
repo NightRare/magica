@@ -16,8 +16,8 @@ public class Globals {
     public static int width = 800;
     public static int height = 800;
     
-    private static int rows = 10;
-    private static int columns = 10;
+    private static int rows = 16;
+    private static int columns = 16;
     
     private static ScalingAssistant scalingAssistant= ScalingAssistant.getScalingAssistant();
     
