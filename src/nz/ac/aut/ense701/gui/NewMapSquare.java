@@ -34,6 +34,24 @@ public class NewMapSquare {
     /**
      * Initialises the NewMapSquare or Refreshes it to sync with model
      */
+    
+     public void textureLoad(){
+        
+        //Get Images # 5
+        BufferedImageLoader loader = new BufferedImageLoader();
+            try{
+            water = loader.loadImage("/resource/images/tile_water.png");
+            scrub = loader.loadImage("/resource/images/tile_scrub.png");
+            wetland = loader.loadImage("/resource/images/tile_wetland.png");
+            forest = loader.loadImage("/resource/images/tile_forest.png");
+            sand = loader.loadImage("/resource/images/tile_sand.png");
+            player = loader.loadImage("/resource/images/player_01.png");
+            }
+            catch(Exception e){
+                e.printStackTrace();
+            }
+    }
+    
     public void initialiseOrRefresh() {
         Terrain terrain = game.getTerrain(row, column);
 
