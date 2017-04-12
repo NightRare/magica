@@ -25,13 +25,10 @@ import nz.ac.aut.ense701.gameModel.Player;
 public class RenderingEngine {
 
     GameLoop loop;
-    Player player;
     GameState gamestate;
     Game game;
     
     
-     public BufferedImage black = null;
-
     public RenderingEngine(GameLoop loop) {
         this.loop = loop;
     }
@@ -47,7 +44,6 @@ public class RenderingEngine {
         for (NewMapSquare square : squareList) {
             renderMapSquare(g2d, square);
         }
-
     }
 
     /**
@@ -63,24 +59,15 @@ public class RenderingEngine {
         int yToRenderAt = Globals.rowToY(square.getRow());
         
         int yLowered = yToRenderAt + Globals.getSquareHeight()/2;
-        
-    
-        
+            
         g2d.fill(new RoundRectangle2D.Double(xToRenderAt, yToRenderAt,
                 Globals.getSquareWidth(),
                 Globals.getSquareHeight(),
                 10, 10)); 
         
-        g2d.fill(new Rectangle.Double());
        
-        
         g2d.drawImage(square.getTexture(), null, xToRenderAt, yToRenderAt);
         
-        /*
-        if(loop.getRunning()){
-        System.out.println(loop.getRunning());}
-        */
-     
         g2d.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 30));
         g2d.drawString(square.getLabel(), xToRenderAt, yLowered);
        

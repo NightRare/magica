@@ -41,7 +41,7 @@ public class NewMapSquare {
     }
 
     /**
-     * Initialises the NewMapSquare or Refreshes it to sync with model
+     * Initializes the NewMapSquare or Refreshes it to sync with model
      */
     
      public void textureLoad(){
@@ -108,14 +108,14 @@ public class NewMapSquare {
             {
               
             }
-            texture = image;
+            texture = image; //Sets up appropriate textures for the map
             
             
             if(game.hasPlayer(row, column)){
-                texture = player;
+                texture = player; //Sets up Player Icon to the current location of the player.
             } 
             if(game.getState()==GameState.LOST){
-                texture = grey; }
+                texture = grey; } //When the player dies, then it reverts all textures that was used to grey.
 
         } else {
             
