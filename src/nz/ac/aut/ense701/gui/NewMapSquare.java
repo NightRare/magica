@@ -8,6 +8,8 @@ package nz.ac.aut.ense701.gui;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 import nz.ac.aut.ense701.gameModel.Game;
+import nz.ac.aut.ense701.gameModel.GameState;
+import nz.ac.aut.ense701.gameModel.Player;
 import nz.ac.aut.ense701.gameModel.Terrain;
 
 /**
@@ -25,8 +27,9 @@ public class NewMapSquare {
     
     private Color tileColour;
     private String label;
+
     
-    public BufferedImage water, scrub, wetland, forest, sand, player = null;
+    public BufferedImage water, scrub, wetland, forest, sand, player, black, grey = null;
 
     public NewMapSquare(Game game, int row, int column) {
         this.game = game;
@@ -52,6 +55,8 @@ public class NewMapSquare {
             forest = loader.loadImage("/resource/images/tile_forest.png");
             sand = loader.loadImage("/resource/images/tile_sand.png");
             player = loader.loadImage("/resource/images/player_01.png");
+            black = loader.loadImage("/resource/images/black.png");
+            grey = loader.loadImage("/resource/images/grey.png");
             }
             catch(Exception e){
                 e.printStackTrace();
@@ -67,6 +72,7 @@ public class NewMapSquare {
         Color colour;
         
         BufferedImage image;
+        
 
         switch (terrain) {
                        
@@ -91,19 +97,26 @@ public class NewMapSquare {
         }
 
         // This code needs to be changed eventually once colours are moved away from
+     
+        
         if (squareExplored || squareVisible) {
             
             label = game.getOccupantStringRepresentation(row,column);
+            
             
             if ( squareVisible && !squareExplored ) 
             {
               
             }
             texture = image;
-                
+            
+            
             if(game.hasPlayer(row, column)){
                 texture = player;
-            }
+            } 
+            if(game.getState()==GameState.LOST){
+                texture = grey; }
+
         } else {
             
             label = "";

@@ -28,6 +28,8 @@ public class GameLoop implements Runnable{
     private TickMachine tickMachine;
     private RenderingEngine renderingEngine;
     
+    
+    
     private boolean running;
     
     private ArrayList<NewMapSquare> mapSquareList;
@@ -85,6 +87,7 @@ public class GameLoop implements Runnable{
      */
     private void tick() {
         tickMachine.tick();
+       
     }
     
     /**
@@ -162,6 +165,10 @@ public class GameLoop implements Runnable{
 
     public ArrayList<NewMapSquare> getMapSquareList() {
         return mapSquareList;
+    }
+    
+    public boolean getRunning(){
+        return running;
     }
     
     
