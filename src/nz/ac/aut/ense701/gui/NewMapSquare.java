@@ -30,6 +30,7 @@ public class NewMapSquare {
 
     
     public BufferedImage water, scrub, wetland, forest, sand, player, black, grey = null;
+    public BufferedImage animal, food, tool, hazard;
 
     public NewMapSquare(Game game, int row, int column) {
         this.game = game;
@@ -37,6 +38,7 @@ public class NewMapSquare {
         this.column = column;
         
         textureLoad();
+        loadOccupantImage();
         initialiseOrRefresh();
     }
 
@@ -57,6 +59,20 @@ public class NewMapSquare {
             player = loader.loadImage("/resource/images/player_01.png");
             black = loader.loadImage("/resource/images/black.png");
             grey = loader.loadImage("/resource/images/grey.png");
+            }
+            catch(Exception e){
+                e.printStackTrace();
+            }
+    }
+     
+     public void loadOccupantImage(){
+        
+        BufferedImageLoader loader = new BufferedImageLoader();
+            try{
+            animal = loader.loadImage("/resource/images/animal.png");
+            food = loader.loadImage("/resource/images/food.png");
+            tool = loader.loadImage("/resource/images/tool.png");
+            hazard = loader.loadImage("/resource/images/hazard.png");
             }
             catch(Exception e){
                 e.printStackTrace();
@@ -144,6 +160,29 @@ public class NewMapSquare {
         return texture;
     }
     
-    
+    public BufferedImage getOccupantImage(String label){
+        BufferedImage img = null;
+        switch(label){
+            case "F":
+                img = animal;
+                break;
+            case "K":
+                img = animal;
+                break;
+            case "P":
+                img = animal;
+                break;
+            case "H":
+                img = hazard;
+                break;
+            case "T":
+                img = tool;
+                break;
+            case "E":
+                img = food;
+                break;
+        }
+        return img;
+    }
     
 }

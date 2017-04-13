@@ -73,7 +73,13 @@ public class RenderingEngine {
         g2d.drawImage(square.getTexture(), null, xToRenderAt, yToRenderAt);
         
         g2d.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 30));
-        g2d.drawString(square.getLabel(), xToRenderAt, yLowered);
+        //g2d.drawString(square.getLabel(), xToRenderAt, yLowered);
+        
+        //drawing the occupants
+        ScalingAssistant scaleAssist = ScalingAssistant.getScalingAssistant();
+        g2d.drawImage(square.getOccupantImage(square.getLabel()), 
+                xToRenderAt, yToRenderAt,
+                scaleAssist.scale(50),scaleAssist.scale(50),null);
        
     }
     
@@ -84,6 +90,21 @@ public class RenderingEngine {
      * @param sidePanel side panel object
      */
     private void renderSidePanel(Graphics2D g2d, SidePanel sidePanel){
+        ScalingAssistant scaleAssist = ScalingAssistant.getScalingAssistant();
+        renderBoards(g2d);
+        renderPlayerIcon(g2d,sidePanel,scaleAssist);
+        renderQuest(g2d,sidePanel,scaleAssist);
+        renderStaminaBar(g2d,sidePanel,scaleAssist);
+        renderInventoryGroup(g2d,sidePanel,scaleAssist);
+        renderActionGroup(g2d,sidePanel,scaleAssist);
+    }
+    
+    /**
+     * Renders the boards for the Side Panel
+     * 
+     * @param g2d graphics2D reference
+     */
+    private void renderBoards(Graphics2D g2d){
         g2d.setColor(Color.white);
         //display Action Board area
         g2d.fill(new Rectangle2D.Double(Globals.boardOffsetX(),Globals.boardOffsetY(),
@@ -92,37 +113,107 @@ public class RenderingEngine {
         g2d.fill(new Rectangle2D.Double(
             Globals.boardOffsetX(),(Globals.boardOffsetY()*2)+Globals.boardHeight(),
             Globals.boardWidth(),Globals.boardHeight()));
-        
-        ScalingAssistant scaleAssist = ScalingAssistant.getScalingAssistant();
+    }
+    
+    /**
+     * Renders a Player Icon for the Side Panel
+     * 
+     * @param g2d graphics2D reference
+     * @param sidePanel side panel object
+     * @param scAs scaling assistant
+     */
+    private void renderPlayerIcon(Graphics2D g2d, SidePanel sidePanel,ScalingAssistant scAs){
         //display images
         g2d.drawImage(sidePanel.showPlayerIcon(), 
-                scaleAssist.scale(12), scaleAssist.scale(12), //X & Y offset
-                scaleAssist.scale(170), scaleAssist.scale(155), //width & height
+                scAs.scale(12), scAs.scale(12), //X & Y offset
+                scAs.scale(170), scAs.scale(155), //width & height
                 null);
+    }
+    
+    /**
+     * Renders the Quest Panel for the Side Panel
+     * 
+     * @param g2d graphics2D reference
+     * @param sidePanel side panel object
+     * @param scAs scaling assistant
+     */
+    private void renderQuest(Graphics2D g2d, SidePanel sidePanel,ScalingAssistant scaleAssist){
+        //displays the quest clipboard image
         g2d.drawImage(sidePanel.showQuests(), 
                 scaleAssist.scale(12+170), scaleAssist.scale(12), //X & Y offset 
                 scaleAssist.scale(105), scaleAssist.scale(155), //width & height
                 null);
-        //display number of Kiwis to tag/count
         g2d.setColor(Color.gray);
-        g2d.setFont(new Font("Arial",Font.BOLD,scaleAssist.scale(20)));
+        g2d.setFont(new Font("Arial",Font.BOLD,scaleAssist.scale(18)));
+        //display number of Kiwis to tag/count
         g2d.drawString(sidePanel.numOfKiwi(), 
-                        scaleAssist.scale(12+170+60), scaleAssist.scale(88));//X & Y offset
+                        scaleAssist.scale(12+170+65), scaleAssist.scale(90));//X & Y offset
+        //display number of Predators left
         g2d.drawString(sidePanel.numOfPredator(), 
-                        scaleAssist.scale(12+170+60), scaleAssist.scale(135));//X & Y offset
-        //display Stamina Bar
-        g2d.setColor(Color.lightGray);
-        g2d.fill(new Rectangle2D.Double(scaleAssist.scale(45), scaleAssist.scale(175), //X & Y offset
-                            scaleAssist.scale(sidePanel.totalStamina()*2), scaleAssist.scale(20)));//width & height
-        g2d.setColor(new Color(57,181,75));
-        g2d.fill(new Rectangle2D.Double(scaleAssist.scale(45), scaleAssist.scale(175), //X & Y offset
-                            scaleAssist.scale(sidePanel.currentStamina()*2), scaleAssist.scale(20)));//width & height
-        g2d.setColor(Color.darkGray);
-        g2d.drawString("STAMINA",scaleAssist.scale(48), scaleAssist.scale(192));
+                        scaleAssist.scale(12+170+65), scaleAssist.scale(137));//X & Y offset
     }
     
-    private void renderBackground(Graphics2D g2d){
-        g2d.setColor(Color.black);
-        g2d.fillRect(0, 0, 1100, 800);
+    /**
+     * Renders a Stamina Bar for the Side Panel
+     * 
+     * @param g2d graphics2D reference
+     * @param sidePanel side panel object
+     * @param scAs scaling assistant
+     */
+    private void renderStaminaBar(Graphics2D g2d, SidePanel sidePanel,ScalingAssistant scaleAssist){
+        //display Max Stamina
+        g2d.setColor(Color.lightGray);
+        g2d.fill(new Rectangle2D.Double(scaleAssist.scale(45), scaleAssist.scale(170), //X & Y offset
+                            scaleAssist.scale(sidePanel.totalStamina()*2), scaleAssist.scale(20)));//width & height
+        //displays Current Stamina
+        g2d.setColor(new Color(57,181,75));
+        g2d.fill(new Rectangle2D.Double(scaleAssist.scale(45), scaleAssist.scale(170), //X & Y offset
+                            scaleAssist.scale(sidePanel.currentStamina()*2), scaleAssist.scale(20)));//width & height
+        //displays the text STAMINA
+        g2d.setColor(Color.darkGray);
+        g2d.drawString("STAMINA",scaleAssist.scale(48), scaleAssist.scale(188));
+    }
+    
+    private void renderInventoryGroup(Graphics2D g2d, SidePanel sidePanel,ScalingAssistant scaleAssist){
+        //display inventory boxes
+        g2d.setColor(Color.gray);
+        g2d.drawString("INVENTORY", 
+                        scaleAssist.scale(35), scaleAssist.scale(220));//X & Y offset
+            //inventory box 1
+            g2d.drawImage(sidePanel.emptyInventory(), 
+                    scaleAssist.scale(35), scaleAssist.scale(225), //X & Y offset 
+                    scaleAssist.scale(65), scaleAssist.scale(65), //width & height
+                    null);
+            //inventory box 2
+            g2d.drawImage(sidePanel.emptyInventory(), 
+                    scaleAssist.scale(35+65+15), scaleAssist.scale(225), //X & Y offset 
+                    scaleAssist.scale(65), scaleAssist.scale(65), //width & height
+                    null);
+            //inventory box 3
+            g2d.drawImage(sidePanel.emptyInventory(), 
+                    scaleAssist.scale(35+(65*2)+30), scaleAssist.scale(225), //X & Y offset 
+                    scaleAssist.scale(65), scaleAssist.scale(65), //width & height
+                    null);
+    }
+    
+    private void renderActionGroup(Graphics2D g2d, SidePanel sidePanel,ScalingAssistant scaleAssist){
+        //display action boxes    
+        g2d.drawString("ACTION", 
+                        scaleAssist.scale(35), scaleAssist.scale(310));//X & Y offset
+            //action box 1
+            g2d.drawImage(sidePanel.emptyInventory(), 
+                    scaleAssist.scale(35), scaleAssist.scale(315), //X & Y offset 
+                    scaleAssist.scale(65), scaleAssist.scale(65), //width & height
+                    null);
+            //action box 2
+            g2d.drawImage(sidePanel.emptyInventory(), 
+                    scaleAssist.scale(35+65+15), scaleAssist.scale(315), //X & Y offset 
+                    scaleAssist.scale(65), scaleAssist.scale(65), //width & height
+                    null);
+            //action box 3
+            g2d.drawImage(sidePanel.emptyInventory(), 
+                    scaleAssist.scale(35+(65*2)+30), scaleAssist.scale(315), //X & Y offset 
+                    scaleAssist.scale(65), scaleAssist.scale(65), //width & height
+                    null);
     }
 }

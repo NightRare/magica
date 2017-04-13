@@ -14,7 +14,8 @@ public class SidePanel {
     private final Game game;
     private Player player;
     
-    private BufferedImage playerIcon,questIcon;
+    private BufferedImage playerIcon,questIcon,inventoryEmpty,inventorySnack,
+                inventoryToolbox,inventoryApple,inventoryTrap;
     
     
     public SidePanel(Game g){
@@ -33,6 +34,11 @@ public class SidePanel {
             try{
             playerIcon = loader.loadImage("/resource/images/sidepanel_player.png");
             questIcon = loader.loadImage("/resource/images/sidepanel_quest.png");
+            inventoryEmpty = loader.loadImage("/resource/images/inventory_empty.png");
+            inventorySnack = loader.loadImage("/resource/images/inventory_snack.png");
+            inventoryToolbox = loader.loadImage("/resource/images/inventory_toolbox.png");
+            inventoryApple = loader.loadImage("/resource/images/inventory_apple.png");
+            inventoryTrap = loader.loadImage("/resource/images/inventory_trap.png");
             }
             catch(Exception e){
                 e.printStackTrace();
@@ -45,6 +51,10 @@ public class SidePanel {
     
     public BufferedImage showQuests(){
         return questIcon;
+    }
+    
+    public BufferedImage emptyInventory(){
+        return inventoryEmpty;
     }
     
     public String numOfKiwi(){
