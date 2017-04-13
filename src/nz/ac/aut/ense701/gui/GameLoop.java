@@ -33,6 +33,7 @@ public class GameLoop implements Runnable{
     private boolean running;
     
     private ArrayList<NewMapSquare> mapSquareList;
+    private SidePanel sidePanel;
 
     /**
      * The constructor for GameLoop takes a game object. Game represents the game model.
@@ -115,6 +116,7 @@ public class GameLoop implements Runnable{
     private void initialise() {
         newUI = new NewUI(game);
         
+        this.sidePanel = new SidePanel(game);
         // Initialise Assets
     }
     
@@ -165,6 +167,10 @@ public class GameLoop implements Runnable{
 
     public ArrayList<NewMapSquare> getMapSquareList() {
         return mapSquareList;
+    }
+    
+    public final SidePanel getSidePanel(){
+        return this.sidePanel;
     }
     
     public boolean getRunning(){

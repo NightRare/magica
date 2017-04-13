@@ -8,14 +8,11 @@ package nz.ac.aut.ense701.gui;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
-import java.awt.Rectangle;
-import java.awt.Shape;
+import java.awt.geom.Rectangle2D;
 import java.awt.geom.RoundRectangle2D;
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import nz.ac.aut.ense701.gameModel.Game;
 import nz.ac.aut.ense701.gameModel.GameState;
-import nz.ac.aut.ense701.gameModel.Player;
 
 /**
  * RenderingEngine is responsible for all graphics rendering
@@ -44,6 +41,8 @@ public class RenderingEngine {
         for (NewMapSquare square : squareList) {
             renderMapSquare(g2d, square);
         }
+        
+        renderSidePanel(g2d, loop.getSidePanel());
     }
 
     /**
@@ -71,5 +70,12 @@ public class RenderingEngine {
         g2d.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 30));
         g2d.drawString(square.getLabel(), xToRenderAt, yLowered);
        
+    }
+    
+    private void renderSidePanel(Graphics2D g2d, SidePanel sidePanel){
+        g2d.setColor(Color.yellow);
+        //g2d.fill(new Rectangle2D.Double(50, 50, 100, 100));
+        g2d.drawRect(50, 50, 100, 100);
+        
     }
 }

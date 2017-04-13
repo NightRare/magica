@@ -30,5 +30,8 @@ public class TickMachine {
             square.initialiseOrRefresh();
         }
         
+        //update side panel
+        loop.getSidePanel().checkStats();
+        
     }
 }

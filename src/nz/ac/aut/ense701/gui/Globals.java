@@ -13,14 +13,15 @@ public class Globals {
     
     public static final String TITLE = "Kiwi Island";
     
-    public static int width = 800;
+    public static int width = 1200;
     public static int height = 800;
-    
+    public static int mapWidth = 800;
+    public static int sidePanelWidth = width - mapWidth;
     private static int rows = 16;
     private static int columns = 16;
     
     private static ScalingAssistant scalingAssistant= ScalingAssistant.getScalingAssistant();
-    
+    public static int sidePanel_width = 4 * scalingAssistant.getScale();
     /**
      * Converts the row number to a y coordinate
      * @param row row number
@@ -36,7 +37,7 @@ public class Globals {
      * @return starting x coordinate of square
      */
     public static int colToX(int col) {
-        return scalingAssistant.scale((width / columns) * col);
+        return scalingAssistant.scale(((mapWidth / columns) * col) + sidePanel_width );
     }
     
     /**
@@ -50,6 +51,6 @@ public class Globals {
      * @return width of the squares
      */
     public static int getSquareWidth() {
-        return scalingAssistant.scale(width / columns);
+        return scalingAssistant.scale(mapWidth / columns);
     }
 }

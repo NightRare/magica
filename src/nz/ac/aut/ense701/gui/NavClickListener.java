@@ -88,8 +88,10 @@ public class NavClickListener implements MouseListener{
 
     @Override
     public void mousePressed(MouseEvent e) {  
-          MoveDirection direction = getDirection(e.getX(), e.getY());
-        if (direction != null) move(direction);
+        if(e.getX() > Globals.sidePanel_width){
+            MoveDirection direction = getDirection(e.getX(), e.getY());
+            if (direction != null) move(direction);
+        }
     }
 
     @Override
