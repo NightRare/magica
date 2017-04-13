@@ -58,13 +58,17 @@ public class RenderingEngine {
         int yToRenderAt = Globals.rowToY(square.getRow());
         
         int yLowered = yToRenderAt + Globals.getSquareHeight()/2;
-            
+        /*    
         g2d.fill(new RoundRectangle2D.Double(xToRenderAt, yToRenderAt,
                 Globals.getSquareWidth(),
                 Globals.getSquareHeight(),
                 10, 10)); 
+        */
         
-       
+        g2d.fill(new Rectangle2D.Double(xToRenderAt, yToRenderAt,
+                Globals.getSquareWidth(),
+                Globals.getSquareHeight()));         
+
         g2d.drawImage(square.getTexture(), null, xToRenderAt, yToRenderAt);
         
         g2d.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 30));
@@ -74,8 +78,8 @@ public class RenderingEngine {
     
     private void renderSidePanel(Graphics2D g2d, SidePanel sidePanel){
         g2d.setColor(Color.yellow);
-        //g2d.fill(new Rectangle2D.Double(50, 50, 100, 100));
-        g2d.drawRect(50, 50, 100, 100);
+        g2d.fill(new Rectangle2D.Double(50, 50, 100, 100));
+        g2d.drawRect(150, 150, 100, 100);
         
     }
 }
