@@ -1,6 +1,7 @@
 
 package nz.ac.aut.ense701.gui;
 
+import java.awt.image.BufferedImage;
 import nz.ac.aut.ense701.gameModel.Game;
 import nz.ac.aut.ense701.gameModel.Player;
 
@@ -10,18 +11,55 @@ import nz.ac.aut.ense701.gameModel.Player;
  */
 public class SidePanel {
 
+    private final Game game;
     private Player player;
-    private Game game;
+    
+    private BufferedImage playerIcon,questIcon;
+    
     
     public SidePanel(Game g){
         this.game = g;
     }
     
-    
-    //thi is run every step, to check for updates to the stats
+    //this is run every step, to check for updates to the stats
     //called from the Tick machine
     public void checkStats(){
-        //what do you want to happen every step?
+        //what happens every step?
+        loadImages();
     }
     
+    public void loadImages(){
+        BufferedImageLoader loader = new BufferedImageLoader();
+            try{
+            playerIcon = loader.loadImage("/resource/images/sidepanel_player.png");
+            questIcon = loader.loadImage("/resource/images/sidepanel_quest.png");
+            }
+            catch(Exception e){
+                e.printStackTrace();
+            }
+    }
+    
+    public BufferedImage showPlayerIcon(){
+        return playerIcon;
+    }
+    
+    public BufferedImage showQuests(){
+        return questIcon;
+    }
+    
+    public String numOfKiwi(){
+        return ""+game.getKiwiCount();
+    }
+    
+    public String numOfPredator(){
+        return "" + game.getPredatorsRemaining();
+    }
+    
+    public String totalStamina(){
+        return "" + game.getPlayerValues()[Game.MAXSTAMINA_INDEX];
+    }
+    
+    public String currentStamina(){
+        return "" + game.getPlayerValues()[Game.STAMINA_INDEX];
+    }
 }

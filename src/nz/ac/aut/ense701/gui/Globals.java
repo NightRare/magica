@@ -13,15 +13,21 @@ public class Globals {
     
     public static final String TITLE = "Kiwi Island";
     
-    public static int width = 1200;
+    public static int width = 1100;
     public static int height = 800;
     public static int mapWidth = 800;
-    public static int sidePanelWidth = width - mapWidth;
+    private static int sidePanelWidth = width - mapWidth;
     private static int rows = 16;
     private static int columns = 16;
     
     private static ScalingAssistant scalingAssistant= ScalingAssistant.getScalingAssistant();
-    public static int sidePanel_width = 4 * scalingAssistant.getScale();
+    private static final int[] BOARD_DIMENSIONS = new int[]{12,12,276,382};//x,y,width,height
+    
+    
+    public static int getSidePanelWidth(){
+        return scalingAssistant.scale(sidePanelWidth);
+    }
+    
     /**
      * Converts the row number to a y coordinate
      * @param row row number
@@ -37,7 +43,7 @@ public class Globals {
      * @return starting x coordinate of square
      */
     public static int colToX(int col) {
-        return scalingAssistant.scale(((mapWidth / columns) * col) + sidePanel_width );
+        return scalingAssistant.scale(((mapWidth / columns) * col)) + getSidePanelWidth();
     }
     
     /**
@@ -52,5 +58,33 @@ public class Globals {
      */
     public static int getSquareWidth() {
         return scalingAssistant.scale(mapWidth / columns);
+    }
+    
+    /**
+     * @return side panel board width
+     */
+    public static double boardWidth(){
+        return (double)scalingAssistant.scale(BOARD_DIMENSIONS[2]);
+    }
+    
+    /**
+     * @return side panel board height
+     */
+    public static double boardHeight(){
+        return (double)scalingAssistant.scale(BOARD_DIMENSIONS[3]);
+    }
+    
+    /**
+     * @return side panel board x origin
+     */
+    public static double boardOffsetX(){
+        return (double)scalingAssistant.scale(BOARD_DIMENSIONS[0]);
+    }
+    
+    /**
+     * @return side panel board y origin
+     */
+    public static double boardOffsetY(){
+        return (double)scalingAssistant.scale(BOARD_DIMENSIONS[1]);
     }
 }

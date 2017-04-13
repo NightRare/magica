@@ -6,6 +6,7 @@
 package nz.ac.aut.ense701.gui;
 
 import java.awt.Canvas;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
