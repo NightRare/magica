@@ -111,10 +111,14 @@ public class RenderingEngine {
         g2d.drawString(sidePanel.numOfPredator(), 
                         scaleAssist.scale(12+170+60), scaleAssist.scale(135));//X & Y offset
         //display Stamina Bar
-        g2d.setColor(Color.gray);
-        //g2d.fill(new Rectangle2D.Double(scaleAssist.scale(20), scaleAssist.scale(20), //X & Y offset
-        //                    scaleAssist.scale(20), scaleAssist.scale(20)));//width & height
-        
+        g2d.setColor(Color.lightGray);
+        g2d.fill(new Rectangle2D.Double(scaleAssist.scale(45), scaleAssist.scale(175), //X & Y offset
+                            scaleAssist.scale(sidePanel.totalStamina()*2), scaleAssist.scale(20)));//width & height
+        g2d.setColor(new Color(57,181,75));
+        g2d.fill(new Rectangle2D.Double(scaleAssist.scale(45), scaleAssist.scale(175), //X & Y offset
+                            scaleAssist.scale(sidePanel.currentStamina()*2), scaleAssist.scale(20)));//width & height
+        g2d.setColor(Color.darkGray);
+        g2d.drawString("STAMINA",scaleAssist.scale(48), scaleAssist.scale(192));
     }
     
     private void renderBackground(Graphics2D g2d){

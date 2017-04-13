@@ -55,11 +55,11 @@ public class SidePanel {
         return "" + game.getPredatorsRemaining();
     }
     
-    public String totalStamina(){
-        return "" + game.getPlayerValues()[Game.MAXSTAMINA_INDEX];
+    public int totalStamina(){
+        return game.getPlayerValues()[Game.MAXSTAMINA_INDEX];
     }
     
-    public String currentStamina(){
-        return "" + game.getPlayerValues()[Game.STAMINA_INDEX];
+    public int currentStamina(){
+        return game.getPlayerValues()[Game.STAMINA_INDEX];
     }
 }
