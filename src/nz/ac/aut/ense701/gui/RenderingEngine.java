@@ -35,7 +35,6 @@ public class RenderingEngine {
      * @param g2d graphics2D reference
      */
     public void render(Graphics2D g2d) {
-        
         ArrayList<NewMapSquare> squareList = loop.getMapSquareList();
         for (NewMapSquare square : squareList) {
             renderMapSquare(g2d, square);
@@ -98,6 +97,7 @@ public class RenderingEngine {
         renderInventoryGroup(g2d,sidePanel,scaleAssist);
         renderActionGroup(g2d,sidePanel,scaleAssist);
     }
+    
     
     /**
      * Renders the boards for the Side Panel
@@ -180,17 +180,17 @@ public class RenderingEngine {
         g2d.drawString("INVENTORY", 
                         scaleAssist.scale(35), scaleAssist.scale(220));//X & Y offset
             //inventory box 1
-            g2d.drawImage(sidePanel.emptyInventory(), 
+            g2d.drawImage(sidePanel.inventoryImage()[0], 
                     scaleAssist.scale(35), scaleAssist.scale(225), //X & Y offset 
                     scaleAssist.scale(65), scaleAssist.scale(65), //width & height
                     null);
             //inventory box 2
-            g2d.drawImage(sidePanel.emptyInventory(), 
+            g2d.drawImage(sidePanel.inventoryImage()[1], 
                     scaleAssist.scale(35+65+15), scaleAssist.scale(225), //X & Y offset 
                     scaleAssist.scale(65), scaleAssist.scale(65), //width & height
                     null);
             //inventory box 3
-            g2d.drawImage(sidePanel.emptyInventory(), 
+            g2d.drawImage(sidePanel.inventoryImage()[2], 
                     scaleAssist.scale(35+(65*2)+30), scaleAssist.scale(225), //X & Y offset 
                     scaleAssist.scale(65), scaleAssist.scale(65), //width & height
                     null);
