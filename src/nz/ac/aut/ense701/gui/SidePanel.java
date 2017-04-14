@@ -17,9 +17,11 @@ public class SidePanel {
     private BufferedImage playerIcon,questIcon,inventoryEmpty,inventorySnack,
                 inventoryToolbox,inventoryApple,inventoryTrap;
     
+    private AssetManager assetManager;
     
     public SidePanel(Game g){
         this.game = g;
+        this.assetManager = AssetManager.getAssetManager();
     }
     
     //this is run every step, to check for updates to the stats
@@ -30,19 +32,13 @@ public class SidePanel {
     }
     
     public void loadImages(){
-        BufferedImageLoader loader = new BufferedImageLoader();
-            try{
-            playerIcon = loader.loadImage("/resource/images/sidepanel_player.png");
-            questIcon = loader.loadImage("/resource/images/sidepanel_quest.png");
-            inventoryEmpty = loader.loadImage("/resource/images/inventory_empty.png");
-            inventorySnack = loader.loadImage("/resource/images/inventory_snack.png");
-            inventoryToolbox = loader.loadImage("/resource/images/inventory_toolbox.png");
-            inventoryApple = loader.loadImage("/resource/images/inventory_apple.png");
-            inventoryTrap = loader.loadImage("/resource/images/inventory_trap.png");
-            }
-            catch(Exception e){
-                e.printStackTrace();
-            }
+        playerIcon = assetManager.getPlayerIcon();
+        questIcon = assetManager.getQuestIcon();
+        inventoryEmpty = assetManager.getInventoryEmpty();
+        inventorySnack = assetManager.getInventorySnack();
+        inventoryToolbox = assetManager.getInventoryToolbox();
+        inventoryApple = assetManager.getInventoryApple();
+        inventoryTrap = assetManager.getInventoryTrap();
     }
     
     public BufferedImage showPlayerIcon(){
