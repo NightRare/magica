@@ -11,6 +11,10 @@ import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.RoundRectangle2D;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
 import nz.ac.aut.ense701.gameModel.Game;
 import nz.ac.aut.ense701.gameModel.GameState;
 import nz.ac.aut.ense701.gameModel.Occupant;
@@ -245,9 +249,36 @@ public class RenderingEngine {
     private void renderOccupantInfo(Graphics2D g2d, SidePanel sidePanel, ScalingAssistant scaleAssist) {
         Occupant occupant = sidePanel.getOccupants()[0];
 
+        Font originalFont = g2d.getFont(); //record the original font
+        
+        Font contentFont = new Font(Font.SERIF, Font.PLAIN, scaleAssist.scale(16));
         g2d.setColor(Color.gray);
-        g2d.drawString(occupant.getName().toUpperCase(), scaleAssist.scale(30), scaleAssist.scale(630));
-        g2d.drawString(occupant.getDescription(), scaleAssist.scale(30), scaleAssist.scale(665));
+        g2d.drawString(occupant.getName().toUpperCase(), scaleAssist.scale(30), scaleAssist.scale(590));
+        
+        g2d.setFont(contentFont);
+        List<String> descLines = wordSplitter(occupant.getDescription(), 35);
+
+        for(int i = 0; i < descLines.size(); i++) {
+            g2d.drawString(descLines.get(i), scaleAssist.scale(30), scaleAssist.scale(615 + i * 16));
+        }
+
+        g2d.setFont(originalFont); //set back to original font
+    }
+    
+    private List<String> wordSplitter(String text, int charNums) {
+        char[] charArray = text.toCharArray();
+        List<String> output = new LinkedList();
+        String line = "";
+        
+        for(int i = 0; i < charArray.length; i++) {
+            line += charArray[i];
+            if(i % charNums == (charNums - 1)) {
+                output.add(line);
+                line = "";
+            }            
+        }
+        output.add(line);
+        return output;
     }
 
     private void renderOccupantsList(Graphics2D g2d, SidePanel sidePanel, ScalingAssistant scaleAssist) {
