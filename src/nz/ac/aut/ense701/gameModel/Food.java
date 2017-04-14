@@ -10,7 +10,7 @@ package nz.ac.aut.ense701.gameModel;
 public class Food extends Item
 {
     private double energy;
-
+    
     /**
      * Construct a food object with known attributes.
      * @param pos the position of the food object
@@ -23,7 +23,23 @@ public class Food extends Item
      */
     public Food(Position pos, String name, String description, double weight, double size, double energy) 
     {
-        super(pos, name, description,weight, size);
+        super(pos, name, description, weight, size);
+        this.energy = energy;
+    }
+
+    /**
+     * Construct a food object with known attributes.
+     * @param pos the position of the food object
+     * @param name the name of the food object
+     * @param description a longer description of the food object
+     * @param weight the weight of the food object
+     * @param size the size of the food object
+     * @param energy stamina contribution of the food object
+     *               when the player uses the object
+     */
+    public Food(Position pos, String name, String description, String portrait, double weight, double size, double energy) 
+    {
+        super(pos, name, description, portrait, weight, size);
         this.energy = energy;
     }
 

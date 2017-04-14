@@ -11,8 +11,9 @@ public abstract class Occupant
 {
     private Position position;
     private final String   name;
-    private final String   description;    
-
+    private final String   description;   
+    private final String   portrait; //image file path
+    
     /**
      * Construct an occupant for a known position & name.
      * @param position the position of the occupant
@@ -23,7 +24,22 @@ public abstract class Occupant
     {
         this.position    = position;
         this.name        = name;
-        this.description = description;        
+        this.description = description;   
+        this.portrait    = "";  
+    }
+
+    /**
+     * Construct an occupant for a known position & name.
+     * @param position the position of the occupant
+     * @param name the name of the occupant
+     * @param description a longer description
+     */
+    public Occupant(Position position, String name, String description, String portrait) 
+    {
+        this.position    = position;
+        this.name        = name;
+        this.description = description;   
+        this.portrait    = portrait;  
     }
     
     /**
@@ -63,6 +79,10 @@ public abstract class Occupant
     */
     public String getDescription() {
         return this.description;
+    }
+
+    public String getPortrait() {
+        return this.portrait;
     }
     
     /**

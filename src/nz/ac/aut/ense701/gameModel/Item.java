@@ -11,7 +11,7 @@ public  abstract class Item extends Occupant
 {
     private double weight;
     private double size;
-
+    
     /**
      * Construct an item with known attributes.
      * @param pos the position of the item
@@ -21,6 +21,19 @@ public  abstract class Item extends Occupant
     public Item(Position pos, String name, String description, double weight, double size) 
     {
         super(pos, name, description);
+        this.weight = weight;
+        this.size = size;
+    }
+
+    /**
+     * Construct an item with known attributes.
+     * @param pos the position of the item
+     * @param name the name of the item
+     * @param description a longer description of the item
+     */
+    public Item(Position pos, String name, String description, String portrait, double weight, double size) 
+    {
+        super(pos, name, description, portrait);
         this.weight = weight;
         this.size = size;
     }

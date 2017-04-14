@@ -6,6 +6,13 @@
 package nz.ac.aut.ense701.gui;
 
 import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import nz.ac.aut.ense701.gameModel.IDataManager;
+import nz.ac.aut.ense701.gameModel.JsonProcessor;
+import nz.ac.aut.ense701.gameModel.Occupant;
 
 /**
  * Singleton class for managing graphics assets. Stores all buffered images for the game with load method and getters.
@@ -17,17 +24,23 @@ public class AssetManager {
     private BufferedImage animal, food, tool, hazard;
     private BufferedImage playerIcon,questIcon,inventoryEmpty,inventorySnack,
                 inventoryToolbox,inventoryApple,inventoryTrap;
-    private BufferedImage kiwi;
+    private HashMap<String, BufferedImage> occupantsPortraits;
+    private IDataManager dataManager;
     
     
     private BufferedImageLoader loader;
     
     private static AssetManager assetManager;
     
-    private AssetManager() {
+    private AssetManager()  {
         this.loader = new BufferedImageLoader();
+        try {
+            dataManager = JsonProcessor.make("data/Occupants.json", "data/OccupantsMap.json");
+        } catch (IOException ex) {
+            Logger.getLogger(AssetManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
         loadTextures();
-        loadOccupantsImages();
+        loadOccupantsPortraits();
     }
     
     public static AssetManager getAssetManager() {
@@ -65,6 +78,29 @@ public class AssetManager {
 
     }
 
+    public BufferedImage getOccupantPortrait (String occupantName) {
+        if (occupantName == null || occupantName.isEmpty())
+            throw new IllegalArgumentException(
+                    "Occupant name cannot be null or empty.");
+
+        if (occupantsPortraits == null)
+            loadOccupantsPortraits();
+
+        return occupantsPortraits.get(occupantName);
+    }
+
+    private void loadOccupantsPortraits () {
+        ScalingAssistant scaleAssist = ScalingAssistant.getScalingAssistant();
+        occupantsPortraits = new HashMap();
+        for (Occupant o : dataManager.getAllOccupantTemplates() ) {
+            BufferedImage bf = scaleAssist.getScaledImage(
+                (loader.loadImage(o.getPortrait())), 
+                scaleAssist.getScale());
+            occupantsPortraits.put(o.getName(), bf);
+        }
+    }
+
+    /*
     public void loadOccupantsImages() {
         ScalingAssistant scaleAssist = ScalingAssistant.getScalingAssistant();
         kiwi = scaleAssist.getScaledImage(
@@ -72,7 +108,8 @@ public class AssetManager {
             scaleAssist.getScale()
             );
     }
-
+    */
+    
     public BufferedImage getWater() {
         return water;
     }
@@ -149,7 +186,4 @@ public class AssetManager {
         return inventoryTrap;
     }
     
-    public BufferedImage getKiwi() {
-        return kiwi;
-    }
 }

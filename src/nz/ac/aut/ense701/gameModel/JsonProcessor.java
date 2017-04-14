@@ -141,10 +141,11 @@ public class JsonProcessor implements IDataManager{
         Position position = template.getPosition();
         String name = template.getName();
         String description = template.getDescription();
+        String portrait = template.getPortrait();
         
         if(template instanceof Hazard) {
             Hazard hazard = (Hazard) template;
-            return new Hazard(position, name, description, hazard.getImpact());
+            return new Hazard(position, name, description, portrait, hazard.getImpact());
         }
         
         if(template instanceof Item) {
@@ -154,11 +155,11 @@ public class JsonProcessor implements IDataManager{
             
             if(template instanceof Food) {
                 Food food = (Food) template;
-                return new Food(position, name, description, weight, size, food.getEnergy());
+                return new Food(position, name, description, portrait, weight, size, food.getEnergy());
             }
             
             if(template instanceof Tool) {
-                return new Tool(position, name, description, weight, size);
+                return new Tool(position, name, description, portrait, weight, size);
             }
             
             throw new IllegalArgumentException("An Item (abstract class) object cannot "
@@ -168,14 +169,14 @@ public class JsonProcessor implements IDataManager{
         if(template instanceof Fauna) {
             
             if(template instanceof Kiwi) {
-                return new Kiwi(position, name, description);
+                return new Kiwi(position, name, description, portrait);
             }
             
             if(template instanceof Predator) {
-                return new Predator(position, name, description);
+                return new Predator(position, name, description, portrait);
             }
             
-            return new Fauna(position, name, description);
+            return new Fauna(position, name, description, portrait);
         }
         
         throw new IllegalArgumentException("An Occupant (abstract class) object "

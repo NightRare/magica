@@ -13,6 +13,7 @@ public class Hazard extends Occupant {
     private final double impact;
     private final double FATAL_IMPACT = 1.0;
 
+    
     /**
      * Create a hazard on the island
      * @param position where hazard is.
@@ -23,6 +24,21 @@ public class Hazard extends Occupant {
     public Hazard(Position position, String name, String description, double impact) {
         
         super(position, name, description);
+        this.impact = impact;
+        
+    }
+    
+    /**
+     * Create a hazard on the island
+     * @param position where hazard is.
+     * @param name of hazard.
+     * @param description a more detailed description of hazard
+     * @param portrait a portrait of an occupant
+     * @param impact on player
+     */
+    public Hazard(Position position, String name, String description, String portrait, double impact) {
+        
+        super(position, name, description, portrait);
         this.impact = impact;
         
     }

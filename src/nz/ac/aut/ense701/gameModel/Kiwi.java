@@ -9,6 +9,7 @@ package nz.ac.aut.ense701.gameModel;
 public class Kiwi  extends Fauna
 {
     private boolean counted;
+    
     /**
      * Constructor for objects of class Kiwi
      * @param pos the position of the kiwi object
@@ -18,6 +19,18 @@ public class Kiwi  extends Fauna
     public Kiwi(Position pos, String name, String description) 
     {
         super(pos, name, description);
+        counted = false;
+    } 
+    
+    /**
+     * Constructor for objects of class Kiwi
+     * @param pos the position of the kiwi object
+     * @param name the name of the kiwi object
+     * @param description a longer description of the kiwi
+     */
+    public Kiwi(Position pos, String name, String description, String portrait) 
+    {
+        super(pos, name, description, portrait);
         counted = false;
     } 
     

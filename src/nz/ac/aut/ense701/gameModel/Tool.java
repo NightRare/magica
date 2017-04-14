@@ -26,6 +26,21 @@ public class Tool extends Item
         this.broken = false;
     }
     
+    
+    /**
+     * Construct a tool with known attributes.
+     * @param pos the position of the tool
+     * @param name the name of the tool
+     * @param description a longer description of the tool
+     * @param weight the weight of the tool
+     * @param size the size of the tool
+     */
+    public Tool(Position pos, String name, String description, String portrait, double weight, double size) 
+    {
+        super(pos, name, description, portrait, weight, size);
+        this.broken = false;
+    }
+    
     /**
      * Break the tool
      */

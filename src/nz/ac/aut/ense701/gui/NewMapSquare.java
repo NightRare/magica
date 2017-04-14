@@ -35,7 +35,7 @@ public class NewMapSquare {
     private AssetManager assetManager;
     
     
-    public NewMapSquare(Game game, int row, int column) {
+    public NewMapSquare(Game game, int row, int column)  {
         this.assetManager = AssetManager.getAssetManager();
         this.game = game;
         this.row = row;

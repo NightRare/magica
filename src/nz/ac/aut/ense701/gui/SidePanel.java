@@ -1,7 +1,10 @@
 package nz.ac.aut.ense701.gui;
 
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 import nz.ac.aut.ense701.gameModel.Game;
 import nz.ac.aut.ense701.gameModel.Item;
 import nz.ac.aut.ense701.gameModel.Occupant;
@@ -28,7 +31,7 @@ public class SidePanel {
     
     
     
-    public SidePanel(Game g){
+    public SidePanel(Game g) {
         this.game = g;
         this.assetManager = AssetManager.getAssetManager();
     }
@@ -48,7 +51,6 @@ public class SidePanel {
         inventoryToolbox = assetManager.getInventoryToolbox();
         inventoryApple = assetManager.getInventoryApple();
         inventoryTrap = assetManager.getInventoryTrap();
-        kiwi = assetManager.getKiwi();
     }
 
     public BufferedImage showPlayerIcon() {
@@ -129,7 +131,12 @@ public class SidePanel {
         return infoOccupant;
     }
 
-    public BufferedImage showOccupants() {
-        return kiwi;
+    public List<BufferedImage> showOccupants() {
+        Occupant[] occupants = game.getOccupantsPlayerPosition();
+        List<BufferedImage> bi = new LinkedList();
+        for(Occupant o : occupants) {
+            bi.add(AssetManager.getAssetManager().getOccupantPortrait(o.getName()));
+        }
+        return bi;
     }
 }

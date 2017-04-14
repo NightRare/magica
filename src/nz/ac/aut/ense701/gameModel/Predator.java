@@ -10,7 +10,7 @@ package nz.ac.aut.ense701.gameModel;
 public class Predator extends Fauna
 {
 
-    /**
+     /**
      * Constructor for objects of class Predator
      * @param pos the position of the predator object
      * @param name the name of the predator object
@@ -19,6 +19,17 @@ public class Predator extends Fauna
     public Predator(Position pos, String name, String description) 
     {
         super(pos, name, description);
+    } 
+    
+    /**
+     * Constructor for objects of class Predator
+     * @param pos the position of the predator object
+     * @param name the name of the predator object
+     * @param description a longer description of the predator object
+     */
+    public Predator(Position pos, String name, String description, String portrait) 
+    {
+        super(pos, name, description, portrait);
     } 
  
     

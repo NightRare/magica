@@ -10,6 +10,7 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.RoundRectangle2D;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import nz.ac.aut.ense701.gameModel.Game;
 import nz.ac.aut.ense701.gameModel.GameState;
@@ -276,10 +277,13 @@ public class RenderingEngine {
 
     private void renderOccupants(Graphics2D g2d, SidePanel sidePanel, ScalingAssistant scaleAssist) {
         //display the images of occupants
-        g2d.drawImage(sidePanel.showOccupants(), 
+        for(BufferedImage bi : sidePanel.showOccupants()) {
+            g2d.drawImage(bi, 
             scaleAssist.scale(35), scaleAssist.scale(12+315+100), //X & Y offset 
             scaleAssist.scale(225), scaleAssist.scale(130), //width & height
             null);
-        g2d.setColor(Color.gray);
+            g2d.setColor(Color.gray);  
+        }
+
     }
 }
