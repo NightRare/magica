@@ -161,6 +161,23 @@ public class Island
         return isPredator;
     } 
     
+    /**
+     * Checks if this position contains a non-Kiwi fauna.
+     * @param position which position
+     * @return true if contains a non-Kiwi fauna.
+     */
+    public boolean hasNonKiwiFauna(Position position) {
+        GridSquare square = getGridSquare(position);
+        Occupant[] occupants = square.getOccupants();
+        for(Occupant o : occupants) {
+            if(o instanceof Fauna && !(o instanceof Kiwi))
+                return true;
+        }
+        return false;
+    }
+    
+    
+    
     /************************************************************************************************************************
      * Mutator methods
     *************************************************************************************************************************/
