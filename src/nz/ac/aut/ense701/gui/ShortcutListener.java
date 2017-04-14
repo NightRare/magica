@@ -7,7 +7,6 @@ package nz.ac.aut.ense701.gui;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import nz.ac.aut.ense701.gameModel.Game;
 
@@ -27,7 +26,18 @@ public class ShortcutListener implements KeyListener{
     public void keyTyped(KeyEvent e) { }
 
     @Override
-    public void keyPressed(KeyEvent e) { }
+    public void keyPressed(KeyEvent e) { 
+        switch(e.getKeyCode()) {
+            case KeyEvent.VK_C:
+            {
+                collectItem();
+            }
+            case KeyEvent.VK_T:
+            {
+                tagKiwi();
+            }
+        }        
+    }
 
     @Override
     public void keyReleased(KeyEvent e) {
@@ -35,10 +45,21 @@ public class ShortcutListener implements KeyListener{
             int result = JOptionPane.showConfirmDialog(null, 
                     "Do you want to exit?", "Exit the game.", 
                     JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE);
+            
             if(result == JOptionPane.OK_OPTION)
                 System.exit(0);
         }
         
     }
     
+    private void collectItem() {
+        // temporarily set to one of the occupants in the square
+        Object obj = (game.getOccupantsPlayerPosition())[0];
+        
+        game.collectItem(obj);
+    }
+    
+    private void tagKiwi() {
+        game.countKiwi();
+    }
 }
