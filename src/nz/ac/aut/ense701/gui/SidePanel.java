@@ -15,7 +15,7 @@ public class SidePanel {
     private Player player;
     
     private BufferedImage playerIcon,questIcon,inventoryEmpty,inventorySnack,
-                inventoryToolbox,inventoryApple,inventoryTrap;
+                inventoryToolbox,inventoryApple,inventoryTrap, kiwi;
     
     private AssetManager assetManager;
     
@@ -39,6 +39,7 @@ public class SidePanel {
         inventoryToolbox = assetManager.getInventoryToolbox();
         inventoryApple = assetManager.getInventoryApple();
         inventoryTrap = assetManager.getInventoryTrap();
+        kiwi = assetManager.getKiwi();
     }
     
     public BufferedImage showPlayerIcon(){
@@ -67,5 +68,9 @@ public class SidePanel {
     
     public int currentStamina(){
         return game.getPlayerValues()[Game.STAMINA_INDEX];
+    }
+
+    public BufferedImage showOccupants() {
+        return kiwi;
     }
 }

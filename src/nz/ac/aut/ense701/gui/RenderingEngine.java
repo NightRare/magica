@@ -97,6 +97,7 @@ public class RenderingEngine {
         renderStaminaBar(g2d,sidePanel,scaleAssist);
         renderInventoryGroup(g2d,sidePanel,scaleAssist);
         renderActionGroup(g2d,sidePanel,scaleAssist);
+        renderOccupants(g2d, sidePanel, scaleAssist);
     }
     
     /**
@@ -215,5 +216,14 @@ public class RenderingEngine {
                     scaleAssist.scale(35+(65*2)+30), scaleAssist.scale(315), //X & Y offset 
                     scaleAssist.scale(65), scaleAssist.scale(65), //width & height
                     null);
+    }
+
+    private void renderOccupants(Graphics2D g2d, SidePanel sidePanel, ScalingAssistant scaleAssist) {
+        //display the images of occupants
+        g2d.drawImage(sidePanel.showOccupants(), 
+            scaleAssist.scale(35), scaleAssist.scale(12+315+100), //X & Y offset 
+            scaleAssist.scale(225), scaleAssist.scale(130), //width & height
+            null);
+        g2d.setColor(Color.gray);
     }
 }

@@ -17,6 +17,7 @@ public class AssetManager {
     private BufferedImage animal, food, tool, hazard;
     private BufferedImage playerIcon,questIcon,inventoryEmpty,inventorySnack,
                 inventoryToolbox,inventoryApple,inventoryTrap;
+    private BufferedImage kiwi;
     
     
     private BufferedImageLoader loader;
@@ -26,6 +27,7 @@ public class AssetManager {
     private AssetManager() {
         this.loader = new BufferedImageLoader();
         loadTextures();
+        loadOccupantsImages();
     }
     
     public static AssetManager getAssetManager() {
@@ -59,6 +61,16 @@ public class AssetManager {
         inventoryToolbox = scaleAssist.getScaledImage((loader.loadImage("/resource/images/inventory_toolbox.png")), scaleAssist.getScale());
         inventoryApple = scaleAssist.getScaledImage((loader.loadImage("/resource/images/inventory_apple.png")), scaleAssist.getScale());
         inventoryTrap = scaleAssist.getScaledImage((loader.loadImage("/resource/images/inventory_trap.png")), scaleAssist.getScale());
+
+
+    }
+
+    public void loadOccupantsImages() {
+        ScalingAssistant scaleAssist = ScalingAssistant.getScalingAssistant();
+        kiwi = scaleAssist.getScaledImage(
+            (loader.loadImage("/resource/images/occupants/kiwi.jpg")), 
+            scaleAssist.getScale()
+            );
     }
 
     public BufferedImage getWater() {
@@ -137,4 +149,7 @@ public class AssetManager {
         return inventoryTrap;
     }
     
+    public BufferedImage getKiwi() {
+        return kiwi;
+    }
 }
