@@ -92,6 +92,9 @@ public class NavClickListener implements MouseListener{
             MoveDirection direction = getDirection(e.getX(), e.getY());
             if (direction != null) move(direction);
         }
+        if((e.getX() < Globals.getSidePanelWidth()) && (ScalingAssistant.getScalingAssistant().scale(e.getY()) > 400)) {
+            
+        }
     }
 
     @Override
@@ -103,5 +106,9 @@ public class NavClickListener implements MouseListener{
 
     @Override
     public void mouseExited(MouseEvent e) {}
+    
+    private void infoBoardClicked(MouseEvent e) {
+        
+    }
     
 }

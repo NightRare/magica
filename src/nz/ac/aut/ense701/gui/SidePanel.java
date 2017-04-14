@@ -2,8 +2,11 @@
 package nz.ac.aut.ense701.gui;
 
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 import nz.ac.aut.ense701.gameModel.Game;
+import nz.ac.aut.ense701.gameModel.Occupant;
 import nz.ac.aut.ense701.gameModel.Player;
+import nz.ac.aut.ense701.gameModel.Position;
 
 /**
  *
@@ -18,6 +21,11 @@ public class SidePanel {
                 inventoryToolbox,inventoryApple,inventoryTrap;
     
     private AssetManager assetManager;
+    
+    // occupant for displaying on info board
+    private Occupant infoOccupant;
+    
+    
     
     public SidePanel(Game g){
         this.game = g;
@@ -67,5 +75,18 @@ public class SidePanel {
     
     public int currentStamina(){
         return game.getPlayerValues()[Game.STAMINA_INDEX];
+    }
+    
+    public Occupant[] getOccupants() {
+        Position position = game.getPlayer().getPosition();
+        return game.getIsland().getOccupants(position);
+    }
+    
+    public void setInfoOccupant(Occupant occupantToDisplay) {
+        infoOccupant = occupantToDisplay;
+    }
+    
+    public Occupant getInfoOccupant() {
+        return infoOccupant;
     }
 }
