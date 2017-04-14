@@ -23,4 +23,10 @@ public interface IDataManager {
      */
     public Set<Occupant> getOccupantsInPosition(Position position);
     
+    /**
+     * Get all the Occupant template objects.
+     * 
+     * @return a set of Occupant templates.
+     */
+    public Set<Occupant> getAllOccupantTemplates();
 }

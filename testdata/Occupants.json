@@ -5,7 +5,7 @@
 			"name":"Trap",
 			"description":"A trap for predators",
 			"weight":1.0,
-			"size":1.0,
+			"size":2.0,
 			"portrait":""
 		}
 	],

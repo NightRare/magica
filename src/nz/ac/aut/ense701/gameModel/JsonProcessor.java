@@ -106,6 +106,11 @@ public class JsonProcessor implements IDataManager{
         return occupants;
     }
     
+    @Override
+    public Set<Occupant> getAllOccupantTemplates() {
+        return new HashSet(occupantsDictionary.values());
+    }
+    
     // make a dictionary of all the types of Occupants so that they can be got by
     // names.
     private static Map<String, Occupant> makeOccupantDictionary(JsonOccupants occupantTypes) {
@@ -127,28 +132,28 @@ public class JsonProcessor implements IDataManager{
     }
     
     // a method to deep clone an Occupant object
-    private static Occupant cloneOccupant(Occupant protoType) {
+    private static Occupant cloneOccupant(Occupant template) {
         
-        Position position = protoType.getPosition();
-        String name = protoType.getName();
-        String description = protoType.getDescription();
+        Position position = template.getPosition();
+        String name = template.getName();
+        String description = template.getDescription();
         
-        if(protoType instanceof Hazard) {
-            Hazard hazard = (Hazard) protoType;
+        if(template instanceof Hazard) {
+            Hazard hazard = (Hazard) template;
             return new Hazard(position, name, description, hazard.getImpact());
         }
         
-        if(protoType instanceof Item) {
-            Item item = (Item) protoType;
+        if(template instanceof Item) {
+            Item item = (Item) template;
             double weight = item.getWeight();
             double size = item.getSize();
             
-            if(protoType instanceof Food) {
-                Food food = (Food) protoType;
+            if(template instanceof Food) {
+                Food food = (Food) template;
                 return new Food(position, name, description, weight, size, food.getEnergy());
             }
             
-            if(protoType instanceof Tool) {
+            if(template instanceof Tool) {
                 return new Tool(position, name, description, weight, size);
             }
             
@@ -156,13 +161,13 @@ public class JsonProcessor implements IDataManager{
                     + "be cloned.");
         }
         
-        if(protoType instanceof Fauna) {
+        if(template instanceof Fauna) {
             
-            if(protoType instanceof Kiwi) {
+            if(template instanceof Kiwi) {
                 return new Kiwi(position, name, description);
             }
             
-            if(protoType instanceof Predator) {
+            if(template instanceof Predator) {
                 return new Predator(position, name, description);
             }
             

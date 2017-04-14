@@ -48,7 +48,7 @@ public class JsonProcessorTest extends junit.framework.TestCase {
                         "			\"name\":\"Trap\",\n" +
                         "			\"description\":\"A trap for predators\",\n" +
                         "			\"weight\":1.0,\n" +
-                        "			\"size\":1.0,\n" +
+                        "			\"size\":2.0,\n" +
                         "			\"portrait\":\"\"\n" +
                         "		}\n" +
                         "	],\n" +
@@ -75,6 +75,12 @@ public class JsonProcessorTest extends junit.framework.TestCase {
         
         writeJsonToFiles(occupantsJson, OCCUPANTS_FILEPATH);
         writeJsonToFiles(occupantsMapJson, OCCUPANTSMAP_FILEPATH);
+        
+        try {
+            dataManager = JsonProcessor.make(OCCUPANTS_FILEPATH, OCCUPANTSMAP_FILEPATH);
+        } catch (IOException ex) {
+            Logger.getLogger(JsonProcessorTest.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -202,54 +208,53 @@ public class JsonProcessorTest extends junit.framework.TestCase {
     
     
     @Test
-    public void testGetOccupantsInPosition() {
-        try {
-            dataManager = JsonProcessor.make(OCCUPANTS_FILEPATH, OCCUPANTSMAP_FILEPATH);            
-            Set<Occupant> occupants = dataManager.getOccupantsInPosition(new Position(island, 0, 4));
-            
-            Assert.assertEquals("There should only be 1 occupant", 1, occupants.size());
-            
-            for(Occupant o : occupants) {
-                Assert.assertTrue("The type is incorrect.", o instanceof Tool);
-                Tool tool = (Tool) o;
-                Assert.assertEquals("The name is incorrect", "Trap", tool.getName());
-                Assert.assertEquals("The description is incorrect", "A trap for predators", tool.getDescription());
-                Assert.assertEquals("The weight shall be 1.0", 1.0, tool.getWeight());
-                Assert.assertEquals("The size shall be 1.0", 1.0, tool.getSize());
-                Assert.assertEquals("Row number should be 0", 0, tool.getPosition().getRow());
-                Assert.assertEquals("Column number should be 4", 4, tool.getPosition().getColumn());
-            }
-        } catch (IOException ex) {
-            
-        }        
+    public void testGetOccupantsInPosition() {   
+        Set<Occupant> occupants = dataManager.getOccupantsInPosition(new Position(island, 0, 4));
+
+        Assert.assertEquals("There should only be 1 occupant", 1, occupants.size());
+
+        for(Occupant o : occupants) {
+            Assert.assertTrue("The type is incorrect.", o instanceof Tool);
+            Tool tool = (Tool) o;
+            Assert.assertEquals("The name is incorrect", "Trap", tool.getName());
+            Assert.assertEquals("The description is incorrect", "A trap for predators", tool.getDescription());
+            Assert.assertEquals("The weight shall be 1.0", 1.0, tool.getWeight());
+            Assert.assertEquals("The size shall be 2.0", 2.0, tool.getSize());
+            Assert.assertEquals("Row number should be 0", 0, tool.getPosition().getRow());
+            Assert.assertEquals("Column number should be 4", 4, tool.getPosition().getColumn());
+        }   
     }
     
     @Test
-    public void testGetOccupantsInEmptyPosition() {
-        try {
-            dataManager = JsonProcessor.make(OCCUPANTS_FILEPATH, OCCUPANTSMAP_FILEPATH);            
-            Set<Occupant> occupants = dataManager.getOccupantsInPosition(new Position(island, 2, 4));
-            
-            Assert.assertEquals("There should be no occupants", 0, occupants.size());
-            
-        } catch (IOException ex) {
-            Logger.getLogger(JsonProcessorTest.class.getName()).log(Level.SEVERE, null, ex);
-        }  
+    public void testGetOccupantsInEmptyPosition() {       
+        Set<Occupant> occupants = dataManager.getOccupantsInPosition(new Position(island, 2, 4));
+
+        Assert.assertEquals("There should be no occupants", 0, occupants.size());
     }
     
     @Test
     public void testGetOccupantsInPositionWithIllegalArgument() {
-        try {
-            dataManager = JsonProcessor.make(OCCUPANTS_FILEPATH, OCCUPANTSMAP_FILEPATH);
-            
+        try {            
             //pass in null as argument
             Set<Occupant> occupants = dataManager.getOccupantsInPosition(null);
             
-            fail("IllegalArgumentException should be thrown");  
-        } catch (IOException ex) {
-            Logger.getLogger(JsonProcessorTest.class.getName()).log(Level.SEVERE, null, ex);
+            fail("IllegalArgumentException should be thrown");
         } catch (IllegalArgumentException ex) {
             // pass test
+        }
+    }
+    
+    @Test
+    public void testGetAllOccupantTemplates() {
+        Set<Occupant> set = dataManager.getAllOccupantTemplates();
+        assertEquals("The size of the set of all occupant templates be 1.", 1,
+                set.size());
+        for(Occupant o : set) {
+            assertTrue("Should be a Tool", o instanceof Tool);
+            Tool tool = (Tool) o;
+            assertTrue("Name should be Trap", tool.getName().equals("Trap"));
+            assertEquals("Weight should be 1.0", 1.0, tool.getWeight());
+            assertEquals("Size should be 2.0", 2.0, tool.getSize());
         }
     }
     
