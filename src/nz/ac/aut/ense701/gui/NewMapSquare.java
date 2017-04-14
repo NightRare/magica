@@ -113,7 +113,7 @@ public class NewMapSquare {
             label = game.getOccupantStringRepresentation(row,column);
             
             
-            if ( squareVisible && !squareExplored ) 
+            if (squareVisible && !squareExplored) 
             {
               
             }
@@ -128,6 +128,7 @@ public class NewMapSquare {
 
         } else {
             
+            texture = grey;
             label = "";
            
         }
@@ -155,23 +156,24 @@ public class NewMapSquare {
     
     public BufferedImage getOccupantImage(String label){
         BufferedImage img = null;
-        switch(label){
-            case "F":
+        if (label.length()==0) return img;
+        switch(label.charAt(0)){
+            case 'F':
                 img = animal;
                 break;
-            case "K":
+            case 'K':
                 img = animal;
                 break;
-            case "P":
+            case 'P':
                 img = animal;
                 break;
-            case "H":
+            case 'H':
                 img = hazard;
                 break;
-            case "T":
+            case 'T':
                 img = tool;
                 break;
-            case "E":
+            case 'E':
                 img = food;
                 break;
         }
