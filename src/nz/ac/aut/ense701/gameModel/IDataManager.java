@@ -24,7 +24,9 @@ public interface IDataManager {
     public Set<Occupant> getOccupantsInPosition(Position position);
     
     /**
-     * Get all the Occupant template objects.
+     * Get all the Occupant template objects which are defined in 
+     * data/Occupants.json. Changes to the objects in the set won't affect the
+     * original set.
      * 
      * @return a set of Occupant templates.
      */

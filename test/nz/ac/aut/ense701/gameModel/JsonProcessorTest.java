@@ -247,7 +247,7 @@ public class JsonProcessorTest extends junit.framework.TestCase {
     @Test
     public void testGetAllOccupantTemplates() {
         Set<Occupant> set = dataManager.getAllOccupantTemplates();
-        assertEquals("The size of the set of all occupant templates be 1.", 1,
+        assertEquals("The size of the set of all occupant templates should be 1.", 1,
                 set.size());
         for(Occupant o : set) {
             assertTrue("Should be a Tool", o instanceof Tool);
@@ -255,6 +255,33 @@ public class JsonProcessorTest extends junit.framework.TestCase {
             assertTrue("Name should be Trap", tool.getName().equals("Trap"));
             assertEquals("Weight should be 1.0", 1.0, tool.getWeight());
             assertEquals("Size should be 2.0", 2.0, tool.getSize());
+        }
+    }
+    
+    @Test
+    public void testGetAllOccupantTemplatesDeepCloneValid() {
+        // changes applied to the occupant set should not
+        // affect the original object in JsonProcessor
+        dataManager.getAllOccupantTemplates().add(
+                new Fauna(null, "Fish", "A test fish"));
+        
+        Set<Occupant> set = dataManager.getAllOccupantTemplates();
+        assertEquals("The size of the set of all occupant templates should still "
+                + "be 1.", 1, set.size());
+        
+        // changes applied to any occupant should not affect the original object
+        // in JsonProcessor
+        for(Occupant o : set) {
+            assertTrue("Should be a Tool", o instanceof Tool);
+            Tool tool = (Tool) o;            
+            tool.setBroken();
+        }
+        
+        set = dataManager.getAllOccupantTemplates();
+        for(Occupant o : set) {
+            assertTrue("Should be a Tool", o instanceof Tool);
+            Tool tool = (Tool) o;            
+            assertFalse("The trap should not be broken", tool.isBroken());
         }
     }
     

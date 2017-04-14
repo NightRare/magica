@@ -108,7 +108,11 @@ public class JsonProcessor implements IDataManager{
     
     @Override
     public Set<Occupant> getAllOccupantTemplates() {
-        return new HashSet(occupantsDictionary.values());
+        Set<Occupant> templates = new HashSet();
+        for(Occupant o : occupantsDictionary.values()) {
+            templates.add(cloneOccupant(o));
+        }
+        return templates;
     }
     
     // make a dictionary of all the types of Occupants so that they can be got by
