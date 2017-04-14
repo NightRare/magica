@@ -336,7 +336,7 @@ public class Game
                 //Traps can only be used if there is a predator to catch
                 if(tool.isTrap())
                 {
-                    result = island.hasPredator(player.getPosition());
+                    result = island.hasNonKiwiFauna(player.getPosition());
                 }
                 //Screwdriver can only be used if player has a broken trap
                 else if (tool.isScrewdriver() && player.hasTrap())
@@ -472,7 +472,7 @@ public class Game
             Tool tool = (Tool) item;
             if (tool.isTrap()&& !tool.isBroken())
             {
-                 success = trapPredator(); 
+                 success = useTrap(); 
             }
             else if(tool.isScrewdriver())// Use screwdriver (to fix trap)
             {
@@ -634,8 +634,42 @@ public class Game
         return ( isPlayerMovePossible(MoveDirection.NORTH)|| isPlayerMovePossible(MoveDirection.SOUTH)
                 || isPlayerMovePossible(MoveDirection.EAST) || isPlayerMovePossible(MoveDirection.WEST));
 
-    }
+    }    
+    
+    /**
+     * Use the trap in player's position, will capture the first trappable
+     * fauna in the position. If the captured fauna is not a predator, a certain
+     * amount of stamina will be deduced and will produce a message for player.
+     * 
+     * @return true if the trap has been used.
+     */
+    private boolean useTrap() {
+        Position current = player.getPosition();
+        Occupant[] occupants = island.getOccupants(current);
         
+        for(Occupant o : occupants) {
+            if(!(o instanceof Fauna) || (o instanceof Kiwi)) {
+                continue;
+            }          
+            if(o instanceof Predator) {
+                if(trapPredator())
+                    return true;
+                continue;
+            }
+
+            // if it's a neutral fauna, trap it
+            if(island.removeOccupant(current, o)) {
+                player.reduceStamina(STAMINA_PUNISH_CAP_FAUNA);
+                
+                this.playerMessage = o.getName() + " is not a predator. You trapped"
+                        + "the wrong fauna — costs you " + STAMINA_PUNISH_CAP_FAUNA
+                        + " stamina to take care of it.";
+            }
+        }
+        
+        return false;
+    }
+    
     /**
      * Trap a predator in this position
      * @return true if predator trapped
@@ -895,6 +929,7 @@ public class Game
     private Set<GameEventListener> eventListeners;
     
     private final double MIN_REQUIRED_CATCH = 0.8;
+    private final double STAMINA_PUNISH_CAP_FAUNA = 10.0;    
         
     private String winMessage = "";
     private String loseMessage  = "";

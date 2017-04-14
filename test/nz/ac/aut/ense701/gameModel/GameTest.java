@@ -158,8 +158,8 @@ public class GameTest extends junit.framework.TestCase
     }
     
     @Test
-    public void testCanUseTrapValid(){
-        //Trap can be used if there is a predator here
+    public void testCanUseTrapOnPredatorValid(){
+        //Trap can be used only if there is a non-Kiwi fauna here
         Item valid = new Tool(playerPosition,"Trap", "A predator trap",1.0, 1.0);
         //Add predator
         Predator rat = new Predator(playerPosition,"Rat", "A norway rat");
@@ -168,10 +168,29 @@ public class GameTest extends junit.framework.TestCase
     }
     
     @Test
-    public void testCanUseTrapNoPredator(){
-        //Trap can be used if there is a predator here
+    public void testCanUseTrapOnNonKiwiFaunaValid(){
+        //Trap can be used only if there is a non-Kiwi fauna here
+        Item valid = new Tool(playerPosition,"Trap", "A predator trap",1.0, 1.0);
+        //Add non-Kiwi Fauna
+        Fauna fish = new Fauna(playerPosition, "Fish", "Just a fish");
+        island.addOccupant(playerPosition, fish);
+        assertTrue("Should be able to use", game.canUse(valid));
+    }
+    
+    @Test
+    public void testCanUseTrapOnNonFauna(){
+        //Trap can be used only if there is a non-Kiwi fauna here
         Item tool = new Tool(playerPosition,"Trap", "A predator trap",1.0, 1.0);
 
+        assertFalse("Should not be able to use", game.canUse(tool));
+    }
+    
+    @Test
+    public void testCanUseTrapOnKiwi() {
+        //Trap can be used only if there is a non-Kiwi fauna here
+        Item tool = new Tool(playerPosition,"Trap", "A predator trap",1.0, 1.0);
+        Kiwi kiwi = new Kiwi(playerPosition, "Kiwi", "A test kiwi.");
+        island.addOccupant(playerPosition, kiwi);
         assertFalse("Should not be able to use", game.canUse(tool));
     }
     
@@ -294,7 +313,7 @@ public class GameTest extends junit.framework.TestCase
     }  
     
     @Test
-    public void testUseItemTrap(){
+    public void testUseItemTrapOnPredator(){
         Item trap = new Tool(playerPosition,"Trap", "Rat trap",1.0, 1.0);
         player.collect(trap);
         assertTrue("Player should have trap",player.hasItem(trap));
@@ -305,6 +324,56 @@ public class GameTest extends junit.framework.TestCase
         game.useItem(trap);
         assertTrue("Player should still have trap",player.hasItem(trap));
         assertFalse("Predator should be gone.", island.hasPredator(playerPosition));
+    }
+    
+    @Test
+    public void testUseItemTrapOnNonKiwiFauna() {
+        Item trap = new Tool(playerPosition,"Trap", "Rat trap",1.0, 1.0);
+        player.collect(trap);
+        assertTrue("Player should have trap",player.hasItem(trap));
+        // setup the stamina value for testing
+        player.increaseStamina(10.0);
+        double staminaLevel = player.getStaminaLevel();
+        
+        // Can only use trap if there is a predator.
+        Fauna fish = new Fauna(playerPosition,"Fish", "A test fish");
+        island.addOccupant(playerPosition, fish);
+        game.useItem(trap);
+        assertTrue("Player should still have trap", player.hasItem(trap));
+        assertFalse("Fauna should be gone.", island.hasNonKiwiFauna(playerPosition));
+        assertTrue("Stamina should be reduced 10.0 for punishing.", 
+                player.getStaminaLevel() == staminaLevel - 10.0);
+    }
+    
+    @Test
+    public void testUseItemTrapOnKiwi() {
+        Item trap = new Tool(playerPosition,"Trap", "Rat trap",1.0, 1.0);
+        player.collect(trap);
+        assertTrue("Player should have trap",player.hasItem(trap));
+        
+        // Can only use trap if there is a predator.
+        Kiwi kiwi = new Kiwi(playerPosition,"Kiwi", "A test kiwi");
+        island.addOccupant(playerPosition, kiwi);
+        
+        assertFalse("Should have failed to use trap.", game.useItem(trap));
+        assertTrue("Player should still have trap", player.hasItem(trap));
+        Occupant[] occupants = island.getOccupants(playerPosition);
+        if(occupants.length == 0) {
+            fail("Kiwi should still be there.");
+        } else {
+            assertTrue("Kiwi should still be there.", occupants[0].equals(kiwi));
+        }
+    }
+    
+    @Test
+    public void testUseItemTrapOnNonFauna() {
+        Item trap = new Tool(playerPosition,"Trap", "Rat trap",1.0, 1.0);
+        player.collect(trap);
+        assertTrue("Player should have trap",player.hasItem(trap));
+        
+        // Can only use trap if there is a predator.
+        assertFalse("Should have failed to use trap.", game.useItem(trap));
+        assertTrue("Player should still have trap", player.hasItem(trap));
     }
     
     @Test
