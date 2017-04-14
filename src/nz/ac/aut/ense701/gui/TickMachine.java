@@ -1,4 +1,4 @@
-/*
+    /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -7,6 +7,7 @@ package nz.ac.aut.ense701.gui;
 
 import java.util.ArrayList;
 import nz.ac.aut.ense701.gameModel.Game;
+import nz.ac.aut.ense701.gameModel.Player;
 
 /**
  * Responsible for making updates required before rendering each frame
@@ -28,6 +29,9 @@ public class TickMachine {
         for (NewMapSquare square : squareList) {
             square.initialiseOrRefresh();
         }
+        
+        //update side panel
+        loop.getSidePanel().checkStats();
         
     }
 }

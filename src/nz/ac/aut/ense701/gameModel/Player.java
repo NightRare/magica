@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Set;
 import java.util.HashSet;
+import nz.ac.aut.ense701.gui.GameLoop;
 
 /**
  * Player represents the player in the KiwiIsland game.
@@ -22,8 +23,8 @@ public class Player
     private boolean   alive;
     private Set<Item> backpack;
     private final double    maxBackpackWeight;
-    private final double    maxBackpackSize;   
-    
+    private final double    maxBackpackSize; 
+
     /**
      * Constructs a new player object.
      * 
@@ -75,7 +76,13 @@ public class Player
     public boolean isAlive()
     {
         return this.alive;
-    }   
+    }
+    
+    public String getAlive(){
+        if(alive){
+           return "Alive"; 
+        }else return "Dead";
+    }
  
     /**
      * Get the maximum stamina for the player.
@@ -242,6 +249,7 @@ public class Player
         return Collections.unmodifiableCollection(backpack);
     }
     
+
     /*************************************************************************************************************
      * Mutator methods
      ****************************************************************************************************************/

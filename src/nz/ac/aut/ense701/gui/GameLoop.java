@@ -28,9 +28,12 @@ public class GameLoop implements Runnable{
     private TickMachine tickMachine;
     private RenderingEngine renderingEngine;
     
+    
+    
     private boolean running;
     
     private ArrayList<NewMapSquare> mapSquareList;
+    private SidePanel sidePanel;
 
     /**
      * The constructor for GameLoop takes a game object. Game represents the game model.
@@ -85,6 +88,7 @@ public class GameLoop implements Runnable{
      */
     private void tick() {
         tickMachine.tick();
+       
     }
     
     /**
@@ -93,7 +97,7 @@ public class GameLoop implements Runnable{
     private void render() {
         bs = newUI.getCanvas().getBufferStrategy();
         if (bs == null) {
-            newUI.getCanvas().createBufferStrategy(3);
+            newUI.getCanvas().createBufferStrategy(2);
             return;
         }
         g2d = (Graphics2D) bs.getDrawGraphics();
@@ -112,6 +116,7 @@ public class GameLoop implements Runnable{
     private void initialise() {
         newUI = new NewUI(game);
         
+        this.sidePanel = new SidePanel(game);
         // Initialise Assets
     }
     
@@ -162,6 +167,14 @@ public class GameLoop implements Runnable{
 
     public ArrayList<NewMapSquare> getMapSquareList() {
         return mapSquareList;
+    }
+    
+    public final SidePanel getSidePanel(){
+        return this.sidePanel;
+    }
+    
+    public boolean getRunning(){
+        return running;
     }
     
     

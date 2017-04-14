@@ -89,6 +89,18 @@ public class NewUI {
         JRadioButtonMenuItem rbMenuItem;
         ScalingAssistant scalingAssistant = ScalingAssistant.getScalingAssistant();
         
+        rbMenuItem = new JRadioButtonMenuItem ("120%");
+        if(scalingAssistant.getScale()==120) rbMenuItem.setSelected(true);
+        subMenu.add(rbMenuItem);
+        group.add(rbMenuItem);
+        rbMenuItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                scaleAndRefresh(120);
+            }    
+        });
+        
+        
         rbMenuItem = new JRadioButtonMenuItem ("100%");
         if(scalingAssistant.getScale()==100) rbMenuItem.setSelected(true);
         subMenu.add(rbMenuItem);
@@ -98,19 +110,17 @@ public class NewUI {
             public void actionPerformed(ActionEvent e) {
                 scaleAndRefresh(100);
             }
-            
         });
         
-        rbMenuItem = new JRadioButtonMenuItem("75%");
-        if(scalingAssistant.getScale()==75) rbMenuItem.setSelected(true);
+        rbMenuItem = new JRadioButtonMenuItem("80%");
+        if(scalingAssistant.getScale()==80) rbMenuItem.setSelected(true);
         subMenu.add(rbMenuItem);
         group.add(rbMenuItem);
         rbMenuItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                scaleAndRefresh(75);
+                scaleAndRefresh(80);
             }
-            
         });
         
         rbMenuItem = new JRadioButtonMenuItem("50%");
@@ -122,7 +132,6 @@ public class NewUI {
             public void actionPerformed(ActionEvent e) {
                 scaleAndRefresh(50);
             }
-            
         });
     }
 
@@ -136,6 +145,7 @@ public class NewUI {
      */
     private void scaleAndRefresh(int percentage){
         ScalingAssistant.getScalingAssistant().setScale(percentage);
+        AssetManager.getAssetManager().loadTextures();
         refreshScale();
     }
     

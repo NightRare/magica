@@ -11,7 +11,6 @@ package nz.ac.aut.ense701.gameModel;
  */
 public class Fauna extends Occupant
 {
-    
 
     /**
      * Constructor for objects of class Endangered
