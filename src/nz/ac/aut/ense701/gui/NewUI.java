@@ -9,6 +9,8 @@ import java.awt.Canvas;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import javax.swing.ButtonGroup;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -61,10 +63,17 @@ public class NewUI {
         // add mouse listeners and keypressed listeners here
         WASDListener keyListener = new WASDListener(game);
         NavClickListener clickListener = new NavClickListener(game);
+        ShortcutListener shortcutListener = new ShortcutListener(game);
         
         frame.addKeyListener(keyListener);
         canvas.addKeyListener(keyListener);
         canvas.addMouseListener(clickListener);
+        frame.addKeyListener(shortcutListener);
+        canvas.addKeyListener(shortcutListener);
+        
+        
+        // add keylisterner to exit the game
+        
         
         
         frame.setJMenuBar(menuBar);
