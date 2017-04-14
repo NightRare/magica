@@ -33,9 +33,11 @@ public class NewUI {
     private ButtonGroup group;
     
     private Game game;
+    private GameLoop loop;
     
-    public NewUI(Game game) {
+    public NewUI(Game game, GameLoop loop) {
         this.game = game;
+        this.loop = loop;
         KiwiCountUI oldUI = new KiwiCountUI(game);
         oldUI.setVisible(true);
         createMenus();
@@ -60,7 +62,7 @@ public class NewUI {
         
         // add mouse listeners and keypressed listeners here
         WASDListener keyListener = new WASDListener(game);
-        NavClickListener clickListener = new NavClickListener(game);
+        NavClickListener clickListener = new NavClickListener(game, loop);
         
         frame.addKeyListener(keyListener);
         canvas.addKeyListener(keyListener);

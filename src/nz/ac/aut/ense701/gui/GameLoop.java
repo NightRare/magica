@@ -114,7 +114,7 @@ public class GameLoop implements Runnable{
      * Initialises the UI and Assets
      */
     private void initialise() {
-        newUI = new NewUI(game);
+        newUI = new NewUI(game, this);
         
         this.sidePanel = new SidePanel(game);
         // Initialise Assets
