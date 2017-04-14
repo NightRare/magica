@@ -32,7 +32,11 @@ public class NewMapSquare {
     public BufferedImage water, scrub, wetland, forest, sand, player, black, grey = null;
     public BufferedImage animal, food, tool, hazard;
 
+    private AssetManager assetManager;
+    
+    
     public NewMapSquare(Game game, int row, int column) {
+        this.assetManager = AssetManager.getAssetManager();
         this.game = game;
         this.row = row;
         this.column = column;
@@ -47,39 +51,28 @@ public class NewMapSquare {
      */
     
      public void textureLoad(){
-        
         //Get Images # 5
-        BufferedImageLoader loader = new BufferedImageLoader();
-            try{
-            water = loader.loadImage("/resource/images/tile_water.png");
-            scrub = loader.loadImage("/resource/images/tile_scrub.png");
-            wetland = loader.loadImage("/resource/images/tile_wetland.png");
-            forest = loader.loadImage("/resource/images/tile_forest.png");
-            sand = loader.loadImage("/resource/images/tile_sand.png");
-            player = loader.loadImage("/resource/images/player_01.png");
-            black = loader.loadImage("/resource/images/black.png");
-            grey = loader.loadImage("/resource/images/grey.png");
-            }
-            catch(Exception e){
-                e.printStackTrace();
-            }
+        water = assetManager.getWater();
+        scrub = assetManager.getScrub();
+        wetland = assetManager.getWetland();
+        forest = assetManager.getForest();
+        sand = assetManager.getSand();
+        player = assetManager.getPlayer();
+        black = assetManager.getBlack();
+        grey = assetManager.getGrey();
     }
      
      public void loadOccupantImage(){
-        
-        BufferedImageLoader loader = new BufferedImageLoader();
-            try{
-            animal = loader.loadImage("/resource/images/animal.png");
-            food = loader.loadImage("/resource/images/food.png");
-            tool = loader.loadImage("/resource/images/tool.png");
-            hazard = loader.loadImage("/resource/images/hazard.png");
-            }
-            catch(Exception e){
-                e.printStackTrace();
-            }
+        animal = assetManager.getAnimal();
+        food = assetManager.getFood();
+        tool = assetManager.getTool();
+        hazard = assetManager.getHazard();
     }
     
     public void initialiseOrRefresh() {
+        textureLoad();
+        loadOccupantImage();
+        
         Terrain terrain = game.getTerrain(row, column);
 
         boolean squareVisible = game.isVisible(row, column);

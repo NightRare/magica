@@ -11,7 +11,7 @@ import nz.ac.aut.ense701.gameModel.*;
 /**
  * A structured class for reading data from Occupants.json.
  * 
- * @author Vince
+ * @author Yuan
  */
 public class JsonOccupants {
     

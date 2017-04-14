@@ -97,7 +97,7 @@ public class GameLoop implements Runnable{
     private void render() {
         bs = newUI.getCanvas().getBufferStrategy();
         if (bs == null) {
-            newUI.getCanvas().createBufferStrategy(3);
+            newUI.getCanvas().createBufferStrategy(2);
             return;
         }
         g2d = (Graphics2D) bs.getDrawGraphics();
