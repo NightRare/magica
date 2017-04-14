@@ -638,7 +638,8 @@ public class Game
     
     /**
      * Use the trap in player's position, will capture the first trappable
-     * fauna in the position.
+     * fauna in the position. If the captured fauna is not a predator, a certain
+     * amount of stamina will be deduced and will produce a message for player.
      * 
      * @return true if the trap has been used.
      */
@@ -647,9 +648,9 @@ public class Game
         Occupant[] occupants = island.getOccupants(current);
         
         for(Occupant o : occupants) {
-            if(!(o instanceof Fauna) || (o instanceof Kiwi))
+            if(!(o instanceof Fauna) || (o instanceof Kiwi)) {
                 continue;
-          
+            }          
             if(o instanceof Predator) {
                 if(trapPredator())
                     return true;
