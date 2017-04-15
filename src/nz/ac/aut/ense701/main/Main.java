@@ -1,6 +1,7 @@
 package nz.ac.aut.ense701.main;
 
 import java.io.IOException;
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import nz.ac.aut.ense701.gameModel.*;
@@ -21,6 +22,9 @@ public class Main
      */
     public static void main(String[] args) 
     {
+        // set the locale to English regardless of the system environment
+        Locale.setDefault(Locale.ENGLISH);
+        
 //        // create the game object
 //        final Game game = new Game();
 //        // create the GUI for the game
