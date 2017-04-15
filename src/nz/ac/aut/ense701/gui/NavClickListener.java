@@ -186,7 +186,7 @@ public class NavClickListener implements MouseListener {
     private void useOrDrop(MouseEvent e, int boxNumber){
         int boxIndex = boxNumber -1;
         if(game.getPlayerInventory().length == 0){}
-            if(game.getPlayerInventory().length == boxNumber){
+            if(game.getPlayerInventory().length >= boxNumber){
                 if(e.getClickCount()>1){game.dropItem(game.getPlayerInventory()[boxIndex]);} 
                 else if(e.getClickCount()==1){game.useItem(game.getPlayerInventory()[boxIndex]);}
             }
