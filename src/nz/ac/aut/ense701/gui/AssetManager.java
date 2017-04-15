@@ -20,13 +20,13 @@ import nz.ac.aut.ense701.gameModel.Occupant;
  */
 public class AssetManager {
     
-    private BufferedImage water, scrub, wetland, forest, sand, player, black, grey;
-    private BufferedImage animal, food, tool, hazard;
+    private BufferedImage water, scrub, wetland, forest, sand, player, black, grey; 
+    private BufferedImage animal, food, tool, hazard; //inventory items
+    private BufferedImage tag, trap, collect; //action boxes
     private BufferedImage playerIcon,questIcon,inventoryEmpty,inventorySnack,
                 inventoryToolbox,inventoryApple,inventoryTrap;
     private HashMap<String, BufferedImage> occupantsPortraits;
     private IDataManager dataManager;
-    
     
     private BufferedImageLoader loader;
     
@@ -71,11 +71,13 @@ public class AssetManager {
         questIcon = scaleAssist.getScaledImage((loader.loadImage("/resource/images/sidepanel_quest.png")), scaleAssist.getScale());
         inventoryEmpty = scaleAssist.getScaledImage((loader.loadImage("/resource/images/inventory_empty.png")), scaleAssist.getScale());
         inventorySnack = scaleAssist.getScaledImage((loader.loadImage("/resource/images/inventory_snack.png")), scaleAssist.getScale());
-        inventoryToolbox = scaleAssist.getScaledImage((loader.loadImage("/resource/images/inventory_toolbox.png")), scaleAssist.getScale());
+        inventoryToolbox = scaleAssist.getScaledImage((loader.loadImage("/resource/images/inventory_screwdriver.png")), scaleAssist.getScale());
         inventoryApple = scaleAssist.getScaledImage((loader.loadImage("/resource/images/inventory_apple.png")), scaleAssist.getScale());
         inventoryTrap = scaleAssist.getScaledImage((loader.loadImage("/resource/images/inventory_trap.png")), scaleAssist.getScale());
-
-
+        
+        tag = scaleAssist.getScaledImage((loader.loadImage("/resource/images/action/tag.png")), scaleAssist.getScale());
+        trap = scaleAssist.getScaledImage((loader.loadImage("/resource/images/action/trap.png")), scaleAssist.getScale());
+        collect = scaleAssist.getScaledImage((loader.loadImage("/resource/images/action/collect.png")), scaleAssist.getScale());
     }
 
     public BufferedImage getOccupantPortrait (String occupantName) {
@@ -184,6 +186,18 @@ public class AssetManager {
 
     public BufferedImage getInventoryTrap() {
         return inventoryTrap;
+    }
+    
+    public BufferedImage getActionTag() {
+        return tag;
+    }
+
+    public BufferedImage getActionTrap() {
+        return trap;
+    }
+
+    public BufferedImage getActionCollect() {
+        return collect;
     }
     
 }

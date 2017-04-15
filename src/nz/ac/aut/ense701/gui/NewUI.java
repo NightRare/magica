@@ -40,8 +40,8 @@ public class NewUI {
     public NewUI(Game game, GameLoop loop) {
         this.game = game;
         this.loop = loop;
-        KiwiCountUI oldUI = new KiwiCountUI(game);
-        oldUI.setVisible(true);
+        //KiwiCountUI oldUI = new KiwiCountUI(game);
+        //oldUI.setVisible(true);
         createMenus();
         createDisplay();
     }

@@ -84,7 +84,6 @@ public class RenderingEngine {
         g2d.drawImage(square.getOccupantImage(square.getLabel()),
                 xToRenderAt, yToRenderAt,
                 scaleAssist.scale(50), scaleAssist.scale(50), null);
-
     }
 
     /**
@@ -200,23 +199,30 @@ public class RenderingEngine {
                     scaleAssist.scale(65), scaleAssist.scale(65), //width & height
                     null);
     }
-
+    
+    /**
+     * Renders the action boxes
+     *
+     * @param g2d
+     * @param sidePanel
+     * @param scaleAssist
+     */
     private void renderActionGroup(Graphics2D g2d, SidePanel sidePanel, ScalingAssistant scaleAssist) {
         //display action boxes    
         g2d.drawString("ACTION",
                 scaleAssist.scale(35), scaleAssist.scale(310));//X & Y offset
-        //action box 1
-        g2d.drawImage(sidePanel.emptyInventory(),
+        //action box tag
+        g2d.drawImage(sidePanel.actionImage()[0],
                 scaleAssist.scale(35), scaleAssist.scale(315), //X & Y offset 
                 scaleAssist.scale(65), scaleAssist.scale(65), //width & height
                 null);
-        //action box 2
-        g2d.drawImage(sidePanel.emptyInventory(),
+        //action box trap
+        g2d.drawImage(sidePanel.actionImage()[1],
                 scaleAssist.scale(35 + 65 + 15), scaleAssist.scale(315), //X & Y offset 
                 scaleAssist.scale(65), scaleAssist.scale(65), //width & height
                 null);
-        //action box 3
-        g2d.drawImage(sidePanel.emptyInventory(),
+        //action box collect
+        g2d.drawImage(sidePanel.actionImage()[2],
                 scaleAssist.scale(35 + (65 * 2) + 30), scaleAssist.scale(315), //X & Y offset 
                 scaleAssist.scale(65), scaleAssist.scale(65), //width & height
                 null);
@@ -272,7 +278,7 @@ public class RenderingEngine {
         g2d.setColor(Color.lightGray);
         //display background for sidePanel
         g2d.fill(new Rectangle2D.Double(0, 0,
-                Globals.getSidePanelWidth(), Globals.height));
+                Globals.width, Globals.height));
     }
 
     private void renderOccupants(Graphics2D g2d, SidePanel sidePanel, ScalingAssistant scaleAssist) {

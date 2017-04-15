@@ -20,9 +20,11 @@ public class SidePanel {
     private final Game game;
 
     private BufferedImage playerIcon, questIcon, inventoryEmpty, inventorySnack,
-            inventoryToolbox, inventoryApple, inventoryTrap, kiwi;
+            inventoryScrewdriver, inventoryApple, inventoryTrap;
     
-    BufferedImage[] imgArray = new BufferedImage[3];
+    private BufferedImage tag,trap,collect;
+    
+    
 
     private AssetManager assetManager;
     
@@ -34,6 +36,7 @@ public class SidePanel {
     public SidePanel(Game g) {
         this.game = g;
         this.assetManager = AssetManager.getAssetManager();
+        
     }
 
     //this is run every step, to check for updates to the stats
@@ -41,6 +44,7 @@ public class SidePanel {
     public void checkStats() {
         //what happens every step?
         loadImages();
+        inventoryImage();
     }
 
     public void loadImages() {
@@ -48,9 +52,12 @@ public class SidePanel {
         questIcon = assetManager.getQuestIcon();
         inventoryEmpty = assetManager.getInventoryEmpty();
         inventorySnack = assetManager.getInventorySnack();
-        inventoryToolbox = assetManager.getInventoryToolbox();
+        inventoryScrewdriver = assetManager.getInventoryToolbox();
         inventoryApple = assetManager.getInventoryApple();
         inventoryTrap = assetManager.getInventoryTrap();
+        tag = assetManager.getActionTag();
+        collect = assetManager.getActionCollect();
+        trap = assetManager.getActionTrap();
     }
 
     public BufferedImage showPlayerIcon() {
@@ -82,41 +89,42 @@ public class SidePanel {
     }
     
     public BufferedImage[] inventoryImage() {
-        if(game.getPlayerInventory().length == 0) {
-            imgArray[0] = inventoryEmpty;
-            imgArray[1] = inventoryEmpty;
-            imgArray[2] = inventoryEmpty;
-        }
+        BufferedImage[] imgArray = new BufferedImage[3];
+        imgArray[0] = inventoryEmpty;
+        imgArray[1] = inventoryEmpty;
+        imgArray[2] = inventoryEmpty;
         for (int i = 0; i < game.getPlayerInventory().length; i++) {
-            if (game.getPlayerInventory().length <= i) {
-                imgArray[i] = inventoryEmpty;
-            } else {
-                switch (((Item) game.getPlayerInventory()[i]).getName().toLowerCase()) {
-                    case "trap":
-                        imgArray[i] = inventoryTrap;
-                        break;
-                    case "screwdriver":
-                        imgArray[i] = inventoryToolbox;
-                        break;
-                    case "orange juice":
-                        imgArray[i] = inventorySnack;
-                        break;
-                    case "sandwich":
-                        imgArray[i] = inventorySnack;
-                        break;
-                    case "muesli bar":
-                        imgArray[i] = inventorySnack;
-                        break;
-                    case "apple":
-                        imgArray[i] = inventoryApple;
-                        break;
-                }
+            switch (((Item) game.getPlayerInventory()[i]).getName().toLowerCase()) {
+                case "trap":
+                    imgArray[i] = inventoryTrap;
+                    break;
+                case "screwdriver":
+                    imgArray[i] = inventoryScrewdriver;
+                    break;
+                case "orange juice":
+                    imgArray[i] = inventorySnack;
+                    break;
+                case "sandwich":
+                    imgArray[i] = inventorySnack;
+                    break;
+                case "muesli bar":
+                    imgArray[i] = inventorySnack;
+                    break;
+                case "apple":
+                    imgArray[i] = inventoryApple;
+                    break;
             }
         }
         return imgArray;
     }
 
-
+    public BufferedImage[] actionImage(){
+        BufferedImage[] imgArray = new BufferedImage[3];
+        imgArray[0]=tag;
+        imgArray[1]=trap;
+        imgArray[2]=collect;
+        return imgArray;
+    }
     
     public Occupant[] getOccupants() {
         Position position = game.getPlayer().getPosition();
@@ -139,4 +147,6 @@ public class SidePanel {
         }
         return bi;
     }
+    
+    
 }

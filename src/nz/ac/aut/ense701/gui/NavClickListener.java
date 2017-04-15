@@ -10,7 +10,8 @@ import java.awt.event.MouseListener;
 import static java.lang.StrictMath.abs;
 import nz.ac.aut.ense701.gameModel.Game;
 import nz.ac.aut.ense701.gameModel.MoveDirection;
-import nz.ac.aut.ense701.gameModel.Position;
+import nz.ac.aut.ense701.gameModel.Occupant;
+import nz.ac.aut.ense701.gameModel.Tool;
 
 /**
  *
@@ -110,6 +111,20 @@ public class NavClickListener implements MouseListener {
         if ((e.getX() < Globals.getSidePanelWidth()) && (e.getY() > sA.scale(400))) {
             infoBoardClicked(e);
         }
+        
+        //Clicking in an area in the Side Panel where there are inventory boxes
+        if ((e.getX() < Globals.getSidePanelWidth()) 
+                && (e.getY() > sA.scale(225))
+                && (e.getY() < sA.scale(225+65))) {
+            inventoryBoxesClicked(e);
+        }
+        //Clicking in an area in the Side Panel where there are action buttons
+        if ((e.getX() < Globals.getSidePanelWidth()) 
+                && (e.getY() > sA.scale(315))
+                && (e.getY() < sA.scale(315+65))) {
+            actionButtonsClicked(e);
+        }
+        
     }
 
     @Override
@@ -136,7 +151,76 @@ public class NavClickListener implements MouseListener {
         } else if (sidePanel.getInfoOccupant() != null) {
             sidePanel.setInfoOccupant(null);
         }
-
     }
-
+    
+    /**
+     * Performs an "action" when a specific area in the game is clicked
+     *
+     * @param e 
+     */
+    private void inventoryBoxesClicked(MouseEvent e) {
+        //ensures that the given pixels are scaled according to game settings
+        ScalingAssistant sA = ScalingAssistant.getScalingAssistant();
+        //Box 1 clicked
+        if((e.getX() > sA.scale(35)) && (e.getX() < sA.scale(35+65))){
+            useOrDrop(e,1);
+        }
+        //Box 2 clicked
+        if((e.getX() > sA.scale(35+65+15)) && (e.getX() < sA.scale(35+(65*2)+15))){
+            useOrDrop(e,2);
+        }
+        //Box 3 clicked
+        if((e.getX() > sA.scale(35+((65+15)*2))) && (e.getX() < sA.scale(35+(65*3)+30))){
+            useOrDrop(e,3);
+        }
+        
+        
+    }
+    
+    private void useOrDrop(MouseEvent e, int boxNumber){
+        int boxIndex = boxNumber -1;
+        if(game.getPlayerInventory().length == 0){}
+            if(game.getPlayerInventory().length == boxNumber){
+                if(e.getClickCount()>1){game.dropItem(game.getPlayerInventory()[boxIndex]);} 
+                else if(e.getClickCount()==1){game.useItem(game.getPlayerInventory()[boxIndex]);}
+            }
+    }
+    
+    /**
+     * Performs an "action" when a specific area in the game is clicked
+     *
+     * @param e 
+     */
+    private void actionButtonsClicked(MouseEvent e) {
+        //ensures that the given pixels are scaled according to game settings
+        ScalingAssistant sA = ScalingAssistant.getScalingAssistant();
+        //TAG if player is on a square where there is a Kiwi
+        if((e.getX() > sA.scale(35)) && (e.getX() < sA.scale(35+65))){
+            for(Occupant o: game.getOccupantsPlayerPosition()){
+                if(game.canCount(o)){game.countKiwi();}
+            }
+        }
+        //TRAP if player is on a square where there is a predator
+        if((e.getX() > sA.scale(35+65+15)) && (e.getX() < sA.scale(35+(65*2)+15))){
+            for(Occupant o: game.getOccupantsPlayerPosition()){
+                if(o.getStringRepresentation().contains("P")){
+                    for(Object obj: game.getPlayerInventory()){
+                        if(game.getPlayer().hasTrap() 
+                                && obj instanceof Tool){game.useItem(obj);}
+                    }
+                }
+            }
+        }
+        //COLLECT if player is on a square where there is tool / food
+        if((e.getX() > sA.scale(35+((65+15)*2))) && (e.getX() < sA.scale(35+(65*3)+30))){
+            for(Occupant o: game.getOccupantsPlayerPosition()){
+                if(o.getStringRepresentation().contains("T")
+                        || o.getStringRepresentation().contains("E")){
+                    game.collectItem(o);
+                }
+            }
+        }
+    }
+    
+    
 }
