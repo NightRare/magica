@@ -210,12 +210,10 @@ public class NavClickListener implements MouseListener {
         if((e.getX() > sA.scale(35+((65+15)*2))) && (e.getX() < sA.scale(35+(65*3)+30))){
             useOrDrop(e,3);
         }
-        
-        
     }
     
     /**
-     * Performs an "action" when a specific area in the game is clicked
+     * Method for use or drop of item as displayed in the inventory boxes 
      *
      * @param e 
      * @param boxNumber tell which inventory box (1,2, or 3)

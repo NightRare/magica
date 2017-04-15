@@ -3,6 +3,7 @@ package nz.ac.aut.ense701.gui;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -45,7 +46,7 @@ public class SidePanel {
         //what happens every step?
         loadImages();
         inventoryImage();
-        
+        inventoryList();
         if ( game.getState() == GameState.LOST ){
             popUpMessage(game.getLoseMessage(),"Game Over!");
             game.createNewGame();
@@ -105,13 +106,21 @@ public class SidePanel {
         return game.getPlayerValues()[Game.STAMINA_INDEX];
     }
     
+    public ArrayList<Item> inventoryList(){
+        ArrayList list = new ArrayList();
+        
+        //HashSet backpack = game.getPlayerInventory();
+        list.addAll(Arrays.asList(game.getPlayerInventory()));
+        return list;
+    }
+    
     public BufferedImage[] inventoryImage() {
         BufferedImage[] imgArray = new BufferedImage[3];
         imgArray[0] = inventoryEmpty;
         imgArray[1] = inventoryEmpty;
         imgArray[2] = inventoryEmpty;
-        for (int i = 0; i < game.getPlayerInventory().length; i++) {
-            switch (((Item) game.getPlayerInventory()[i]).getName().toLowerCase()) {
+        for (int i = 0; i < inventoryList().size(); i++) {
+            switch (((Item) inventoryList().get(i)).getName().toLowerCase()) {
                 case "trap": imgArray[i] = inventoryTrap;break;
                 case "screwdriver": imgArray[i] = inventoryScrewdriver;break;
                 case "orange juice": imgArray[i] = inventorySnack;break;
@@ -125,9 +134,7 @@ public class SidePanel {
 
     public BufferedImage[] actionImage(){
         BufferedImage[] imgArray = new BufferedImage[3];
-        imgArray[0]=tag;
-        imgArray[1]=trap;
-        imgArray[2]=collect;
+        imgArray[0]=tag; imgArray[1]=trap; imgArray[2]=collect;
         return imgArray;
     }
     
