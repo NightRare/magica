@@ -15,6 +15,7 @@ public class PlayerTest extends junit.framework.TestCase
    Position playerPosition;
    Island island;
    Food sandwich;
+   Game game;
      /**
      * Default constructor for test class PlayerTest
      */
@@ -33,7 +34,8 @@ public class PlayerTest extends junit.framework.TestCase
         island = new Island(5,5);
         playerPosition = new Position(island, 0,0);
         player = new Player(playerPosition,"Lisa Simpson",25.0, 15.0, 20.0);
-        sandwich = new Food(playerPosition, "sandwich", "A tasty cheese sandwich", 1.0, 2.0, 1.5);        
+        sandwich = new Food(playerPosition, "sandwich", "A tasty cheese sandwich", 1.0, 2.0, 1.5);
+        game = new Game();
     }
 
     /**
@@ -254,8 +256,8 @@ public class PlayerTest extends junit.framework.TestCase
     @Test
     public void testCollectDuplicateItem()
     {
-        assertTrue(player.collect(sandwich));
-        assertFalse(player.collect(sandwich));
+        assertTrue(game.collectItem(sandwich));
+        assertFalse(game.collectItem(sandwich));
     }
 
     @Test

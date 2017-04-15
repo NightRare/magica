@@ -1,9 +1,9 @@
 package nz.ac.aut.ense701.gameModel;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Player represents the player in the KiwiIsland game.
@@ -20,7 +20,7 @@ public class Player
     private final double    maxStamina;
     private double    stamina;
     private boolean   alive;
-    private ArrayList<Item> backpack;
+    private Set<Item> backpack;
     private final double    maxBackpackWeight;
     private final double    maxBackpackSize; 
 
@@ -43,7 +43,7 @@ public class Player
        this.maxBackpackWeight = maxBackpackWeight;
        this.maxBackpackSize = maxBackpackSize;
        this.alive = true;
-       this.backpack = new ArrayList<>();
+       this.backpack = new HashSet<>();
     }   
     
     /*****************************************************************************************************
