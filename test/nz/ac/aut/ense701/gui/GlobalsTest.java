@@ -44,7 +44,7 @@ public class GlobalsTest {
     public void testRowToY() {
         System.out.println("rowToY");
         int row = 5;
-        int expResult = 400;
+        int expResult = 250;
         int result = Globals.rowToY(row);
         assertEquals(expResult, result);
     }
@@ -56,7 +56,7 @@ public class GlobalsTest {
     public void testColToX() {
         System.out.println("colToX");
         int col = 5;
-        int expResult = 400;
+        int expResult = 550;
         int result = Globals.colToX(col);
         assertEquals(expResult, result);
     }
@@ -67,7 +67,7 @@ public class GlobalsTest {
     @Test
     public void testGetSquareHeight() {
         System.out.println("getSquareHeight");
-        int expResult = 80;
+        int expResult = 50;
         int result = Globals.getSquareHeight();
         assertEquals(expResult, result);
     }
@@ -78,9 +78,64 @@ public class GlobalsTest {
     @Test
     public void testGetSquareWidth() {
         System.out.println("getSquareWidth");
-        int expResult = 80;
+        int expResult = 50;
         int result = Globals.getSquareWidth();
         assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of getSidePanelWidth method, of class Globals.
+     */
+    @Test
+    public void testGetSidePanelWidth() {
+        System.out.println("getSidePanelWidth");
+        int expResult = 300;
+        int result = Globals.getSidePanelWidth();
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of boardWidth method, of class Globals.
+     */
+    @Test
+    public void testBoardWidth() {
+        System.out.println("boardWidth");
+        double expResult = 276.0;
+        double result = Globals.boardWidth();
+        assertEquals(expResult, result, 0.0);
+    }
+
+    /**
+     * Test of boardHeight method, of class Globals.
+     */
+    @Test
+    public void testBoardHeight() {
+        System.out.println("boardHeight");
+        double expResult = 382.0;
+        double result = Globals.boardHeight();
+        assertEquals(expResult, result, 0.0);
+    }
+
+    /**
+     * Test of boardOffsetX method, of class Globals.
+     */
+    @Test
+    public void testBoardOffsetX() {
+        System.out.println("boardOffsetX");
+        double expResult = 12.0;
+        double result = Globals.boardOffsetX();
+        assertEquals(expResult, result, 0.0);
+    }
+
+    /**
+     * Test of boardOffsetY method, of class Globals.
+     */
+    @Test
+    public void testBoardOffsetY() {
+        System.out.println("boardOffsetY");
+        double expResult = 0.0;
+        double result = Globals.boardOffsetY();
+        assertEquals(expResult, result, 12.0);
     }
     
 }

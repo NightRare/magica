@@ -253,6 +253,12 @@ public class RenderingEngine {
         }
     }
 
+    /**
+     * Renders the info for an occupant 
+     * @param g2d
+     * @param sidePanel
+     * @param scaleAssist 
+     */
     private void renderOccupantInfo(Graphics2D g2d, SidePanel sidePanel, ScalingAssistant scaleAssist) {
         Occupant occupant = sidePanel.getOccupants()[0];
 
@@ -272,6 +278,7 @@ public class RenderingEngine {
         g2d.setFont(originalFont); //set back to original font
     }
     
+    
     private List<String> wordSplitter(String text, int charNums) {
         char[] charArray = text.toCharArray();
         List<String> output = new LinkedList();
@@ -287,7 +294,13 @@ public class RenderingEngine {
         output.add(line);
         return output;
     }
-
+    
+    /**
+     * Renders the list of up to two occupants. If one has been selected then render only one.
+     * @param g2d
+     * @param sidePanel
+     * @param scaleAssist 
+     */
     private void renderOccupantsList(Graphics2D g2d, SidePanel sidePanel, ScalingAssistant scaleAssist) {
         Occupant infoOccupant = sidePanel.getInfoOccupant();
         
