@@ -299,9 +299,20 @@ public class RenderingEngine {
             g2d.drawString(occupant1.getName().toUpperCase(), scaleAssist.scale(30), scaleAssist.scale(600));
             g2d.drawString(occupant2.getName().toUpperCase(), scaleAssist.scale(30), scaleAssist.scale(770));
         } else {
+            Font originalFont = g2d.getFont(); //record the original font
+
+            Font contentFont = new Font(Font.SERIF, Font.PLAIN, scaleAssist.scale(16));
             g2d.setColor(Color.gray);
-            g2d.drawString(infoOccupant.getName().toUpperCase(), scaleAssist.scale(30), scaleAssist.scale(630));
-            g2d.drawString(infoOccupant.getDescription(), scaleAssist.scale(30), scaleAssist.scale(665));
+            g2d.drawString(infoOccupant.getName().toUpperCase(), scaleAssist.scale(30), scaleAssist.scale(590));
+
+            g2d.setFont(contentFont);
+            List<String> descLines = wordSplitter(infoOccupant.getDescription(), 35);
+
+            for(int i = 0; i < descLines.size(); i++) {
+                g2d.drawString(descLines.get(i), scaleAssist.scale(30), scaleAssist.scale(615 + i * 16));
+            }
+
+            g2d.setFont(originalFont); //set back to original font
         }
     }
 
