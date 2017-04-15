@@ -104,7 +104,7 @@ public class RenderingEngine {
         renderStaminaBar(g2d, sidePanel, scaleAssist);
         renderInventoryGroup(g2d, sidePanel, scaleAssist);
         renderActionGroup(g2d, sidePanel, scaleAssist);
-        renderOccupants(g2d, sidePanel, scaleAssist);
+
     }
 
     /**
@@ -246,6 +246,7 @@ public class RenderingEngine {
                 break;
             case 1:
                 renderOccupantInfo(g2d, sidePanel, scaleAssist);
+                renderOccupants(g2d, sidePanel, scaleAssist);
                 break;
             default:
                 //draw something pretty
@@ -304,17 +305,43 @@ public class RenderingEngine {
     private void renderOccupantsList(Graphics2D g2d, SidePanel sidePanel, ScalingAssistant scaleAssist) {
         Occupant infoOccupant = sidePanel.getInfoOccupant();
         
-        if (infoOccupant == null) {
+        if (infoOccupant == null) 
+        {
             Occupant occupant1 = sidePanel.getOccupants()[0];
             Occupant occupant2 = sidePanel.getOccupants()[1];
-
+            
+            List<BufferedImage> occupantsImages = new LinkedList();
+            occupantsImages.add(AssetManager.getAssetManager()
+                    .getOccupantPortrait(occupant1.getName()));
+            occupantsImages.add(AssetManager.getAssetManager()
+                    .getOccupantPortrait(occupant2.getName()));
+                        
+            for(int i = 0; i < 2; i ++) 
+            {
+                g2d.drawImage(occupantsImages.get(i), 
+                    scaleAssist.scale(35), scaleAssist.scale(12+315+100 + i*(130+57)), //X & Y offset 
+                    scaleAssist.scale(225), scaleAssist.scale(130), //width & height
+                    null);
+                //g2d.setColor(Color.gray);  
+            }
+            
             g2d.setColor(Color.gray);
-            g2d.drawString(occupant1.getName().toUpperCase(), scaleAssist.scale(30), scaleAssist.scale(600));
-            g2d.drawString(occupant2.getName().toUpperCase(), scaleAssist.scale(30), scaleAssist.scale(770));
-        } else {
+            g2d.drawString(occupant1.getName().toUpperCase(), scaleAssist.scale(35), scaleAssist.scale(600));
+            g2d.drawString(occupant2.getName().toUpperCase(), scaleAssist.scale(35), scaleAssist.scale(770));
+        } 
+        
+        else {            
+            BufferedImage bi = AssetManager.getAssetManager().getOccupantPortrait(infoOccupant.getName());
+            g2d.drawImage(bi, 
+                scaleAssist.scale(35), scaleAssist.scale(12+315+100), //X & Y offset 
+                scaleAssist.scale(225), scaleAssist.scale(130), //width & height
+                null);
+            
             g2d.setColor(Color.gray);
-            g2d.drawString(infoOccupant.getName().toUpperCase(), scaleAssist.scale(30), scaleAssist.scale(630));
-            g2d.drawString(infoOccupant.getDescription(), scaleAssist.scale(30), scaleAssist.scale(665));
+            
+            g2d.setColor(Color.gray);
+            g2d.drawString(infoOccupant.getName().toUpperCase(), scaleAssist.scale(35), scaleAssist.scale(630));
+            g2d.drawString(infoOccupant.getDescription(), scaleAssist.scale(35), scaleAssist.scale(665));
         }
     }
 
@@ -326,14 +353,14 @@ public class RenderingEngine {
     }
 
     private void renderOccupants(Graphics2D g2d, SidePanel sidePanel, ScalingAssistant scaleAssist) {
-        //display the images of occupants
-        for(BufferedImage bi : sidePanel.showOccupants()) {
-            g2d.drawImage(bi, 
+        
+        Occupant o = sidePanel.getOccupants()[0];
+        BufferedImage bi = AssetManager.getAssetManager().getOccupantPortrait(o.getName());
+        g2d.drawImage(bi, 
             scaleAssist.scale(35), scaleAssist.scale(12+315+100), //X & Y offset 
             scaleAssist.scale(225), scaleAssist.scale(130), //width & height
             null);
-            g2d.setColor(Color.gray);  
-        }
+        g2d.setColor(Color.gray);
 
-    }
+    }    
 }

@@ -143,15 +143,6 @@ public class SidePanel {
     public Occupant getInfoOccupant() {
         return infoOccupant;
     }
-
-    public List<BufferedImage> showOccupants() {
-        Occupant[] occupants = game.getOccupantsPlayerPosition();
-        List<BufferedImage> bi = new LinkedList();
-        for(Occupant o : occupants) {
-            bi.add(AssetManager.getAssetManager().getOccupantPortrait(o.getName()));
-        }
-        return bi;
-    }
-    
+   
     
 }
