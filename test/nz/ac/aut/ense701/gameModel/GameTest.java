@@ -162,7 +162,7 @@ public class GameTest extends junit.framework.TestCase
         //Trap can be used only if there is a non-Kiwi fauna here
         Item valid = new Tool(playerPosition,"Trap", "A predator trap", "", 1.0, 1.0);
         //Add predator
-        Predator rat = new Predator(playerPosition,"Rat", "A norway rat", "");
+        Predator rat = new Predator(playerPosition,"Rat", "A norway rat", "", "");
         island.addOccupant(playerPosition, rat);
         assertTrue("Should be able to use", game.canUse(valid));
     }
@@ -172,7 +172,7 @@ public class GameTest extends junit.framework.TestCase
         //Trap can be used only if there is a non-Kiwi fauna here
         Item valid = new Tool(playerPosition,"Trap", "A predator trap", "", 1.0, 1.0);
         //Add non-Kiwi Fauna
-        Fauna fish = new Fauna(playerPosition, "Fish", "Just a fish", "");
+        Fauna fish = new Fauna(playerPosition, "Fish", "Just a fish", "", "");
         island.addOccupant(playerPosition, fish);
         assertTrue("Should be able to use", game.canUse(valid));
     }
@@ -189,7 +189,7 @@ public class GameTest extends junit.framework.TestCase
     public void testCanUseTrapOnKiwi() {
         //Trap can be used only if there is a non-Kiwi fauna here
         Item tool = new Tool(playerPosition,"Trap", "A predator trap", "",1.0, 1.0);
-        Kiwi kiwi = new Kiwi(playerPosition, "Kiwi", "A test kiwi.", "");
+        Kiwi kiwi = new Kiwi(playerPosition, "Kiwi", "A test kiwi.", "", "");
         island.addOccupant(playerPosition, kiwi);
         assertFalse("Should not be able to use", game.canUse(tool));
     }

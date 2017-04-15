@@ -6,16 +6,23 @@
 package nz.ac.aut.ense701.gui;
 
 import java.awt.Color;
+import java.awt.Desktop;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.RoundRectangle2D;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import nz.ac.aut.ense701.gameModel.Fauna;
 import nz.ac.aut.ense701.gameModel.Game;
 import nz.ac.aut.ense701.gameModel.GameState;
 import nz.ac.aut.ense701.gameModel.Occupant;
@@ -342,6 +349,10 @@ public class RenderingEngine {
             g2d.setColor(Color.gray);
             g2d.drawString(infoOccupant.getName().toUpperCase(), scaleAssist.scale(35), scaleAssist.scale(630));
             g2d.drawString(infoOccupant.getDescription(), scaleAssist.scale(35), scaleAssist.scale(665));
+            
+            // display "read more" if its fauna
+            if(infoOccupant instanceof Fauna)
+                g2d.drawString("READ MORE", scaleAssist.scale(35), scaleAssist.scale(600+160));            
         }
     }
 
@@ -361,6 +372,12 @@ public class RenderingEngine {
             scaleAssist.scale(225), scaleAssist.scale(130), //width & height
             null);
         g2d.setColor(Color.gray);
+        
+        // display "read more" if its fauna
+        if(o instanceof Fauna)
+            g2d.drawString("READ MORE", scaleAssist.scale(35), scaleAssist.scale(600+160));
 
     }    
+    
+    
 }

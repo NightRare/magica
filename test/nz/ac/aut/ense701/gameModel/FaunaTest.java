@@ -20,7 +20,7 @@ public class FaunaTest {
     public void testGetStringRepresentation() {
         Island island = new Island(5,5);
         Position position = new Position(island, 4,4);
-        Fauna instance = new Fauna(position, "Oystercatcher", " A nesting oystercatcher", "");
+        Fauna instance = new Fauna(position, "Oystercatcher", " A nesting oystercatcher", "", "");
         String expResult = "F";
         String result = instance.getStringRepresentation();
         assertEquals(expResult, result);

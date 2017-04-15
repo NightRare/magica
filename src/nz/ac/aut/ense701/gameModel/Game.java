@@ -880,17 +880,17 @@ public class Game
             }
             else if ( occType.equals("K") )
             {
-                occupant = new Kiwi(occPos, occName, occDesc, "");
+                occupant = new Kiwi(occPos, occName, occDesc, "", "");
                 totalKiwis++;
             }
             else if ( occType.equals("P") )
             {
-                occupant = new Predator(occPos, occName, occDesc, "");
+                occupant = new Predator(occPos, occName, occDesc, "", "");
                 totalPredators++;
             }
             else if ( occType.equals("F") )
             {
-                occupant = new Fauna(occPos, occName, occDesc, "");
+                occupant = new Fauna(occPos, occName, occDesc, "", "");
             }
             if ( occupant != null ) island.addOccupant(occPos, occupant);
         }

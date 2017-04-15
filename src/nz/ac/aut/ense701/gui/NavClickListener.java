@@ -5,9 +5,16 @@
  */
 package nz.ac.aut.ense701.gui;
 
+import java.awt.Desktop;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.IOException;
 import static java.lang.StrictMath.abs;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import nz.ac.aut.ense701.gameModel.Fauna;
 import nz.ac.aut.ense701.gameModel.Game;
 import nz.ac.aut.ense701.gameModel.MoveDirection;
 import nz.ac.aut.ense701.gameModel.Occupant;
@@ -142,16 +149,46 @@ public class NavClickListener implements MouseListener {
     private void infoBoardClicked(MouseEvent e) {
         ScalingAssistant sA = ScalingAssistant.getScalingAssistant();
         SidePanel sidePanel = loop.getSidePanel();
-        if ((sidePanel.getInfoOccupant() == null) && sidePanel.getOccupants().length > 1) {
-            if (e.getY() > sA.scale(600)) {
-                sidePanel.setInfoOccupant(sidePanel.getOccupants()[1]);
-            } else if (e.getY() > sA.scale(400)) {
-                sidePanel.setInfoOccupant(sidePanel.getOccupants()[0]);
+        Occupant[] occupants = sidePanel.getOccupants();
+        
+        
+        if(occupants.length > 1) {
+            if(sidePanel.getInfoOccupant() == null) {
+                
+                if (e.getY() > sA.scale(600)) {
+                    sidePanel.setInfoOccupant(sidePanel.getOccupants()[1]);
+                } else if (e.getY() > sA.scale(400)) {
+                    sidePanel.setInfoOccupant(sidePanel.getOccupants()[0]);
+                }
+            } else {
+                Occupant o = sidePanel.getInfoOccupant();
+                if (e.getY() > sA.scale(735) && o instanceof Fauna) {
+                    openLink(((Fauna)o).getLink());
+                } else sidePanel.setInfoOccupant(null);                
+            }            
+            
+        } else if (occupants.length == 1 && occupants[0] instanceof Fauna) {
+            if (e.getY() > sA.scale(735)) {
+               openLink(((Fauna)occupants[0]).getLink());
             }
-        } else if (sidePanel.getInfoOccupant() != null) {
-            sidePanel.setInfoOccupant(null);
+        
+        }
+
+    }
+    
+    //open default browser
+    private void openLink(String link) {
+        if(Desktop.isDesktopSupported())
+        {
+            try {
+                Desktop.getDesktop().browse(new URI(link));
+            } catch (URISyntaxException | IOException ex) {
+                Logger.getLogger(RenderingEngine.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
+    
+
     
     /**
      * Performs an "action" when a specific area in the game is clicked

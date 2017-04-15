@@ -62,37 +62,43 @@
 		{
 			"name":"Oystercatcher",
 			"description":"This black and white wader is unique to the Chatham Islands. It is an endangered species with a high risk of extinction due to its very small population and range. They eat marine molluscs, worms, and other invertebrates.",
-			"portrait":"/resource/images/occupants/fauna/oystercatcher.jpg"
+			"portrait":"/resource/images/occupants/fauna/oystercatcher.jpg",
+			"link": "http://www.doc.govt.nz/nature/native-animals/birds/birds-a-z/variable-oystercatcher-torea/"
 		},
 
 		{
 			"name":"Crab",
 			"description":"Oh, crab! They live in all the world's oceans, in fresh water, and on land, are generally covered with a thick exoskeleton and have a single pair of claws. It's sure that they only like seafood.",
-			"portrait":"/resource/images/occupants/fauna/crab.jpg"
+			"portrait":"/resource/images/occupants/fauna/crab.jpg",
+			"link": "https://en.wikipedia.org/wiki/Crab"
 		},
 
 		{
 			"name":"Fernbird",
 			"description":"The at risk fernbird/mātātā is an endemic species which inhabits wetlands throughout Kiwiisland. They are closely related to the grassbirds Megalurus of Australia and Africa, and are sometimes included in that genus.",
-			"portrait":"/resource/images/occupants/fauna/fernbird.jpg"
+			"portrait":"/resource/images/occupants/fauna/fernbird.jpg",
+			"link": "http://www.doc.govt.nz/nature/native-animals/birds/birds-a-z/fernbird-matata/"
 		},
 
 		{
 			"name":"Heron",
 			"description":"The white heron has always been rare in Kiwiisland and it has gained almost mythical status. This graceful bird has long, slender legs and a long, thin S-shaped neck, which has a distinct kink when flying. They are theaten by predators like stoats, possums and harrier hawks.",
-			"portrait":"/resource/images/occupants/fauna/heron.jpg"
+			"portrait":"/resource/images/occupants/fauna/heron.jpg",
+			"link": "http://www.doc.govt.nz/nature/native-animals/birds/birds-a-z/white-heron-kotuku/"
 		},
 
 		{
 			"name":"Robin",
 			"description":"The Kiwiisland robin is a sparrow-sized bird found only in New Zealand. They are friendly and trusting, often coming to within a couple of metres of people. They forage for invertebrates, such as worms and beetles among the leaf litter on the ground.",
-			"portrait":"/resource/images/occupants/fauna/robin.jpg"
+			"portrait":"/resource/images/occupants/fauna/robin.jpg",
+			"link": "http://www.doc.govt.nz/nature/native-animals/birds/birds-a-z/nz-robin-toutouwai/"
 		},
 
 		{
 			"name":"Tui",
 			"description":"Tūī are endemic to Kiwiisland and belong to the honeyeater family, which means they feed mainly on nectar from flowers of native plants.",
-			"portrait":"/resource/images/occupants/fauna/tui.jpg"
+			"portrait":"/resource/images/occupants/fauna/tui.jpg",
+			"link": "http://www.doc.govt.nz/nature/native-animals/birds/birds-a-z/tui/"
 		}
 	],
 
@@ -101,7 +107,8 @@
 		{
 			"name":"Kiwi",
 			"description":"The kiwi is a unique and curious bird: it cannot fly, has loose, hair-like feathers, strong legs and no tail. It is the national icon of New Zealand and unofficial national emblem. Tag the kiwi when you see one, make sure they live safely and freely.",
-			"portrait":"/resource/images/occupants/kiwi/kiwi.jpg"
+			"portrait":"/resource/images/occupants/kiwi/kiwi.jpg",
+			"link": "http://www.doc.govt.nz/nature/native-animals/birds/birds-a-z/kiwi/"
 		}
 	],
 
@@ -111,31 +118,36 @@
 		{
 			"name":"Rat",
 			"description":"Please learn about rats in Kiwiisland and pest control measures that can reduce this threat to native plants and animals. They eat native animals, eggs and a wide range of native fruit and plants, which puts them in competition with native wildlife for food.",
-			"portrait":"/resource/images/occupants/predator/rat.jpg"
+			"portrait":"/resource/images/occupants/predator/rat.jpg",
+			"link": "http://www.doc.govt.nz/nature/pests-and-threats/animal-pests/rats/"
 		},
 
 		{
 			"name":"Cat",
 			"description":"Help protect wildlife in your neighbourhood from the cat. Earn a Kiwi Guardians medal for trapping cats - there are a lot of tricks you can use to trap them. Tell us how your challenge went and we’ll send you Kiwi Guardians Wildlife Protector medal.",
-			"portrait":"/resource/images/occupants/predator/cat.jpg"
+			"portrait":"/resource/images/occupants/predator/cat.jpg",
+			"link": "http://www.doc.govt.nz/nature/pests-and-threats/animal-pests/pets/"
 		},
 
 		{
 			"name":"Kiore",
 			"description":"Kiore have brown fur, which is darker along the spine, with grey and white on the belly. They are also thought to have been responsible for the extinction or reduction on the mainland of a significant number of native species.",
-			"portrait":"/resource/images/occupants/predator/kiore.jpg"
+			"portrait":"/resource/images/occupants/predator/kiore.jpg",
+			"link": "http://www.doc.govt.nz/nature/pests-and-threats/animal-pests/rats/"
 		},
 
 		{
 			"name":"Stoat",
 			"description":"Stoats look like weasels, but larger and have longer tails and a straight line where the brown fur on their backs meets the white belly fur. Stoats are now considered \"public enemy number one\" for Kiwiisland birds.",
-			"portrait":"/resource/images/occupants/predator/stoat.jpg"
+			"portrait":"/resource/images/occupants/predator/stoat.jpg",
+			"link": "http://www.doc.govt.nz/nature/pests-and-threats/animal-pests/stoats/"
 		},
 
 		{
 			"name":"Possum",
 			"description":"The possum has a thick, bushy tail, a pointed snout and long, fox-like tapering ears.Possums can live anywhere yet forests are the major habitat, especially hardwood mixed forests. Possums compete with native birds for habitat and for food such as insects and berries.",
-			"portrait":"/resource/images/occupants/predator/possum.jpg"
+			"portrait":"/resource/images/occupants/predator/possum.jpg",
+			"link": "http://www.doc.govt.nz/nature/pests-and-threats/animal-pests/possums/"
 		}
 	],
 

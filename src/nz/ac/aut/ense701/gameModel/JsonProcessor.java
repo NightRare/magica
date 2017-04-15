@@ -168,15 +168,17 @@ public class JsonProcessor implements IDataManager{
         
         if(template instanceof Fauna) {
             
+            String link = ((Fauna) template).getLink();
+            
             if(template instanceof Kiwi) {
-                return new Kiwi(position, name, description, portrait);
+                return new Kiwi(position, name, description, portrait, link);
             }
             
             if(template instanceof Predator) {
-                return new Predator(position, name, description, portrait);
+                return new Predator(position, name, description, portrait, link);
             }
             
-            return new Fauna(position, name, description, portrait);
+            return new Fauna(position, name, description, portrait, link);
         }
         
         throw new IllegalArgumentException("An Occupant (abstract class) object "
