@@ -5,7 +5,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import javax.swing.JOptionPane;
 import nz.ac.aut.ense701.gameModel.Game;
+import nz.ac.aut.ense701.gameModel.GameState;
 import nz.ac.aut.ense701.gameModel.Item;
 import nz.ac.aut.ense701.gameModel.Occupant;
 import nz.ac.aut.ense701.gameModel.Player;
@@ -23,15 +25,13 @@ public class SidePanel {
             inventoryScrewdriver, inventoryApple, inventoryTrap;
     
     private BufferedImage tag,trap,collect;
-    
-    
 
     private AssetManager assetManager;
     
     // occupant for displaying on info board
     private Occupant infoOccupant;
     
-    
+    private NewUI ui;
     
     public SidePanel(Game g) {
         this.game = g;
@@ -45,6 +45,23 @@ public class SidePanel {
         //what happens every step?
         loadImages();
         inventoryImage();
+        
+        if ( game.getState() == GameState.LOST ){
+            popUpMessage(game.getLoseMessage(),"Game Over!");
+            game.createNewGame();
+        } else if ( game.getState() == GameState.WON )
+        {
+            popUpMessage(game.getWinMessage(),"Well Done!");
+            game.createNewGame();
+        } else if (game.messageForPlayer())
+        {
+            popUpMessage(game.getPlayerMessage(),"Hey.."); 
+        }
+        
+    }
+    
+    public static void popUpMessage(String message, String title){
+        JOptionPane.showMessageDialog(null, message, title, JOptionPane.INFORMATION_MESSAGE);
     }
 
     public void loadImages() {
@@ -95,24 +112,12 @@ public class SidePanel {
         imgArray[2] = inventoryEmpty;
         for (int i = 0; i < game.getPlayerInventory().length; i++) {
             switch (((Item) game.getPlayerInventory()[i]).getName().toLowerCase()) {
-                case "trap":
-                    imgArray[i] = inventoryTrap;
-                    break;
-                case "screwdriver":
-                    imgArray[i] = inventoryScrewdriver;
-                    break;
-                case "orange juice":
-                    imgArray[i] = inventorySnack;
-                    break;
-                case "sandwich":
-                    imgArray[i] = inventorySnack;
-                    break;
-                case "muesli bar":
-                    imgArray[i] = inventorySnack;
-                    break;
-                case "apple":
-                    imgArray[i] = inventoryApple;
-                    break;
+                case "trap": imgArray[i] = inventoryTrap;break;
+                case "screwdriver": imgArray[i] = inventoryScrewdriver;break;
+                case "orange juice": imgArray[i] = inventorySnack;break;
+                case "sandwich": imgArray[i] = inventorySnack;break;
+                case "muesli bar": imgArray[i] = inventorySnack;break;
+                case "apple": imgArray[i] = inventoryApple;break;
             }
         }
         return imgArray;

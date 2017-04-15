@@ -177,6 +177,12 @@ public class NavClickListener implements MouseListener {
         
     }
     
+    /**
+     * Performs an "action" when a specific area in the game is clicked
+     *
+     * @param e 
+     * @param boxNumber tell which inventory box (1,2, or 3)
+     */
     private void useOrDrop(MouseEvent e, int boxNumber){
         int boxIndex = boxNumber -1;
         if(game.getPlayerInventory().length == 0){}
@@ -203,19 +209,15 @@ public class NavClickListener implements MouseListener {
         //TRAP if player is on a square where there is a predator
         if((e.getX() > sA.scale(35+65+15)) && (e.getX() < sA.scale(35+(65*2)+15))){
             for(Occupant o: game.getOccupantsPlayerPosition()){
-                if(o.getStringRepresentation().contains("P")){
-                    for(Object obj: game.getPlayerInventory()){
-                        if(game.getPlayer().hasTrap() 
-                                && obj instanceof Tool){game.useItem(obj);}
-                    }
-                }
+                //if(o.getStringRepresentation().contains("P")){
+                    if(game.getPlayer().hasTrap()){game.useItem(game.getPlayer().getTrap());}
+                //}
             }
         }
         //COLLECT if player is on a square where there is tool / food
         if((e.getX() > sA.scale(35+((65+15)*2))) && (e.getX() < sA.scale(35+(65*3)+30))){
             for(Occupant o: game.getOccupantsPlayerPosition()){
-                if(o.getStringRepresentation().contains("T")
-                        || o.getStringRepresentation().contains("E")){
+                if(game.canCollect(o)){
                     game.collectItem(o);
                 }
             }
