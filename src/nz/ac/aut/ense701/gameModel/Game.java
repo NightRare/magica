@@ -662,7 +662,7 @@ public class Game
                 player.reduceStamina(STAMINA_PUNISH_CAP_FAUNA);
                 
                 this.playerMessage = o.getName() + " is not a predator. You trapped"
-                        + "the wrong fauna — costs you " + STAMINA_PUNISH_CAP_FAUNA
+                        + " the wrong fauna — costs you " + STAMINA_PUNISH_CAP_FAUNA
                         + " stamina to take care of it.";
             }
         }
