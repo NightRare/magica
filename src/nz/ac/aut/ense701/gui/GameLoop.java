@@ -17,7 +17,7 @@ import nz.ac.aut.ense701.gameModel.Game;
 public class GameLoop implements Runnable{
 
     private Game game;
-    private NewUI newUI;
+    private GUI newUI;
     private Thread thread;
     
     // The graphics 2D will be taken from the canvas of the user interface and a bufferstrategy applied
@@ -32,7 +32,7 @@ public class GameLoop implements Runnable{
     
     private boolean running;
     
-    private ArrayList<NewMapSquare> mapSquareList;
+    private ArrayList<MapSquare> mapSquareList;
     private SidePanel sidePanel;
 
     /**
@@ -102,7 +102,7 @@ public class GameLoop implements Runnable{
         }
         g2d = (Graphics2D) bs.getDrawGraphics();
         
-        g2d.clearRect(0, 0, Globals.width, Globals.height);
+        g2d.clearRect(0, 0, GUIConfigs.width, GUIConfigs.height);
         
         renderingEngine.render(g2d);
         
@@ -114,7 +114,7 @@ public class GameLoop implements Runnable{
      * Initialises the UI and Assets
      */
     private void initialise() {
-        newUI = new NewUI(game, this);
+        newUI = new GUI(game, this);
         
         this.sidePanel = new SidePanel(game);
         // Initialise Assets
@@ -160,12 +160,12 @@ public class GameLoop implements Runnable{
         {
             for ( int col = 0 ; col < columns ; col++ )
             {
-                mapSquareList.add(new NewMapSquare(game, row, col));
+                mapSquareList.add(new MapSquare(game, row, col));
             }
         }
     }
 
-    public ArrayList<NewMapSquare> getMapSquareList() {
+    public ArrayList<MapSquare> getMapSquareList() {
         return mapSquareList;
     }
     

@@ -32,7 +32,7 @@ public class SidePanel {
     // occupant for displaying on info board
     private Occupant infoOccupant;
     
-    private NewUI ui;
+    private GUI ui;
     
     public SidePanel(Game g) {
         this.game = g;

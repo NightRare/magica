@@ -16,7 +16,7 @@ import nz.ac.aut.ense701.gameModel.Terrain;
  * Replaces GridSquarePanel
  * @author Sam
  */
-public class NewMapSquare {
+public class MapSquare {
 
     private Game game;
     private int row;
@@ -35,7 +35,7 @@ public class NewMapSquare {
     private AssetManager assetManager;
     
     
-    public NewMapSquare(Game game, int row, int column)  {
+    public MapSquare(Game game, int row, int column)  {
         this.assetManager = AssetManager.getAssetManager();
         this.game = game;
         this.row = row;
@@ -47,7 +47,7 @@ public class NewMapSquare {
     }
 
     /**
-     * Initializes the NewMapSquare or Refreshes it to sync with model
+     * Initializes the MapSquare or Refreshes it to sync with model
      */
     
      public void textureLoad(){

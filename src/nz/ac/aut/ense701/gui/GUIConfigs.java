@@ -9,7 +9,7 @@ package nz.ac.aut.ense701.gui;
  * Settings and Related Methods that need to be accessed by multiple classes
  * @author Sam
  */
-public class Globals {
+public class GUIConfigs {
     
     public static final String TITLE = "Kiwi Island";
     

@@ -14,11 +14,11 @@ import nz.ac.aut.ense701.gameModel.MoveDirection;
  *
  * @author Sam
  */
-public class WASDListener implements KeyListener{
+public class NavigationKeyListener implements KeyListener{
     
     Game game;
     
-    public WASDListener(Game game) {
+    public NavigationKeyListener(Game game) {
         this.game = game;
     }
     

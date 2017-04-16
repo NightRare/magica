@@ -19,17 +19,20 @@ import nz.ac.aut.ense701.gameModel.Game;
 import nz.ac.aut.ense701.gameModel.MoveDirection;
 import nz.ac.aut.ense701.gameModel.Occupant;
 import nz.ac.aut.ense701.gameModel.Tool;
+import static java.lang.StrictMath.abs;
+import static java.lang.StrictMath.abs;
+import static java.lang.StrictMath.abs;
 
 /**
  *
  * @author Sam
  */
-public class NavClickListener implements MouseListener {
+public class ClickListener implements MouseListener {
 
     Game game;
     GameLoop loop;
 
-    public NavClickListener(Game game, GameLoop loop) {
+    public ClickListener(Game game, GameLoop loop) {
         this.game = game;
         this.loop = loop;
     }
@@ -41,7 +44,7 @@ public class NavClickListener implements MouseListener {
      * @return x coordinate
      */
     private int getPlayerCentreX(Game game) {
-        return Globals.colToX(this.game.getPlayer().getPosition().getColumn()) + (Globals.getSquareWidth() / 2);
+        return GUIConfigs.colToX(this.game.getPlayer().getPosition().getColumn()) + (GUIConfigs.getSquareWidth() / 2);
     }
 
     /**
@@ -51,7 +54,7 @@ public class NavClickListener implements MouseListener {
      * @return x coordinate
      */
     private int getPlayerCentreY(Game game) {
-        return Globals.rowToY(this.game.getPlayer().getPosition().getRow()) + (Globals.getSquareHeight() / 2);
+        return GUIConfigs.rowToY(this.game.getPlayer().getPosition().getRow()) + (GUIConfigs.getSquareHeight() / 2);
     }
 
     /**
@@ -108,25 +111,25 @@ public class NavClickListener implements MouseListener {
 
     @Override
     public void mousePressed(MouseEvent e) {
-        if (e.getX() > Globals.getSidePanelWidth()) {
+        if (e.getX() > GUIConfigs.getSidePanelWidth()) {
             MoveDirection direction = getDirection(e.getX(), e.getY());
             if (direction != null) {
                 move(direction);
             }
         }
         ScalingAssistant sA = ScalingAssistant.getScalingAssistant();
-        if ((e.getX() < Globals.getSidePanelWidth()) && (e.getY() > sA.scale(400))) {
+        if ((e.getX() < GUIConfigs.getSidePanelWidth()) && (e.getY() > sA.scale(400))) {
             infoBoardClicked(e);
         }
         
         //Clicking in an area in the Side Panel where there are inventory boxes
-        if ((e.getX() < Globals.getSidePanelWidth()) 
+        if ((e.getX() < GUIConfigs.getSidePanelWidth()) 
                 && (e.getY() > sA.scale(225))
                 && (e.getY() < sA.scale(225+65))) {
             inventoryBoxesClicked(e);
         }
         //Clicking in an area in the Side Panel where there are action buttons
-        if ((e.getX() < Globals.getSidePanelWidth()) 
+        if ((e.getX() < GUIConfigs.getSidePanelWidth()) 
                 && (e.getY() > sA.scale(315))
                 && (e.getY() < sA.scale(315+65))) {
             actionButtonsClicked(e);

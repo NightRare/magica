@@ -24,7 +24,7 @@ import nz.ac.aut.ense701.gameModel.Game;
  * 
  * @author Sam
  */
-public class NewUI {
+public class GUI {
     
     private JFrame frame;
     private Canvas canvas;
@@ -37,7 +37,7 @@ public class NewUI {
     private Game game;
     private GameLoop loop;
     
-    public NewUI(Game game, GameLoop loop) {
+    public GUI(Game game, GameLoop loop) {
         this.game = game;
         this.loop = loop;
         //KiwiCountUI oldUI = new KiwiCountUI(game);
@@ -50,21 +50,21 @@ public class NewUI {
      * Creates the frame and populates it
      */
     private void createDisplay() {
-        frame = new JFrame(Globals.TITLE);
-        frame.setSize(Globals.width, Globals.height);
+        frame = new JFrame(GUIConfigs.TITLE);
+        frame.setSize(GUIConfigs.width, GUIConfigs.height);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(false);
         frame.setLocationRelativeTo(null);
         
         canvas = new Canvas();
         canvas.setIgnoreRepaint(true);
-        canvas.setPreferredSize(new Dimension(Globals.width, Globals.height));
-        canvas.setMaximumSize(new Dimension(Globals.width, Globals.height));
-        canvas.setMinimumSize(new Dimension(Globals.width, Globals.height));
+        canvas.setPreferredSize(new Dimension(GUIConfigs.width, GUIConfigs.height));
+        canvas.setMaximumSize(new Dimension(GUIConfigs.width, GUIConfigs.height));
+        canvas.setMinimumSize(new Dimension(GUIConfigs.width, GUIConfigs.height));
         
         // add mouse listeners and keypressed listeners here
-        WASDListener keyListener = new WASDListener(game);
-        NavClickListener clickListener = new NavClickListener(game, loop);
+        NavigationKeyListener keyListener = new NavigationKeyListener(game);
+        ClickListener clickListener = new ClickListener(game, loop);
         ShortcutListener shortcutListener = new ShortcutListener(game);
         
         frame.addKeyListener(keyListener);
@@ -167,8 +167,8 @@ public class NewUI {
         frame.setVisible(false);
         
         ScalingAssistant scaler = ScalingAssistant.getScalingAssistant();
-        int newWidth = scaler.scale(Globals.width);
-        int newHeight = scaler.scale(Globals.height);
+        int newWidth = scaler.scale(GUIConfigs.width);
+        int newHeight = scaler.scale(GUIConfigs.height);
         frame.setSize(newWidth, newHeight);
         canvas.setPreferredSize(new Dimension(newWidth, newHeight));
         canvas.setMaximumSize(new Dimension(newWidth, newHeight));

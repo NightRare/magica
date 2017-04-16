@@ -25,8 +25,8 @@ public class TickMachine {
     public void tick() {
         
         // Updates each map square to reflect any changes in Game Model
-        ArrayList<NewMapSquare> squareList = loop.getMapSquareList();
-        for (NewMapSquare square : squareList) {
+        ArrayList<MapSquare> squareList = loop.getMapSquareList();
+        for (MapSquare square : squareList) {
             square.initialiseOrRefresh();
         }
         

@@ -51,8 +51,8 @@ public class RenderingEngine {
 
         renderBackground(g2d);
         
-        ArrayList<NewMapSquare> squareList = loop.getMapSquareList();
-        for (NewMapSquare square : squareList) {
+        ArrayList<MapSquare> squareList = loop.getMapSquareList();
+        for (MapSquare square : squareList) {
             renderMapSquare(g2d, square);
         }
         //renders Side Panel
@@ -68,22 +68,22 @@ public class RenderingEngine {
      * @param g2d graphics2D reference
      * @param square MapSquare to render
      */
-    private void renderMapSquare(Graphics2D g2d, NewMapSquare square) {
+    private void renderMapSquare(Graphics2D g2d, MapSquare square) {
 
-        int xToRenderAt = Globals.colToX(square.getColumn());
-        int yToRenderAt = Globals.rowToY(square.getRow());
+        int xToRenderAt = GUIConfigs.colToX(square.getColumn());
+        int yToRenderAt = GUIConfigs.rowToY(square.getRow());
 
-        int yLowered = yToRenderAt + Globals.getSquareHeight() / 2;
+        int yLowered = yToRenderAt + GUIConfigs.getSquareHeight() / 2;
         /*    
         g2d.fill(new RoundRectangle2D.Double(xToRenderAt, yToRenderAt,
-                Globals.getSquareWidth(),
-                Globals.getSquareHeight(),
+                GUIConfigs.getSquareWidth(),
+                GUIConfigs.getSquareHeight(),
                 10, 10)); 
          */
 
         g2d.fill(new Rectangle2D.Double(xToRenderAt, yToRenderAt,
-                Globals.getSquareWidth(),
-                Globals.getSquareHeight()));
+                GUIConfigs.getSquareWidth(),
+                GUIConfigs.getSquareHeight()));
 
         g2d.drawImage(square.getTexture(), null, xToRenderAt, yToRenderAt);
 
@@ -122,12 +122,12 @@ public class RenderingEngine {
     private void renderBoards(Graphics2D g2d) {
         g2d.setColor(Color.white);
         //display Action Board area
-        g2d.fill(new Rectangle2D.Double(Globals.boardOffsetX(), Globals.boardOffsetY(),
-                Globals.boardWidth(), Globals.boardHeight()));
+        g2d.fill(new Rectangle2D.Double(GUIConfigs.boardOffsetX(), GUIConfigs.boardOffsetY(),
+                GUIConfigs.boardWidth(), GUIConfigs.boardHeight()));
         //display Info Board area
         g2d.fill(new Rectangle2D.Double(
-                Globals.boardOffsetX(), (Globals.boardOffsetY() * 2) + Globals.boardHeight(),
-                Globals.boardWidth(), Globals.boardHeight()));
+                GUIConfigs.boardOffsetX(), (GUIConfigs.boardOffsetY() * 2) + GUIConfigs.boardHeight(),
+                GUIConfigs.boardWidth(), GUIConfigs.boardHeight()));
     }
 
     /**
@@ -372,7 +372,7 @@ public class RenderingEngine {
         g2d.setColor(Color.lightGray);
         //display background for sidePanel
         g2d.fill(new Rectangle2D.Double(0, 0,
-                Globals.width, Globals.height));
+                GUIConfigs.width, GUIConfigs.height));
     }
 
     private void renderOccupants(Graphics2D g2d, SidePanel sidePanel, ScalingAssistant scaleAssist) {
