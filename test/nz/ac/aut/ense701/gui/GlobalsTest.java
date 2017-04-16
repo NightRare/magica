@@ -133,9 +133,9 @@ public class GlobalsTest {
     @Test
     public void testBoardOffsetY() {
         System.out.println("boardOffsetY");
-        double expResult = 0.0;
+        double expResult = 12.0;
         double result = Globals.boardOffsetY();
-        assertEquals(expResult, result, 12.0);
+        assertEquals(expResult, result, 0.0);
     }
     
 }
