@@ -337,19 +337,31 @@ public class RenderingEngine {
             g2d.drawString(occupant2.getName().toUpperCase(), scaleAssist.scale(35), scaleAssist.scale(770));
         } 
         
-        else {            
+        else {
+	      // display the portrait of the Occupant            
             BufferedImage bi = AssetManager.getAssetManager().getOccupantPortrait(infoOccupant.getName());
             g2d.drawImage(bi, 
                 scaleAssist.scale(35), scaleAssist.scale(12+315+100), //X & Y offset 
                 scaleAssist.scale(225), scaleAssist.scale(130), //width & height
                 null);
-            
             g2d.setColor(Color.gray);
-            
-            g2d.setColor(Color.gray);
-            g2d.drawString(infoOccupant.getName().toUpperCase(), scaleAssist.scale(35), scaleAssist.scale(630));
-            g2d.drawString(infoOccupant.getDescription(), scaleAssist.scale(35), scaleAssist.scale(665));
-            
+	      
+             // display text info
+            Font originalFont = g2d.getFont(); //record the original font
+
+            Font contentFont = new Font(Font.SERIF, Font.PLAIN, scaleAssist.scale(16));
+
+            g2d.drawString(infoOccupant.getName().toUpperCase(), scaleAssist.scale(30), scaleAssist.scale(590));
+
+            g2d.setFont(contentFont);
+            List<String> descLines = wordSplitter(infoOccupant.getDescription(), 35);
+
+            for(int i = 0; i < descLines.size(); i++) {
+                g2d.drawString(descLines.get(i), scaleAssist.scale(30), scaleAssist.scale(615 + i * 16));
+            }
+
+            g2d.setFont(originalFont); //set back to original font
+
             // display "read more" if its fauna
             if(infoOccupant instanceof Fauna)
                 g2d.drawString("READ MORE", scaleAssist.scale(35), scaleAssist.scale(600+160));            
