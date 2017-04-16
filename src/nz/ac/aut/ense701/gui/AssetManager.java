@@ -79,7 +79,14 @@ public class AssetManager {
         trap = scaleAssist.getScaledImage((loader.loadImage("/resource/images/action/trap.png")), scaleAssist.getScale());
         collect = scaleAssist.getScaledImage((loader.loadImage("/resource/images/action/collect.png")), scaleAssist.getScale());
     }
-
+    
+    
+    /**
+     * Get the image object of an occupant given its name.
+     * @param occupantName the name of an occupant.
+     * @return the image object of an occupant.
+     * @throws IllegalArgumentException
+     */
     public BufferedImage getOccupantPortrait (String occupantName) {
         if (occupantName == null || occupantName.isEmpty())
             throw new IllegalArgumentException(
