@@ -10,6 +10,7 @@ package nz.ac.aut.ense701.gui;
  * @author K Cortez
  */
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,7 +26,7 @@ public class BufferedImageLoader {
     
     public BufferedImage loadImage(String path){
         try {
-            image = ImageIO.read(getClass().getResource(path));
+            image = ImageIO.read(new File(path));
         } catch (IOException ex) {
             Logger.getLogger(BufferedImageLoader.class.getName()).log(Level.SEVERE, null, ex);
         }

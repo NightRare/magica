@@ -53,31 +53,31 @@ public class AssetManager {
     public void loadTextures() {
         ScalingAssistant scaleAssist = ScalingAssistant.getScalingAssistant();
         
-        water = scaleAssist.getScaledImage((loader.loadImage("/resource/images/tile_water.png")), scaleAssist.getScale());
-        scrub = scaleAssist.getScaledImage((loader.loadImage("/resource/images/tile_scrub.png")), scaleAssist.getScale());
-        wetland = scaleAssist.getScaledImage((loader.loadImage("/resource/images/tile_wetland.png")), scaleAssist.getScale());
-        forest = scaleAssist.getScaledImage((loader.loadImage("/resource/images/tile_forest.png")), scaleAssist.getScale());
-        sand = scaleAssist.getScaledImage((loader.loadImage("/resource/images/tile_sand.png")), scaleAssist.getScale());
-        player = scaleAssist.getScaledImage((loader.loadImage("/resource/images/player_01.png")), scaleAssist.getScale());
-        black = scaleAssist.getScaledImage((loader.loadImage("/resource/images/black.png")), scaleAssist.getScale());
-        grey = scaleAssist.getScaledImage((loader.loadImage("/resource/images/grey.png")), scaleAssist.getScale());
+        water = scaleAssist.getScaledImage((loader.loadImage("images/tile_water.png")), scaleAssist.getScale());
+        scrub = scaleAssist.getScaledImage((loader.loadImage("images/tile_scrub.png")), scaleAssist.getScale());
+        wetland = scaleAssist.getScaledImage((loader.loadImage("images/tile_wetland.png")), scaleAssist.getScale());
+        forest = scaleAssist.getScaledImage((loader.loadImage("images/tile_forest.png")), scaleAssist.getScale());
+        sand = scaleAssist.getScaledImage((loader.loadImage("images/tile_sand.png")), scaleAssist.getScale());
+        player = scaleAssist.getScaledImage((loader.loadImage("images/player_01.png")), scaleAssist.getScale());
+        black = scaleAssist.getScaledImage((loader.loadImage("images/black.png")), scaleAssist.getScale());
+        grey = scaleAssist.getScaledImage((loader.loadImage("images/grey.png")), scaleAssist.getScale());
         
-        animal = scaleAssist.getScaledImage((loader.loadImage("/resource/images/animal.png")), scaleAssist.getScale());
-        food = scaleAssist.getScaledImage((loader.loadImage("/resource/images/food.png")), scaleAssist.getScale());
-        tool = scaleAssist.getScaledImage((loader.loadImage("/resource/images/tool.png")), scaleAssist.getScale());
-        hazard = scaleAssist.getScaledImage((loader.loadImage("/resource/images/hazard.png")), scaleAssist.getScale());
+        animal = scaleAssist.getScaledImage((loader.loadImage("images/animal.png")), scaleAssist.getScale());
+        food = scaleAssist.getScaledImage((loader.loadImage("images/food.png")), scaleAssist.getScale());
+        tool = scaleAssist.getScaledImage((loader.loadImage("images/tool.png")), scaleAssist.getScale());
+        hazard = scaleAssist.getScaledImage((loader.loadImage("images/hazard.png")), scaleAssist.getScale());
         
-        playerIcon = scaleAssist.getScaledImage((loader.loadImage("/resource/images/sidepanel_player.png")), scaleAssist.getScale());
-        questIcon = scaleAssist.getScaledImage((loader.loadImage("/resource/images/sidepanel_quest.png")), scaleAssist.getScale());
-        inventoryEmpty = scaleAssist.getScaledImage((loader.loadImage("/resource/images/inventory_empty.png")), scaleAssist.getScale());
-        inventorySnack = scaleAssist.getScaledImage((loader.loadImage("/resource/images/inventory_snack.png")), scaleAssist.getScale());
-        inventoryToolbox = scaleAssist.getScaledImage((loader.loadImage("/resource/images/inventory_screwdriver.png")), scaleAssist.getScale());
-        inventoryApple = scaleAssist.getScaledImage((loader.loadImage("/resource/images/inventory_apple.png")), scaleAssist.getScale());
-        inventoryTrap = scaleAssist.getScaledImage((loader.loadImage("/resource/images/inventory_trap.png")), scaleAssist.getScale());
+        playerIcon = scaleAssist.getScaledImage((loader.loadImage("images/sidepanel_player.png")), scaleAssist.getScale());
+        questIcon = scaleAssist.getScaledImage((loader.loadImage("images/sidepanel_quest.png")), scaleAssist.getScale());
+        inventoryEmpty = scaleAssist.getScaledImage((loader.loadImage("images/inventory_empty.png")), scaleAssist.getScale());
+        inventorySnack = scaleAssist.getScaledImage((loader.loadImage("images/inventory_snack.png")), scaleAssist.getScale());
+        inventoryToolbox = scaleAssist.getScaledImage((loader.loadImage("images/inventory_screwdriver.png")), scaleAssist.getScale());
+        inventoryApple = scaleAssist.getScaledImage((loader.loadImage("images/inventory_apple.png")), scaleAssist.getScale());
+        inventoryTrap = scaleAssist.getScaledImage((loader.loadImage("images/inventory_trap.png")), scaleAssist.getScale());
         
-        tag = scaleAssist.getScaledImage((loader.loadImage("/resource/images/action/tag.png")), scaleAssist.getScale());
-        trap = scaleAssist.getScaledImage((loader.loadImage("/resource/images/action/trap.png")), scaleAssist.getScale());
-        collect = scaleAssist.getScaledImage((loader.loadImage("/resource/images/action/collect.png")), scaleAssist.getScale());
+        tag = scaleAssist.getScaledImage((loader.loadImage("images/action/tag.png")), scaleAssist.getScale());
+        trap = scaleAssist.getScaledImage((loader.loadImage("images/action/trap.png")), scaleAssist.getScale());
+        collect = scaleAssist.getScaledImage((loader.loadImage("images/action/collect.png")), scaleAssist.getScale());
     }
     
     
@@ -113,7 +113,7 @@ public class AssetManager {
     public void loadOccupantsImages() {
         ScalingAssistant scaleAssist = ScalingAssistant.getScalingAssistant();
         kiwi = scaleAssist.getScaledImage(
-            (loader.loadImage("/resource/images/occupants/kiwi.jpg")), 
+            (loader.loadImage("images/occupants/kiwi.jpg")), 
             scaleAssist.getScale()
             );
     }
