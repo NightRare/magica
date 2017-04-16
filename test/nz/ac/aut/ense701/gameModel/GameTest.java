@@ -54,37 +54,55 @@ public class GameTest extends junit.framework.TestCase
     /*********************************************************************************************************
      * Game under test
       
----------------------------------------------------
-|    |    |@   | F  | T  |    |    | PK |    |    |
-|~~~~|~~~~|....|....|....|~~~~|^^^^|^^^^|^^^^|^^^^|
----------------------------------------------------
-|    |    |    |    | H  |    |    |    |    |    |
-|~~~~|####|^^^^|^^^^|^^^^|^^^^|^^^^|^^^^|^^^^|^^^^|
----------------------------------------------------
-|    |    | H  |    | E  |    | P  |    | K  |    |
-|####|####|####|####|^^^^|^^^^|^^^^|^^^^|^^^^|~~~~|
----------------------------------------------------
-| T  |    |    |    | P  | H  |    |    |    |    |
-|....|####|####|####|****|****|^^^^|....|~~~~|~~~~|
----------------------------------------------------
-| F  | P  |    |    |    |    | F  |    |    |    |
-|....|^^^^|^^^^|^^^^|****|****|^^^^|....|~~~~|~~~~|
----------------------------------------------------
-| H  |    | P  | T  | E  |    |    |    |    |    |
-|....|****|****|****|****|****|####|####|####|~~~~|
----------------------------------------------------
-|    |    | K  |    | P  | H  | K  | E  | F  |    |
-|....|****|****|****|****|****|****|####|####|####|
----------------------------------------------------
-| K  |    |    | F  | H  |    | H  | K  | T  |    |
-|****|****|****|****|****|~~~~|****|****|~~~~|~~~~|
----------------------------------------------------
-|    |    | E  | K  |    |    |    |    | F  |    |
-|....|....|****|****|~~~~|~~~~|~~~~|****|****|....|
----------------------------------------------------
-|    |    |    | K  | K  |    | K  | P  |    |    |
-|~~~~|....|****|****|****|~~~~|****|****|****|....|
----------------------------------------------------
+---------------------------------------------------------------------------------
+|    |    |@   | F  | T  |    |    | PK |    |    | T  |    |    |    |    |    |
+|~~~~|~~~~|....|....|....|~~~~|^^^^|^^^^|^^^^|^^^^|^^^^|~~~~|~~~~|....|....|....|
+---------------------------------------------------------------------------------
+|    |    |    |    | H  |    |    |    |    |    |    |    |    |    |    |    |
+|~~~~|####|^^^^|^^^^|^^^^|^^^^|^^^^|^^^^|^^^^|^^^^|^^^^|####|####|####|~~~~|~~~~|
+---------------------------------------------------------------------------------
+|    |    | H  |    | E  |    | P  |    | K  |    |    |    |    | F  |    |    |
+|####|####|####|####|^^^^|^^^^|^^^^|^^^^|^^^^|~~~~|^^^^|^^^^|^^^^|^^^^|^^^^|^^^^|
+---------------------------------------------------------------------------------
+| T  |    |    |    | P  | H  |    |    |    |    |    |    |    |    | P  |    |
+|....|####|####|####|****|****|^^^^|....|~~~~|~~~~|....|####|####|####|####|****|
+---------------------------------------------------------------------------------
+| F  | P  |    |    |    |    | F  |    |    |    |    |    | F  |    |    |    |
+|....|^^^^|^^^^|^^^^|****|****|^^^^|....|~~~~|~~~~|****|****|****|****|****|****|
+---------------------------------------------------------------------------------
+| H  |    | P  | T  | E  |    |    |    |    |    |    |    | P  |    |    |    |
+|....|****|****|****|****|****|####|####|####|~~~~|~~~~|####|####|####|####|####|
+---------------------------------------------------------------------------------
+|    |    | K  |    | P  | H  | K  | E  | F  |    |    |    |    |    | P  |    |
+|....|****|****|****|****|****|****|####|####|####|^^^^|^^^^|^^^^|^^^^|^^^^|^^^^|
+---------------------------------------------------------------------------------
+| K  |    |    | F  | H  |    | H  | K  | T  |    |    |    | K  |    |    |    |
+|****|****|****|****|****|~~~~|****|****|~~~~|~~~~|^^^^|^^^^|^^^^|^^^^|^^^^|^^^^|
+---------------------------------------------------------------------------------
+|    |    | E  | K  |    |    |    |    | F  |    |    |    | E  |    |    | E  |
+|....|....|****|****|~~~~|~~~~|~~~~|****|****|....|****|****|****|****|****|****|
+---------------------------------------------------------------------------------
+|    |    |    | K  | K  |    | K  | P  |    |    |    |    |    |    | K  | E  |
+|~~~~|....|****|****|****|~~~~|****|****|****|....|####|####|****|****|****|****|
+---------------------------------------------------------------------------------
+| K  |    |    | K  |    |    | P  | P  |    |    |    |    | F  | F  |    | E  |
+|....|....|****|****|~~~~|~~~~|~~~~|****|****|....|****|****|****|****|****|****|
+---------------------------------------------------------------------------------
+| E  |    |    | E  |    | E  | H  |    |    |    |    |    | H  | H  | K  | K  |
+|....|****|****|****|****|****|####|####|####|~~~~|~~~~|####|####|####|####|####|
+---------------------------------------------------------------------------------
+| P  |    |    | K  |    |    | K  |    | E  |    | E  |    | F  |    | K  | F  |
+|....|^^^^|^^^^|^^^^|****|****|^^^^|....|~~~~|~~~~|****|****|****|****|****|****|
+---------------------------------------------------------------------------------
+| E  | E  | E  |    |    | H  |    |    | H  |    |    |    | F  | K  |    | F  |
+|~~~~|####|^^^^|^^^^|^^^^|^^^^|^^^^|^^^^|^^^^|^^^^|^^^^|####|####|####|~~~~|~~~~|
+---------------------------------------------------------------------------------
+| H  |    | E  | E  |    |    | E  |    | K  |    |    |    |    | K  | F  | F  |
+|~~~~|####|^^^^|^^^^|^^^^|^^^^|^^^^|^^^^|^^^^|^^^^|^^^^|####|####|####|~~~~|~~~~|
+---------------------------------------------------------------------------------
+| F  |    | E  |    |    |    | E  |    | K  |    | K  |    | H  |    |    | H  |
+|****|****|****|****|****|~~~~|****|****|~~~~|~~~~|^^^^|^^^^|^^^^|^^^^|^^^^|^^^^|
+---------------------------------------------------------------------------------
  *********************************************************************************************************/
     /**
      * Tests for Accessor methods of Game, excluding those which are wrappers for accessors in other classes.
@@ -93,12 +111,12 @@ public class GameTest extends junit.framework.TestCase
     
     @Test
     public void testGetNumRows(){
-        assertEquals("Check row number", game.getNumRows(), 10);
+        assertEquals("Check row number", game.getNumRows(), 16);
     }
     
     @Test
     public void testGetNumColumns(){
-        assertEquals("Check column number", game.getNumRows(), 10);
+        assertEquals("Check column number", game.getNumRows(), 16);
     }
     
     @Test
@@ -376,12 +394,6 @@ public class GameTest extends junit.framework.TestCase
         assertTrue("Player should still have trap", player.hasItem(trap));
     }
     
-    @Test
-    public void testUseItemTrapFinalPredator(){
-        
-        assertTrue("Check player moves", trapAllPredators());
-        assertTrue("Game should be won", game.getState()== GameState.WON);    
-    }
     
     @Test
     public void testUseItemBrokenTrap(){
@@ -499,91 +511,7 @@ public class GameTest extends junit.framework.TestCase
  * Private helper methods
  */
     
-    private boolean trapAllPredators()
-    {
-        //Firstly player needs a trap
-        Tool trap = new Tool(playerPosition,"Trap", "A predator trap",1.0, 1.0);
-        game.collectItem(trap);
-        
-        //Now player needs to trap all predators
-        //Predator 1
-        boolean moveOK = playerMoveEast(5);
-        game.useItem(trap);
-        //Predator 2
-        if(moveOK){
-            moveOK = playerMoveWest(1);
-        }
-        if(moveOK){
-            moveOK = playerMoveSouth(2);
-            game.useItem(trap);
-        }
-        //Predator 3
-        if(moveOK){
-            moveOK = playerMoveWest(2);
-        }
-        if(moveOK){
-            moveOK = playerMoveSouth(1);
-            game.useItem(trap);
-        }
-        //Predator 4
-        if(moveOK){
-            moveOK = playerMoveWest(3);
-        }
-        if(moveOK){
-            moveOK = playerMoveSouth(1);
-            game.useItem(trap);
-        }
-        //Predator 5
-        if(moveOK){
-            moveOK = playerMoveEast(1);
-        }
-        if(moveOK){
-            moveOK = playerMoveSouth(1);
-            game.useItem(trap);
-        }
-         //Predator 6
-        if(moveOK){
-            moveOK = playerMoveEast(2);
-        }
-        if(moveOK){
-            moveOK = playerMoveSouth(1);
-            game.useItem(trap);
-        }
-        //Predator 7
-        if(moveOK){
-            moveOK = playerMoveNorth(1);
-        }
-        if(moveOK){
-            moveOK = playerMoveEast(3);
-        }
-        if(moveOK){
-            moveOK = playerMoveSouth(4);
-            game.useItem(trap);
-        }
-        return moveOK;
-    }
-    
-    private boolean playerMoveNorth(int numberOfMoves)
-    {
-        boolean success = false;
-        for (int i = 0; i < numberOfMoves; i++) {
-            success = game.playerMove(MoveDirection.NORTH);
-            if(!success)break;
-            
-        }
-        return success;
-    }
-    
-    private boolean playerMoveSouth(int numberOfMoves)
-    {
-        boolean success = false;
-        for (int i = 0; i < numberOfMoves; i++) {
-            success = game.playerMove(MoveDirection.SOUTH);
-            if(!success)break;
-            
-        }
-        return success;
-    }
+
     
     private boolean playerMoveEast(int numberOfMoves)
     {
@@ -596,14 +524,4 @@ public class GameTest extends junit.framework.TestCase
         return success;
     }
     
-    private boolean playerMoveWest(int numberOfMoves)
-    {
-        boolean success = false;
-        for (int i = 0; i < numberOfMoves; i++) {
-            success = game.playerMove(MoveDirection.WEST);
-            if(!success)break;
-            
-        }
-        return success;
-    }
 }
