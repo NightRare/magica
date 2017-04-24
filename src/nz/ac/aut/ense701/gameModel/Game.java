@@ -29,7 +29,6 @@ public class Game
     public static final int MAXSIZE_INDEX = 4;
     public static final int SIZE_INDEX = 5;
     
-    
 
     /**
      * A new instance of Kiwi island that reads data from "IslandData.txt".
@@ -72,6 +71,11 @@ public class Game
         loseMessage = "";
         playerMessage = "";
         notifyGameEventListeners();
+        
+        //Background Music
+        AudioPlayer.load();
+        AudioPlayer.getMusic("music").loop();
+        
     }
 
     /***********************************************************************************************************************
@@ -918,6 +922,7 @@ public class Game
             }
         }
     }
+    
 
     private Island island;
     private Player player;
