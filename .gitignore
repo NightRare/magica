@@ -31,3 +31,7 @@ nbdist/
 
 # Exclusion
 !libs/**/*.jar
+
+# Intellij
+.idea/
+magica.iml
