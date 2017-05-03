@@ -115,7 +115,7 @@ public class RenderingEngine {
 
         //drawing the occupants
         ScalingAssistant scaleAssist = ScalingAssistant.getScalingAssistant();
-        g2d.drawImage(square.getOccupantImage(square.getLabel()),
+        g2d.drawImage(square.getOccupantIcon(square.getLabel()),
                 xToRenderAt, yToRenderAt,
                 scaleAssist.scale(50), scaleAssist.scale(50), null);
     }

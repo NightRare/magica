@@ -154,29 +154,13 @@ public class MapSquare {
         return texture;
     }
     
-    public BufferedImage getOccupantImage(String label){
+    public BufferedImage getOccupantIcon(String label){
         BufferedImage img = null;
-        if (label.length()==0) return img;
-        switch(label.charAt(0)){
-            case 'F':
-                img = animal;
-                break;
-            case 'K':
-                img = animal;
-                break;
-            case 'P':
-                img = animal;
-                break;
-            case 'H':
-                img = hazard;
-                break;
-            case 'T':
-                img = tool;
-                break;
-            case 'E':
-                img = food;
-                break;
-        }
+        if (label.length() == 0) return img;
+        if(label.matches("[FKP]+")) img = animal;
+        if(label.matches("H")) img = hazard;
+        if(label.matches("T")) img = tool;
+        if(label.matches("E")) img = food;
         return img;
     }
     
