@@ -54,13 +54,9 @@ public class RenderingEngine {
     
 
     public RenderingEngine(GameLoop loop) {
-        X_OFFSET = 0;
-        Y_OFFSET = 1;
-        IMG_WIDTH = 2; 
-        IMG_HEIGHT = 3;
-        BOX_1 = 0;
-        BOX_2 = 1;
-        BOX_3 = 2;
+        X_OFFSET = 0; Y_OFFSET = 1;
+        IMG_WIDTH = 2; IMG_HEIGHT = 3;
+        BOX_1 = 0; BOX_2 = 1; BOX_3 = 2;
         this.loop = loop;
         this.scaleAssist = ScalingAssistant.getScalingAssistant();
     }
