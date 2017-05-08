@@ -25,6 +25,7 @@ import java.util.logging.Logger;
 import nz.ac.aut.ense701.gameModel.Fauna;
 import nz.ac.aut.ense701.gameModel.Game;
 import nz.ac.aut.ense701.gameModel.GameState;
+import nz.ac.aut.ense701.gameModel.LightLevel;
 import nz.ac.aut.ense701.gameModel.Occupant;
 
 /**
@@ -40,6 +41,7 @@ public class RenderingEngine {
 
     public RenderingEngine(GameLoop loop) {
         this.loop = loop;
+        this.game = loop.getGame();
     }
 
     /**
@@ -60,6 +62,10 @@ public class RenderingEngine {
 
         // render info board
         renderInfoBoard(g2d, loop.getSidePanel(), ScalingAssistant.getScalingAssistant());
+        
+        loop.getPlayerSprite().render(g2d);
+        
+        if (game.lightLevel() == LightLevel.NIGHT) g2d.drawImage(AssetManager.getAssetManager().getNight(), null, GUIConfigs.colToX(0), GUIConfigs.rowToY(0));
     }
 
     /**
@@ -73,18 +79,6 @@ public class RenderingEngine {
         int xToRenderAt = GUIConfigs.colToX(square.getColumn());
         int yToRenderAt = GUIConfigs.rowToY(square.getRow());
 
-        int yLowered = yToRenderAt + GUIConfigs.getSquareHeight() / 2;
-        /*    
-        g2d.fill(new RoundRectangle2D.Double(xToRenderAt, yToRenderAt,
-                GUIConfigs.getSquareWidth(),
-                GUIConfigs.getSquareHeight(),
-                10, 10)); 
-         */
-
-        g2d.fill(new Rectangle2D.Double(xToRenderAt, yToRenderAt,
-                GUIConfigs.getSquareWidth(),
-                GUIConfigs.getSquareHeight()));
-
         g2d.drawImage(square.getTexture(), null, xToRenderAt, yToRenderAt);
 
         g2d.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 30));
@@ -95,8 +89,9 @@ public class RenderingEngine {
         g2d.drawImage(square.getOccupantImage(square.getLabel()),
                 xToRenderAt, yToRenderAt,
                 scaleAssist.scale(50), scaleAssist.scale(50), null);
+        
     }
-
+    
     /**
      * Renders a Side Panel
      *
@@ -150,7 +145,7 @@ public class RenderingEngine {
      *
      * @param g2d graphics2D reference
      * @param sidePanel side panel object
-     * @param scAs scaling assistant
+     * @param scaleAssist scaling assistant
      */
     private void renderQuest(Graphics2D g2d, SidePanel sidePanel, ScalingAssistant scaleAssist) {
         //displays the quest clipboard image
@@ -173,7 +168,7 @@ public class RenderingEngine {
      *
      * @param g2d graphics2D reference
      * @param sidePanel side panel object
-     * @param scAs scaling assistant
+     * @param scaleAssist scaling assistant
      */
     private void renderStaminaBar(Graphics2D g2d, SidePanel sidePanel, ScalingAssistant scaleAssist) {
         //display Max Stamina
@@ -252,7 +247,7 @@ public class RenderingEngine {
                 renderOccupantsList(g2d, sidePanel, scaleAssist);
                 break;
             case 1:
-                renderOccupantInfo(g2d, sidePanel, scaleAssist);
+                renderOccupantInfo(g2d, sidePanel.getOccupants()[0], scaleAssist);
                 renderOccupants(g2d, sidePanel, scaleAssist);
                 break;
             default:
@@ -264,23 +259,21 @@ public class RenderingEngine {
     /**
      * Renders the info for an occupant 
      * @param g2d
-     * @param sidePanel
+     * @param occupant the occupant
      * @param scaleAssist 
      */
-    private void renderOccupantInfo(Graphics2D g2d, SidePanel sidePanel, ScalingAssistant scaleAssist) {
-        Occupant occupant = sidePanel.getOccupants()[0];
-
+    private void renderOccupantInfo(Graphics2D g2d, Occupant occupant, ScalingAssistant scaleAssist) {
         Font originalFont = g2d.getFont(); //record the original font
-        
+
         Font contentFont = new Font(Font.SERIF, Font.PLAIN, scaleAssist.scale(16));
         g2d.setColor(Color.gray);
         g2d.drawString(occupant.getName().toUpperCase(), scaleAssist.scale(30), scaleAssist.scale(590));
-        
+
         g2d.setFont(contentFont);
-        List<String> descLines = wordSplitter(occupant.getDescription(), 35);
+        List<String> descLines = wordSplitter(occupant.getDescription(), 40);
 
         for(int i = 0; i < descLines.size(); i++) {
-            g2d.drawString(descLines.get(i), scaleAssist.scale(30), scaleAssist.scale(615 + i * 16));
+            g2d.drawString(descLines.get(i), scaleAssist.scale(25), scaleAssist.scale(612 + i * 16));
         }
 
         g2d.setFont(originalFont); //set back to original font
@@ -288,18 +281,27 @@ public class RenderingEngine {
     
     
     private List<String> wordSplitter(String text, int charNums) {
-        char[] charArray = text.toCharArray();
+        String[] words = text.split(" ");
         List<String> output = new LinkedList();
-        String line = "";
-        
-        for(int i = 0; i < charArray.length; i++) {
-            line += charArray[i];
-            if(i % charNums == (charNums - 1)) {
-                output.add(line);
-                line = "";
-            }            
+        StringBuilder sb = new StringBuilder();
+
+        for(int i = 0; i < words.length; i++) {
+            int lineLength = sb.length() + words[i].length();
+
+            // it is >= but not >, because should keep one char for space
+            if(lineLength >= charNums) {
+                output.add(sb.toString());
+                sb = new StringBuilder();
+                i--;
+            }
+            else {
+                sb.append(" ");
+                sb.append(words[i]);
+            }
         }
-        output.add(line);
+        if(sb.length() != 0)
+            output.add(sb.toString());
+
         return output;
     }
     
@@ -346,21 +348,7 @@ public class RenderingEngine {
                 null);
             g2d.setColor(Color.gray);
 	      
-             // display text info
-            Font originalFont = g2d.getFont(); //record the original font
-
-            Font contentFont = new Font(Font.SERIF, Font.PLAIN, scaleAssist.scale(16));
-
-            g2d.drawString(infoOccupant.getName().toUpperCase(), scaleAssist.scale(30), scaleAssist.scale(590));
-
-            g2d.setFont(contentFont);
-            List<String> descLines = wordSplitter(infoOccupant.getDescription(), 35);
-
-            for(int i = 0; i < descLines.size(); i++) {
-                g2d.drawString(descLines.get(i), scaleAssist.scale(30), scaleAssist.scale(615 + i * 16));
-            }
-
-            g2d.setFont(originalFont); //set back to original font
+            renderOccupantInfo(g2d, infoOccupant, scaleAssist);
 
             // display "read more" if its fauna
             if(infoOccupant instanceof Fauna)

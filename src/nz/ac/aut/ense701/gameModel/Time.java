@@ -29,7 +29,7 @@ public class Time {
      * @return LightLevel DAY or NIGHT
      */
     public LightLevel dayOrNight() {
-        if (turn%20 < 10) return LightLevel.DAY;
+        if (turn%24 < 12) return LightLevel.DAY;
         else return LightLevel.NIGHT;
     }
     

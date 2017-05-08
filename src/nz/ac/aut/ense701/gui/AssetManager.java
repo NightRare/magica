@@ -20,7 +20,7 @@ import nz.ac.aut.ense701.gameModel.Occupant;
  */
 public class AssetManager {
     
-    private BufferedImage water, scrub, wetland, forest, sand, player, black, grey; 
+    private BufferedImage water, scrub, wetland, forest, sand, player, black, grey, night; 
     private BufferedImage animal, food, tool, hazard; //inventory items
     private BufferedImage tag, trap, collect; //action boxes
     private BufferedImage playerIcon,questIcon,inventoryEmpty,inventorySnack,
@@ -61,6 +61,7 @@ public class AssetManager {
         player = scaleAssist.getScaledImage((loader.loadImage("images/player_01.png")), scaleAssist.getScale());
         black = scaleAssist.getScaledImage((loader.loadImage("images/black.png")), scaleAssist.getScale());
         grey = scaleAssist.getScaledImage((loader.loadImage("images/grey.png")), scaleAssist.getScale());
+        night = scaleAssist.getScaledImage((loader.loadImage("images/night.png")), scaleAssist.getScale());
         
         animal = scaleAssist.getScaledImage((loader.loadImage("images/animal.png")), scaleAssist.getScale());
         food = scaleAssist.getScaledImage((loader.loadImage("images/food.png")), scaleAssist.getScale());
@@ -206,5 +207,10 @@ public class AssetManager {
     public BufferedImage getActionCollect() {
         return collect;
     }
+
+    public BufferedImage getNight() {
+        return night;
+    }
+
     
 }

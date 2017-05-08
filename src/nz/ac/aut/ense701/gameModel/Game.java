@@ -72,6 +72,7 @@ public class Game
         loseMessage = "";
         playerMessage = "";
         notifyGameEventListeners();
+        this.time = new Time();
     }
 
     /***********************************************************************************************************************
@@ -524,6 +525,9 @@ public class Game
             player.moveToPosition(newPosition, terrain);
             island.updatePlayerPosition(player);
             successfulMove = true;
+            
+            // tick time
+            passTime();
                     
             // Is there a hazard?
             checkForHazard();
@@ -918,7 +922,19 @@ public class Game
             }
         }
     }
+    
+    // ticks time over
+    private void passTime() {
+        time.tick();
+    }
+    
+    // returns whether it is day or night
+    public LightLevel lightLevel() {
+        return time.dayOrNight();
+    }
+    
 
+    private Time time;
     private Island island;
     private Player player;
     private GameState state;

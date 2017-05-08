@@ -29,7 +29,7 @@ public class MapSquare {
     private String label;
 
     
-    public BufferedImage water, scrub, wetland, forest, sand, player, black, grey = null;
+    public BufferedImage water, scrub, wetland, forest, sand, black, grey = null;
     public BufferedImage animal, food, tool, hazard;
 
     private AssetManager assetManager;
@@ -57,7 +57,6 @@ public class MapSquare {
         wetland = assetManager.getWetland();
         forest = assetManager.getForest();
         sand = assetManager.getSand();
-        player = assetManager.getPlayer();
         black = assetManager.getBlack();
         grey = assetManager.getGrey();
     }
@@ -119,10 +118,6 @@ public class MapSquare {
             }
             texture = image; //Sets up appropriate textures for the map
             
-            
-            if(game.hasPlayer(row, column)){
-                texture = player; //Sets up Player Icon to the current location of the player.
-            } 
             if(game.getState()==GameState.LOST){
                 texture = grey; } //When the player dies, then it reverts all textures that was used to grey.
 
