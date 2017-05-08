@@ -48,6 +48,7 @@ public class PlayerSprite {
     }
     
     public void tick() {
+        this.sprite = AssetManager.getAssetManager().getPlayer();
         player = game.getPlayer();
 //        xLocation = getXPosition();
 //        yLocation = getYPosition();
