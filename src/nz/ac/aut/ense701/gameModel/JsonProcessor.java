@@ -7,19 +7,14 @@ package nz.ac.aut.ense701.gameModel;
 
 import java.io.FileReader;
 import java.io.Reader;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.Map;
-import java.util.Objects;
+
 import nz.ac.aut.ense701.gameModel.jsonModels.*;
-import nz.ac.aut.ense701.gameModel.utils.OccupantsDuplicator;
 
 import static nz.ac.aut.ense701.gameModel.utils.OccupantsDuplicator.duplicate;
 
@@ -117,7 +112,29 @@ public class JsonProcessor implements IDataManager{
         }
         return templates;
     }
-    
+
+    @Override
+    public Map<Occupant, Integer> getAllOccupantTemplatesWithCount() {
+        Map<String, Integer> nameCounts = new HashMap<>();
+        Map<Occupant, Integer> occCount = new HashMap<>();
+        for(JsonOccupantsPosition jop : jsonOccupantsMap) {
+            for (String occName : jop.occupants) {
+                if(nameCounts.containsKey(occName)) {
+                    nameCounts.put(occName, nameCounts.get(occName) + 1);
+                }
+                else {
+                    nameCounts.put(occName, 1);
+                }
+            }
+        }
+
+        for(Map.Entry<String, Integer> nCount : nameCounts.entrySet()) {
+            occCount.put(occupantsDictionary.get(nCount.getKey()), nCount.getValue());
+        }
+
+        return occCount;
+    }
+
     // make a dictionary of all the types of Occupants so that they can be got by
     // names.
     private static Map<String, Occupant> makeOccupantDictionary(JsonOccupants occupantTypes) {

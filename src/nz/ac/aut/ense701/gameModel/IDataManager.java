@@ -5,6 +5,7 @@
  */
 package nz.ac.aut.ense701.gameModel;
 
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -31,4 +32,6 @@ public interface IDataManager {
      * @return a set of Occupant templates.
      */
     public Set<Occupant> getAllOccupantTemplates();
+
+    public Map<Occupant, Integer> getAllOccupantTemplatesWithCount();
 }

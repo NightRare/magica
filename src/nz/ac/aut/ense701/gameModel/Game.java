@@ -3,11 +3,9 @@ package nz.ac.aut.ense701.gameModel;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.HashSet;
-import java.util.Locale;
-import java.util.Scanner;
-import java.util.Set;
-import nz.ac.aut.ense701.gui.GameLoop;
+import java.util.*;
+
+import nz.ac.aut.ense701.gameModel.randomiser.OccupantsRandomiser;
 
 /**
  * This is the class that knows the Kiwi Island game rules and state
@@ -45,8 +43,9 @@ public class Game
     
     
     public Game(FeatureToggle fToggle, IDataManager dataManager) {
-        if(fToggle == null || dataManager == null) 
-            throw new IllegalArgumentException("The fToggle and dataManager cannot be null.");
+        Objects.requireNonNull(fToggle);
+        Objects.requireNonNull(dataManager);
+
         eventListeners = new HashSet<GameEventListener>();
         this.fToggle = fToggle;
         this.dataManager = dataManager;
@@ -902,18 +901,41 @@ public class Game
      */
     private void setUpOccupants() {
 
-        for(int r = 0; r < island.getNumRows(); r++) {
-            for(int c = 0; c < island.getNumColumns(); c++) {
-                Position pos = new Position(island, r, c);
-                Set<Occupant> occupants = dataManager.getOccupantsInPosition(
-                        pos);
+        if(island.getNumRows() == island.getNumColumns()) {
+            Map<Occupant, Integer> occCounts = dataManager.getAllOccupantTemplatesWithCount();
+            OccupantsRandomiser or = new OccupantsRandomiser(island.getNumRows(), occCounts);
+            Set<Occupant>[][] oMap = or.distributeOccupantsRandomly();
 
-                for(Occupant o : occupants) {
-                    if(o instanceof Kiwi)
-                        totalKiwis++;
-                    if(o instanceof Predator)
-                        totalPredators++;
-                    island.addOccupant(pos, o);
+            for(int r = 0; r < island.getNumRows(); r++) {
+                for(int c = 0; c < island.getNumColumns(); c++) {
+                    Position pos = new Position(island, r, c);
+                    Set<Occupant> occupants = oMap[r][c];
+
+                    for(Occupant o : occupants) {
+                        if(o instanceof Kiwi)
+                            totalKiwis++;
+                        if(o instanceof Predator)
+                            totalPredators++;
+                        island.addOccupant(pos, o);
+                    }
+                }
+            }
+        }
+        else {
+
+            for(int r = 0; r < island.getNumRows(); r++) {
+                for(int c = 0; c < island.getNumColumns(); c++) {
+                    Position pos = new Position(island, r, c);
+                    Set<Occupant> occupants = dataManager.getOccupantsInPosition(
+                            pos);
+
+                    for(Occupant o : occupants) {
+                        if(o instanceof Kiwi)
+                            totalKiwis++;
+                        if(o instanceof Predator)
+                            totalPredators++;
+                        island.addOccupant(pos, o);
+                    }
                 }
             }
         }
@@ -938,6 +960,4 @@ public class Game
     
     private FeatureToggle fToggle;
     private IDataManager dataManager;
-
-
 }
