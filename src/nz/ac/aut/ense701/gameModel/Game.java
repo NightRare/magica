@@ -705,7 +705,7 @@ public class Game
         {
             if ( occupant instanceof Fauna )
             {
-                AudioPlayer.getSound("birdsong").play();
+                AudioPlayer.getSound("Kiwi").play();
             }
         }
     }
