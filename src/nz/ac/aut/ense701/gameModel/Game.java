@@ -1,5 +1,7 @@
 package nz.ac.aut.ense701.gameModel;
 
+import nz.ac.aut.ense701.gui.SoundManager;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -73,8 +75,8 @@ public class Game
         
         //Background Music
         AudioPlayer.load();
-//        AudioPlayer.getMusic("music").loop();
-        
+        AudioPlayer.getMusic("music").loop();
+
     }
 
     /***********************************************************************************************************************
@@ -703,9 +705,9 @@ public class Game
     {
         for ( Occupant occupant : island.getOccupants(player.getPosition())  )
         {
-            if ( occupant instanceof Fauna )
+            if (AudioPlayer.soundMap.containsKey(occupant.getName()))
             {
-                AudioPlayer.getSound("Kiwi").play();
+                AudioPlayer.getSound(occupant.getName()).play();
             }
         }
     }
