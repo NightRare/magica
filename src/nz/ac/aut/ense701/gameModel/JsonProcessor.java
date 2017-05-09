@@ -19,6 +19,9 @@ import java.util.LinkedList;
 import java.util.Map;
 import java.util.Objects;
 import nz.ac.aut.ense701.gameModel.jsonModels.*;
+import nz.ac.aut.ense701.gameModel.utils.OccupantsDuplicator;
+
+import static nz.ac.aut.ense701.gameModel.utils.OccupantsDuplicator.duplicate;
 
 /**
  * A JSON Implementation of IDataManager.
@@ -98,7 +101,7 @@ public class JsonProcessor implements IDataManager{
             
             for(String name : jop.occupants) {
                 // clone from a "prototype"
-                Occupant o = cloneOccupant(occupantsDictionary.get(name));
+                Occupant o = duplicate(occupantsDictionary.get(name));
                 o.setPosition(position);
                 occupants.add(o);
             }
@@ -110,7 +113,7 @@ public class JsonProcessor implements IDataManager{
     public Set<Occupant> getAllOccupantTemplates() {
         Set<Occupant> templates = new HashSet();
         for(Occupant o : occupantsDictionary.values()) {
-            templates.add(cloneOccupant(o));
+            templates.add(duplicate(o));
         }
         return templates;
     }
@@ -134,57 +137,7 @@ public class JsonProcessor implements IDataManager{
         
         return occupantsDictionary;
     }
-    
-    // a method to deep clone an Occupant object
-    private static Occupant cloneOccupant(Occupant template) {
-        
-        Position position = template.getPosition();
-        String name = template.getName();
-        String description = template.getDescription();
-        String portrait = template.getPortrait();
-        
-        if(template instanceof Hazard) {
-            Hazard hazard = (Hazard) template;
-            return new Hazard(position, name, description, portrait, hazard.getImpact());
-        }
-        
-        if(template instanceof Item) {
-            Item item = (Item) template;
-            double weight = item.getWeight();
-            double size = item.getSize();
-            
-            if(template instanceof Food) {
-                Food food = (Food) template;
-                return new Food(position, name, description, portrait, weight, size, food.getEnergy());
-            }
-            
-            if(template instanceof Tool) {
-                return new Tool(position, name, description, portrait, weight, size);
-            }
-            
-            throw new IllegalArgumentException("An Item (abstract class) object cannot "
-                    + "be cloned.");
-        }
-        
-        if(template instanceof Fauna) {
-            
-            String link = ((Fauna) template).getLink();
-            
-            if(template instanceof Kiwi) {
-                return new Kiwi(position, name, description, portrait, link);
-            }
-            
-            if(template instanceof Predator) {
-                return new Predator(position, name, description, portrait, link);
-            }
-            
-            return new Fauna(position, name, description, portrait, link);
-        }
-        
-        throw new IllegalArgumentException("An Occupant (abstract class) object "
-                + "cannot be cloned.");
-    }
-    
+
     /**
      * Checks whether the deserialised JsonOccupants contains non-nullable fields
      * 
@@ -214,7 +167,7 @@ public class JsonProcessor implements IDataManager{
      * Checks whether any of the deserialised Occupants contains 
      * non-nullable fields
      * 
-     * @param occupantsPosition 
+     * @param occupant
      */
     private static void requireDataIntegerity(Occupant occupant) {
         if(occupant.getName() == null || occupant.getName().isEmpty())
