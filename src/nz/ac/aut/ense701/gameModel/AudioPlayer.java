@@ -25,8 +25,9 @@ public class AudioPlayer {
     public static void load(){
         
         try {
-
             musicMap.put("music", new Music("resource/sound/Intro_Theme.ogg"));
+            soundMap.put("birdsong", new Sound("sound/Birdsong.ogg"));
+
         } catch (SlickException ex) {
             Logger.getLogger(AudioPlayer.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -7,7 +7,6 @@ import java.util.HashSet;
 import java.util.Locale;
 import java.util.Scanner;
 import java.util.Set;
-import nz.ac.aut.ense701.gui.GameLoop;
 
 /**
  * This is the class that knows the Kiwi Island game rules and state
@@ -74,7 +73,7 @@ public class Game
         
         //Background Music
         AudioPlayer.load();
-        AudioPlayer.getMusic("music").loop();
+//        AudioPlayer.getMusic("music").loop();
         
     }
 
@@ -597,8 +596,11 @@ public class Game
                 this.setWinMessage(message);
             }
         }
+
+        playFaunaSoundOrNot();
+
         // notify listeners about changes
-            notifyGameEventListeners();
+        notifyGameEventListeners();
     }
     
        
@@ -691,6 +693,21 @@ public class Game
         }
         
         return hadPredator;
+    }
+
+    /**
+     * Checks if the player has met any fauna and play its sound
+     * if they do.
+     */
+    private void playFaunaSoundOrNot()
+    {
+        for ( Occupant occupant : island.getOccupants(player.getPosition())  )
+        {
+            if ( occupant instanceof Fauna )
+            {
+                AudioPlayer.getSound("birdsong").play();
+            }
+        }
     }
     
     /**
