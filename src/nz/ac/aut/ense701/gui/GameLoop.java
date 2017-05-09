@@ -34,6 +34,7 @@ public class GameLoop implements Runnable{
     
     private ArrayList<MapSquare> mapSquareList;
     private SidePanel sidePanel;
+    PlayerSprite playerSprite;
 
     /**
      * The constructor for GameLoop takes a game object. Game represents the game model.
@@ -44,6 +45,7 @@ public class GameLoop implements Runnable{
         this.running = false;
         tickMachine = new TickMachine(this);
         renderingEngine = new RenderingEngine(this);
+        playerSprite = new PlayerSprite(game);
         
         // Initialise the map grid
         initialiseMapSquareList();
@@ -175,6 +177,14 @@ public class GameLoop implements Runnable{
     
     public boolean getRunning(){
         return running;
+    }
+
+    public Game getGame() {
+        return game;
+    }
+    
+    public PlayerSprite getPlayerSprite() {
+        return this.playerSprite;
     }
     
     
