@@ -25,6 +25,7 @@ public class AssetManager {
     private BufferedImage tag, trap, collect; //action boxes
     private BufferedImage playerIcon,questIcon,inventoryEmpty,inventorySnack,
                 inventoryToolbox,inventoryApple,inventoryTrap;
+    private BufferedImage taggedBubble, trappedBubble;
     private HashMap<String, BufferedImage> occupantsPortraits;
     private IDataManager dataManager;
     
@@ -79,6 +80,9 @@ public class AssetManager {
         tag = scaleAssist.getScaledImage((loader.loadImage("images/action/tag.png")), scaleAssist.getScale());
         trap = scaleAssist.getScaledImage((loader.loadImage("images/action/trap.png")), scaleAssist.getScale());
         collect = scaleAssist.getScaledImage((loader.loadImage("images/action/collect.png")), scaleAssist.getScale());
+        
+        taggedBubble = scaleAssist.getScaledImage((loader.loadImage("images/notification/tagged.png")), scaleAssist.getScale());
+        trappedBubble = scaleAssist.getScaledImage((loader.loadImage("images/notification/trapped.png")), scaleAssist.getScale());
     }
     
     
@@ -212,5 +216,12 @@ public class AssetManager {
         return night;
     }
 
+    public BufferedImage getTaggedBubble() {
+        return taggedBubble;
+    }
+    
+    public BufferedImage getTrappedBubble() {
+        return trappedBubble;
+    }
     
 }

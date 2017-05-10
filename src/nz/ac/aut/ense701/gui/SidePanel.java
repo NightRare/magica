@@ -43,22 +43,18 @@ public class SidePanel {
     //this is run every step, to check for updates to the stats
     //called from the Tick machine
     public void checkStats() {
-        //what happens every step?
         loadImages();
         inventoryImage();
         inventoryList();
         if ( game.getState() == GameState.LOST ){
             popUpMessage(game.getLoseMessage(),"Game Over!");
             game.createNewGame();
-        } else if ( game.getState() == GameState.WON )
-        {
+        } else if ( game.getState() == GameState.WON ){
             popUpMessage(game.getWinMessage(),"Well Done!");
             game.createNewGame();
-        } else if (game.messageForPlayer())
-        {
+        } else if (game.messageForPlayer()){
             popUpMessage(game.getPlayerMessage(),"Hey.."); 
         }
-        
     }
     
     public static void popUpMessage(String message, String title){

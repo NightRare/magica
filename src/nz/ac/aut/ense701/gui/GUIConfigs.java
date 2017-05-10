@@ -13,19 +13,19 @@ public class GUIConfigs {
     
     public static final String TITLE = "Kiwi Island";
     
-    public static int width = 1100;
-    public static int height = 800;
-    public static int mapWidth = 800;
-    private static int sidePanelWidth = width - mapWidth;
-    private static int rows = 16;
-    private static int columns = 16;
+    public static final int WINDOW_WIDTH = 1100;
+    public static final int WINDOW_HEIGHT = 800;
+    public static final int MAP_WIDTH = 800;
+    private static final int SIDEPANEL_WIDTH = WINDOW_WIDTH - MAP_WIDTH;
+    private static final int MAP_ROWS = 16;
+    private static final int MAP_COLUMNS = 16;
     
     private static ScalingAssistant scalingAssistant= ScalingAssistant.getScalingAssistant();
-    private static final int[] BOARD_DIMENSIONS = new int[]{12,12,276,382};//x,y,width,height
+    private static final int[] BOARD_DIMENSIONS = new int[]{12,12,276,382};//x,y,WINDOW_WIDTH,WINDOW_HEIGHT
     
     
     public static int getSidePanelWidth(){
-        return scalingAssistant.scale(sidePanelWidth);
+        return scalingAssistant.scale(SIDEPANEL_WIDTH);
     }
     
     /**
@@ -34,7 +34,7 @@ public class GUIConfigs {
      * @return starting y coordinate of square
      */
     public static int rowToY(int row) {
-        return scalingAssistant.scale((height / rows) * row);
+        return scalingAssistant.scale((WINDOW_HEIGHT / MAP_ROWS) * row);
     }
     
     /**
@@ -43,32 +43,32 @@ public class GUIConfigs {
      * @return starting x coordinate of square
      */
     public static int colToX(int col) {
-        return scalingAssistant.scale(((mapWidth / columns) * col)) + getSidePanelWidth();
+        return scalingAssistant.scale(((MAP_WIDTH / MAP_COLUMNS) * col)) + getSidePanelWidth();
     }
     
     /**
-     * @return height of the squares 
+     * @return WINDOW_HEIGHT of the squares 
      */
     public static int getSquareHeight() {
-        return scalingAssistant.scale(height / rows);
+        return scalingAssistant.scale(WINDOW_HEIGHT / MAP_ROWS);
     }
     
     /**
-     * @return width of the squares
+     * @return WINDOW_WIDTH of the squares
      */
     public static int getSquareWidth() {
-        return scalingAssistant.scale(mapWidth / columns);
+        return scalingAssistant.scale(MAP_WIDTH / MAP_COLUMNS);
     }
     
     /**
-     * @return side panel board width
+     * @return side panel board WINDOW_WIDTH
      */
     public static double boardWidth(){
         return (double)scalingAssistant.scale(BOARD_DIMENSIONS[2]);
     }
     
     /**
-     * @return side panel board height
+     * @return side panel board WINDOW_HEIGHT
      */
     public static double boardHeight(){
         return (double)scalingAssistant.scale(BOARD_DIMENSIONS[3]);

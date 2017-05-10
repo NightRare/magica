@@ -22,6 +22,10 @@ import nz.ac.aut.ense701.gameModel.Tool;
 import static java.lang.StrictMath.abs;
 import static java.lang.StrictMath.abs;
 import static java.lang.StrictMath.abs;
+import static java.lang.StrictMath.abs;
+import static java.lang.StrictMath.abs;
+import static java.lang.StrictMath.abs;
+import static java.lang.StrictMath.abs;
 
 /**
  *
@@ -241,7 +245,11 @@ public class ClickListener implements MouseListener {
         //TAG if player is on a square where there is a Kiwi
         if((e.getX() > sA.scale(35)) && (e.getX() < sA.scale(35+65))){
             for(Occupant o: game.getOccupantsPlayerPosition()){
-                if(game.canCount(o)){game.countKiwi();}
+                
+                if(game.canCount(o)){
+                    loop.getNotification().kiwiCounted();
+                    game.countKiwi();
+                }
             }
         }
         //TRAP if player is on a square where there is a predator

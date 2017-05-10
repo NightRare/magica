@@ -51,16 +51,16 @@ public class GUI {
      */
     private void createDisplay() {
         frame = new JFrame(GUIConfigs.TITLE);
-        frame.setSize(GUIConfigs.width, GUIConfigs.height);
+        frame.setSize(GUIConfigs.WINDOW_WIDTH, GUIConfigs.WINDOW_HEIGHT);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(false);
         frame.setLocationRelativeTo(null);
         
         canvas = new Canvas();
         canvas.setIgnoreRepaint(true);
-        canvas.setPreferredSize(new Dimension(GUIConfigs.width, GUIConfigs.height));
-        canvas.setMaximumSize(new Dimension(GUIConfigs.width, GUIConfigs.height));
-        canvas.setMinimumSize(new Dimension(GUIConfigs.width, GUIConfigs.height));
+        canvas.setPreferredSize(new Dimension(GUIConfigs.WINDOW_WIDTH, GUIConfigs.WINDOW_HEIGHT));
+        canvas.setMaximumSize(new Dimension(GUIConfigs.WINDOW_WIDTH, GUIConfigs.WINDOW_HEIGHT));
+        canvas.setMinimumSize(new Dimension(GUIConfigs.WINDOW_WIDTH, GUIConfigs.WINDOW_HEIGHT));
         
         // add mouse listeners and keypressed listeners here
         NavigationKeyListener keyListener = new NavigationKeyListener(game);
@@ -167,8 +167,8 @@ public class GUI {
         frame.setVisible(false);
         
         ScalingAssistant scaler = ScalingAssistant.getScalingAssistant();
-        int newWidth = scaler.scale(GUIConfigs.width);
-        int newHeight = scaler.scale(GUIConfigs.height);
+        int newWidth = scaler.scale(GUIConfigs.WINDOW_WIDTH);
+        int newHeight = scaler.scale(GUIConfigs.WINDOW_HEIGHT);
         frame.setSize(newWidth, newHeight);
         canvas.setPreferredSize(new Dimension(newWidth, newHeight));
         canvas.setMaximumSize(new Dimension(newWidth, newHeight));
