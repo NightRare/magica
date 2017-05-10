@@ -69,6 +69,7 @@ public class GameNotification {
     public void update(){
         taggedBubble = AssetManager.getAssetManager().getTaggedBubble();
         trappedBubble = AssetManager.getAssetManager().getTrappedBubble();
+        player = game.getPlayer();
         notificationCounter();
     }
     
