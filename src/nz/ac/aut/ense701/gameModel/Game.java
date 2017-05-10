@@ -2,12 +2,12 @@ package nz.ac.aut.ense701.gameModel;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.HashSet;
 import java.util.Locale;
 import java.util.Scanner;
 import java.util.Set;
 import nz.ac.aut.ense701.gui.GameLoop;
+import nz.ac.aut.ense701.gui.GameNotification;
 
 /**
  * This is the class that knows the Kiwi Island game rules and state
@@ -50,9 +50,12 @@ public class Game
         eventListeners = new HashSet<GameEventListener>();
         this.fToggle = fToggle;
         this.dataManager = dataManager;
-
+        
         createNewGame();
+        this.notify = new GameNotification(this);
     }
+    
+    
       
     
     /**
@@ -391,6 +394,10 @@ public class Game
         return !("".equals(playerMessage));
     }
     
+    public GameNotification getNotification(){
+        return notify;
+    }
+    
     /***************************************************************************************************************
      * Mutator Methods
     ****************************************************************************************************************/
@@ -499,6 +506,7 @@ public class Game
                 Kiwi kiwi = (Kiwi) occupant;
                 if (!kiwi.counted()) {
                     kiwi.count();
+                    notify.kiwiCounted();
                     kiwiCount++;
                 }
             }
@@ -687,6 +695,8 @@ public class Game
             Occupant occupant = island.getPredator(current);
             //Predator has been trapped so remove
             island.removeOccupant(current, occupant); 
+            //notify player that the predator is trapped
+            notify.predatorTrapped();
             predatorsTrapped++;
         }
         
@@ -954,6 +964,6 @@ public class Game
     
     private FeatureToggle fToggle;
     private IDataManager dataManager;
-
-
+    
+    private GameNotification notify;
 }

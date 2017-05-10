@@ -28,6 +28,7 @@ public class GameNotification {
     private int playerLocationY;
     private int bubblePositionOffset;
     private boolean kiwiCounted = false;
+    private boolean predatorTrapped = false;
     private static int displayTime = 50;
     
     
@@ -58,10 +59,13 @@ public class GameNotification {
     
     public void render(Graphics2D g2d) {
         //g2d.drawImage(taggedBubble, null, playerLocationX, playerLocationY);
+        System.out.println(kiwiCounted);
         if(kiwiCounted){
             g2d.drawImage(taggedBubble, null, getBubblePositionOffset(),getPlayerPosition_Y());
         }
-        
+        if(predatorTrapped){
+            g2d.drawImage(trappedBubble,null,getBubblePositionOffset(),getPlayerPosition_Y());
+        }
         
         
     }
@@ -74,10 +78,11 @@ public class GameNotification {
     }
     
     private void notificationCounter(){
-        if(kiwiCounted){
+        if(kiwiCounted || predatorTrapped){
             displayTime--;
             if(displayTime == 0){
                 kiwiCounted = false;
+                predatorTrapped = false;
                 displayTime = 50;
             }
         }
@@ -86,6 +91,10 @@ public class GameNotification {
     
     public void kiwiCounted(){
         this.kiwiCounted = true;
+    }
+    
+    public void predatorTrapped(){
+        this.predatorTrapped = true;
     }
     
     

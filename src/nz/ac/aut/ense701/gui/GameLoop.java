@@ -47,7 +47,7 @@ public class GameLoop implements Runnable{
         tickMachine = new TickMachine(this);
         renderingEngine = new RenderingEngine(this);
         playerSprite = new PlayerSprite(game);
-        notification = new GameNotification(game);
+        notification = game.getNotification();
         
         // Initialise the map grid
         initialiseMapSquareList();
@@ -109,7 +109,6 @@ public class GameLoop implements Runnable{
         g2d.clearRect(0, 0, GUIConfigs.WINDOW_WIDTH, GUIConfigs.WINDOW_HEIGHT);
         
         renderingEngine.render(g2d);
-        
         bs.show();
         g2d.dispose();
     }
@@ -189,8 +188,6 @@ public class GameLoop implements Runnable{
         return this.playerSprite;
     }
     
-    public GameNotification getNotification(){
-        return notification;
-    }
+    
     
 }

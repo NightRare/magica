@@ -37,6 +37,6 @@ public class TickMachine {
         loop.getPlayerSprite().tick();
         
         //update notifications
-        loop.getNotification().update();
+        loop.getGame().getNotification().update();
     }
 }

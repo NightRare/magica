@@ -245,9 +245,7 @@ public class ClickListener implements MouseListener {
         //TAG if player is on a square where there is a Kiwi
         if((e.getX() > sA.scale(35)) && (e.getX() < sA.scale(35+65))){
             for(Occupant o: game.getOccupantsPlayerPosition()){
-                
                 if(game.canCount(o)){
-                    loop.getNotification().kiwiCounted();
                     game.countKiwi();
                 }
             }
@@ -255,10 +253,8 @@ public class ClickListener implements MouseListener {
         //TRAP if player is on a square where there is a predator
         if((e.getX() > sA.scale(35+65+15)) && (e.getX() < sA.scale(35+(65*2)+15))){
             for(Occupant o: game.getOccupantsPlayerPosition()){
-                //if(o.getStringRepresentation().contains("P")){
                     if(game.getPlayer().hasTrap()){game.useItem(game.getPlayer().getTrap());}
-                //}
-            }
+           }
         }
         //COLLECT if player is on a square where there is tool / food
         if((e.getX() > sA.scale(35+((65+15)*2))) && (e.getX() < sA.scale(35+(65*3)+30))){
