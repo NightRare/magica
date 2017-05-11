@@ -13,9 +13,11 @@ import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.io.IOException;
+import java.util.function.BiConsumer;
 
 import nz.ac.aut.ense701.gameModel.jsonModels.*;
 
+import static nz.ac.aut.ense701.gameModel.utils.OccupantsDuplicator.duplicatMulti;
 import static nz.ac.aut.ense701.gameModel.utils.OccupantsDuplicator.duplicate;
 
 /**
@@ -27,11 +29,14 @@ public class JsonProcessor implements IDataManager{
 
     private Map<String, Occupant> occupantsDictionary;
     private List<JsonOccupantsPosition> jsonOccupantsMap;
+    private JsonOccupantsPool jsonOccupantsPool;
+    private List<Occupant> allOccupantInstance;
     
     private JsonProcessor(Map<String, Occupant> occupantsDictionary, 
-            List<JsonOccupantsPosition> jsonOccupantsMap) {        
+            List<JsonOccupantsPosition> jsonOccupantsMap, JsonOccupantsPool jsonOccupantsPool) {
         this.occupantsDictionary = occupantsDictionary;
         this.jsonOccupantsMap = jsonOccupantsMap;
+        this.jsonOccupantsPool = jsonOccupantsPool;
     }
     
     /**
@@ -45,7 +50,8 @@ public class JsonProcessor implements IDataManager{
      * @throws IllegalStateException if the data integrity of any of the Json files 
      *          is corrupted; currently this only supports non-primitive type fileds.
      */
-    public static IDataManager make(String occupantsFilePath, String occupantsMapFilePath) 
+    public static IDataManager make(String occupantsFilePath, String occupantsMapFilePath,
+                                    String occupantsPoolFilePath)
             throws IOException {
         if(occupantsFilePath == null || occupantsMapFilePath == null
                 || occupantsFilePath.isEmpty() || occupantsMapFilePath.isEmpty())
@@ -79,7 +85,13 @@ public class JsonProcessor implements IDataManager{
             throw new IllegalStateException("Occupant data damaged. " + ex.getMessage());
         }
 
-        return new JsonProcessor(od, jom);
+        JsonOccupantsPool pool;
+        try(Reader reader = new FileReader(occupantsPoolFilePath)) {
+            pool = gson.fromJson(reader, JsonOccupantsPool.class);
+        }
+        // TODO add integrity check
+
+        return new JsonProcessor(od, jom, pool);
     }
     
     @Override
@@ -114,25 +126,21 @@ public class JsonProcessor implements IDataManager{
     }
 
     @Override
-    public Map<Occupant, Integer> getAllOccupantTemplatesWithCount() {
-        Map<String, Integer> nameCounts = new HashMap<>();
-        Map<Occupant, Integer> occCount = new HashMap<>();
-        for(JsonOccupantsPosition jop : jsonOccupantsMap) {
-            for (String occName : jop.occupants) {
-                if(nameCounts.containsKey(occName)) {
-                    nameCounts.put(occName, nameCounts.get(occName) + 1);
-                }
-                else {
-                    nameCounts.put(occName, 1);
-                }
-            }
-        }
+    public List<Occupant> getAllOccupantInstances() {
+        if(allOccupantInstance != null)
+            return new ArrayList<>(allOccupantInstance);
 
-        for(Map.Entry<String, Integer> nCount : nameCounts.entrySet()) {
-            occCount.put(occupantsDictionary.get(nCount.getKey()), nCount.getValue());
-        }
+        allOccupantInstance = new ArrayList<>();
 
-        return occCount;
+        Map<String, Integer> oneType = null;
+        while((oneType = getNextOccupantType(jsonOccupantsPool)) != null) {
+            oneType.forEach((s, i) -> {
+                Occupant[] typeInstances = duplicatMulti(occupantsDictionary.get(s), i);
+                allOccupantInstance.addAll(Arrays.asList(typeInstances));
+            });
+            oneType.clear();
+        }
+        return allOccupantInstance;
     }
 
     // make a dictionary of all the types of Occupants so that they can be got by
@@ -192,5 +200,21 @@ public class JsonProcessor implements IDataManager{
         if(occupant.getDescription() == null || occupant.getDescription().isEmpty())
             throw new NullPointerException(
                     "did not include \"description\" for " + occupant.getName());
+    }
+
+    private Map<String, Integer> getNextOccupantType(JsonOccupantsPool pool) {
+        if(!pool.food.isEmpty())
+            return pool.food;
+        if(!pool.tools.isEmpty())
+            return pool.tools;
+        if(!pool.faunae.isEmpty())
+            return pool.faunae;
+        if(!pool.kiwis.isEmpty())
+            return pool.kiwis;
+        if(!pool.predators.isEmpty())
+            return pool.predators;
+        if(!pool.hazards.isEmpty())
+            return pool.hazards;
+        return null;
     }
 }

@@ -44,7 +44,8 @@ public class Main
             FeatureToggle ft = new FeatureToggle(true);
 
             // initialise IDataManager
-            IDataManager dm = JsonProcessor.make("data/Occupants.json", "data/OccupantsMap.json");
+            IDataManager dm = JsonProcessor.make("data/Occupants.json",
+                    "data/OccupantsMap.json", "data/OccupantsPool.json");
 
             Game game = new Game(ft, dm);
             GameLoop gameLoop = new GameLoop(game);

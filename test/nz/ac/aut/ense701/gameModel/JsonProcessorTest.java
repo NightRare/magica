@@ -21,6 +21,7 @@ public class JsonProcessorTest extends junit.framework.TestCase {
     
     final String OCCUPANTS_FILEPATH = "testdata/Occupants.json";
     final String OCCUPANTSMAP_FILEPATH = "testdata/OccupantsMap.json";
+    final String OCCUPANTPOOL_FILEPATH = "testdata/OccupantsPool.json";
     
     Island island;
     String occupantsJson;
@@ -77,7 +78,7 @@ public class JsonProcessorTest extends junit.framework.TestCase {
         writeJsonToFiles(occupantsMapJson, OCCUPANTSMAP_FILEPATH);
         
         try {
-            dataManager = JsonProcessor.make(OCCUPANTS_FILEPATH, OCCUPANTSMAP_FILEPATH);
+            dataManager = JsonProcessor.make(OCCUPANTS_FILEPATH, OCCUPANTSMAP_FILEPATH, OCCUPANTPOOL_FILEPATH);
         } catch (IOException ex) {
             Logger.getLogger(JsonProcessorTest.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -100,7 +101,7 @@ public class JsonProcessorTest extends junit.framework.TestCase {
     @Test
     public void testMakeWithIllegalArgument() {
         try {
-            dataManager = JsonProcessor.make(null, null);
+            dataManager = JsonProcessor.make(null, null, null);
             
             fail("Should have thrown IllegalArgumentException");
         } catch (IOException ex) {
@@ -110,7 +111,7 @@ public class JsonProcessorTest extends junit.framework.TestCase {
         }
         
         try {
-            dataManager = JsonProcessor.make("", "");
+            dataManager = JsonProcessor.make("", "", "");
             
             fail("Should have thrown IllegalArgumentException");
         } catch (IOException ex) {
@@ -120,7 +121,8 @@ public class JsonProcessorTest extends junit.framework.TestCase {
         }
         
         try {
-            dataManager = JsonProcessor.make("nosuchfile.json", "wrongfile.txt");
+            dataManager = JsonProcessor.make("nosuchfile.json", "wrongfile.txt",
+                    "nosuchfile.json");
             
             fail("Should have thrown IOException");
         } catch (IOException ex) {
@@ -143,7 +145,7 @@ public class JsonProcessorTest extends junit.framework.TestCase {
         writeJsonToFiles(occupantsJson, OCCUPANTS_FILEPATH);
         
         try {
-            dataManager = JsonProcessor.make(OCCUPANTS_FILEPATH, OCCUPANTSMAP_FILEPATH);
+            dataManager = JsonProcessor.make(OCCUPANTS_FILEPATH, OCCUPANTSMAP_FILEPATH, OCCUPANTPOOL_FILEPATH);
             
             fail("Should have thrown Exception");
         } catch (IOException e) {
@@ -174,7 +176,7 @@ public class JsonProcessorTest extends junit.framework.TestCase {
         writeJsonToFiles(occupantsJson, OCCUPANTS_FILEPATH);
         
         try {
-            dataManager = JsonProcessor.make(OCCUPANTS_FILEPATH, OCCUPANTSMAP_FILEPATH);
+            dataManager = JsonProcessor.make(OCCUPANTS_FILEPATH, OCCUPANTSMAP_FILEPATH, OCCUPANTPOOL_FILEPATH);
             
 //            fail("Should have thrown Exception");
         } catch (IOException e) {
@@ -196,7 +198,7 @@ public class JsonProcessorTest extends junit.framework.TestCase {
         writeJsonToFiles(occupantsJson, OCCUPANTSMAP_FILEPATH);
         
         try {
-            dataManager = JsonProcessor.make(OCCUPANTS_FILEPATH, OCCUPANTSMAP_FILEPATH);
+            dataManager = JsonProcessor.make(OCCUPANTS_FILEPATH, OCCUPANTSMAP_FILEPATH, OCCUPANTPOOL_FILEPATH);
             
             fail("Should have thrown Exception");
         } catch (IOException e) {

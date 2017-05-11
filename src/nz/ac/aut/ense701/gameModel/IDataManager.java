@@ -5,6 +5,7 @@
  */
 package nz.ac.aut.ense701.gameModel;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -33,5 +34,10 @@ public interface IDataManager {
      */
     public Set<Occupant> getAllOccupantTemplates();
 
-    public Map<Occupant, Integer> getAllOccupantTemplatesWithCount();
+    /**
+     * Get all the Occupant instances in which same type of occupants are ordered together.
+     *
+     * @return the list of all Occupant instances.
+     */
+    public List<Occupant> getAllOccupantInstances();
 }

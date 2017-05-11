@@ -902,8 +902,8 @@ public class Game
     private void setUpOccupants() {
 
         if(island.getNumRows() == island.getNumColumns()) {
-            Map<Occupant, Integer> occCounts = dataManager.getAllOccupantTemplatesWithCount();
-            OccupantsRandomiser or = new OccupantsRandomiser(island.getNumRows(), occCounts);
+            OccupantsRandomiser or = new OccupantsRandomiser(
+                    island.getNumRows(), dataManager.getAllOccupantInstances());
             or.setRecurssionIndex(1);
             Set<Occupant>[][] oMap = or.distributeOccupantsRandomly();
 

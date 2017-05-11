@@ -23,16 +23,16 @@ public class OccupantsRandomiser {
      * 5. allowSameOccupantsOnOnePosition = false;
      *
      * @param length
-     * @param occupantsPool
+     * @param allOccupantInstances
      */
-    public OccupantsRandomiser(int length, Map<Occupant, Integer> occupantsPool) {
-        Objects.requireNonNull(occupantsPool);
+    public OccupantsRandomiser(int length, List<Occupant> allOccupantInstances) {
+        Objects.requireNonNull(allOccupantInstances);
 
         if(length < 1)
             throw new IllegalArgumentException("The length of a island cannot be less than 1");
 
         this.length = length;
-        this.occupantsPool = occupantsPool;
+        this.allOccupantInstances = allOccupantInstances;
 
         random = new Random(System.currentTimeMillis());
         recursion = 0;
@@ -94,13 +94,8 @@ public class OccupantsRandomiser {
     //endregion
 
     public Set<Occupant>[][] distributeOccupantsRandomly() {
-        List<Occupant> occupants = new ArrayList<>();
+        List<Occupant> occupants = new ArrayList<>(allOccupantInstances);
         Set<Occupant>[][] oMap = new HashSet[length][length];
-
-        for (Map.Entry<Occupant, Integer> o : occupantsPool.entrySet()) {
-            Occupant[] array = duplicatMulti(o.getKey(), o.getValue());
-            occupants.addAll(Arrays.asList(array));
-        }
 
         Map<Integer, Set<Occupant>> distOccUnits = distributeOccupantsRecursively(length, occupants, recursion);
 
@@ -120,7 +115,7 @@ public class OccupantsRandomiser {
 
     private int length;
 
-    private Map<Occupant, Integer> occupantsPool;
+    private List<Occupant> allOccupantInstances;
 
     private int recursion;
 
@@ -132,7 +127,8 @@ public class OccupantsRandomiser {
 
     private Random random;
 
-    private Map<Integer, Set<Occupant>> distributeOccupantsRecursively(int length, List<Occupant> occupants, int recursion) {
+    private Map<Integer, Set<Occupant>> distributeOccupantsRecursively(
+            int length, List<Occupant> occupants, int recursion) {
 
         if(recursion == 0)
             return distributeRandomly(bundleOccupants(occupants), length * length);
