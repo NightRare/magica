@@ -7,11 +7,19 @@ import java.util.*;
 import static nz.ac.aut.ense701.gameModel.utils.OccupantsDuplicator.duplicatMulti;
 
 /**
+ * A randomiser for randomly distribute occupants on a square map.
+ * <p>
+ * Supports recursive distribution. If recursion index is set to 1, then occupants
+ * will be divided into 4 parts each of which will be distributed randomly on a quarter-sized
+ * sub map. This can be used to distribute occupants more evenly over the map.
+ *
  * @author Yuan
  */
 public class OccupantsRandomiser {
 
     /**
+     * Initialise an OccupantsRandomiser.
+     * <p>
      * Default settings:
      * <p>random seed is the currentTimeMillis</p>
      * <p>recurssion = 0</p>
@@ -20,8 +28,8 @@ public class OccupantsRandomiser {
      * <p>allowSameOccupantsOnOnePosition = false</p>
      * <p>resideRull: always return true</p>
      *
-     * @param length
-     * @param allOccupantInstances
+     * @param length               the length of the square map
+     * @param allOccupantInstances the list of all occupant instances
      */
     public OccupantsRandomiser(int length, List<Occupant> allOccupantInstances) {
         Objects.requireNonNull(allOccupantInstances);
@@ -36,16 +44,25 @@ public class OccupantsRandomiser {
         recursion = 0;
         maintainOccupantTypesPercentage = true;
         doubleOccupantsPercentage = 0.0;
-//  todo      allowSameOccupantsOnOnePosition = false;
         resideRull = (existedOccupants, candidate) -> true;
     }
 
     //region ACCESSORS
 
-    public int getRecurssionIndex() {
+    /**
+     * Gets the recursion index.
+     *
+     * @return the recursion index
+     */
+    public int getRecursionIndex() {
         return recursion;
     }
 
+    /**
+     * Gets the probability of two occupants reside in one square (position).
+     *
+     * @return the double-occupants percentage
+     */
     public double getDoubleOccupantsPercentage() {
         return doubleOccupantsPercentage;
     }
@@ -54,7 +71,17 @@ public class OccupantsRandomiser {
 
     //region MODIFIERS
 
-    public void setRecurssionIndex(int recurssionIndex) {
+    /**
+     * Set the recursion index. If the given index exceeds the possible max index, then the max will be
+     * set automatically.
+     * <p>
+     * If n>0, and the length of the map can be exactly divided by 2^n while cannot be exactly divided by 2^(n+1)
+     * , then n is the possible max recursion index.
+     *
+     * @param recurssionIndex the recursion index
+     * @throws IllegalArgumentException if recursionIndex < 0;
+     */
+    public void setRecursionIndex(int recurssionIndex) {
         if (recurssionIndex < 0)
             throw new IllegalArgumentException("Recurssion index cannot be negative.");
 
@@ -70,15 +97,31 @@ public class OccupantsRandomiser {
         this.recursion = deepestRecurssion;
     }
 
+    /**
+     * Sets not to maintain the proportion of different types of occupants when recursively distribute
+     * occupants.
+     */
     public void ignoreOccupantTypesPercentage() {
         this.maintainOccupantTypesPercentage = false;
     }
 
+    /**
+     * Sets the core randomiser.
+     *
+     * @param random the random engine
+     * @throws NullPointerException if random is {@code null}
+     */
     public void setRandom(Random random) {
         Objects.requireNonNull(random);
         this.random = random;
     }
 
+    /**
+     * Sets the probability of two occupants reside in one square (position).
+     *
+     * @param doubleOccupantsPercentage the probability
+     * @throws IllegalArgumentException if 0.0 < doubleOccupantsPercentage < 1.0
+     */
     public void setDoubleOccupantsPercentage(double doubleOccupantsPercentage) {
         if (doubleOccupantsPercentage < 0.0 || doubleOccupantsPercentage > 1.0)
             throw new IllegalArgumentException(
@@ -86,12 +129,22 @@ public class OccupantsRandomiser {
         this.doubleOccupantsPercentage = doubleOccupantsPercentage;
     }
 
-//   todo public void allowSameOccupantsOnOnePosition() {
-//        allowSameOccupantsOnOnePosition = true;
-//    }
-
+    /**
+     * Sets the reside rule.
+     *
+     * @param resideRull the reside rule for occupants
+     */
+    public void setResideRull(ResideRull resideRull) {
+        Objects.requireNonNull(resideRull);
+        this.resideRull = resideRull;
+    }
     //endregion
 
+    /**
+     * Distributes a list of occupants on a square map.
+     *
+     * @return the array representing the map holding all the Occupant bundles (units)
+     */
     public Set<Occupant>[][] distributeOccupantsRandomly() {
         List<Occupant> occupants = new ArrayList<>(allOccupantInstances);
         Set<Occupant>[][] oMap = new HashSet[length][length];
@@ -108,11 +161,6 @@ public class OccupantsRandomiser {
         }
 
         return oMap;
-    }
-
-    public void setResideRull(ResideRull resideRull) {
-        Objects.requireNonNull(resideRull);
-        this.resideRull = resideRull;
     }
 
     public interface ResideRull {
@@ -138,8 +186,6 @@ public class OccupantsRandomiser {
     private boolean maintainOccupantTypesPercentage;
 
     private double doubleOccupantsPercentage;
-
-// todo   private boolean allowSameOccupantsOnOnePosition;
 
     private Random random;
 
@@ -244,7 +290,6 @@ public class OccupantsRandomiser {
             //if need to double up occupants
             if (random.nextDouble() < doubleOccupantsPercentage
                     && !occupants.isEmpty()
-// TODO                   && (allowSameOccupantsOnOnePosition || hasDifferentOccupantNames(firstOccupant, occupants))
                     && hasLegalCandidate(firstOccupant, occupants)) {
 
 
@@ -277,8 +322,8 @@ public class OccupantsRandomiser {
     private boolean hasLegalCandidate(Occupant first, List<Occupant> occupants) {
         List<Occupant> existed = new ArrayList<>();
         existed.add(first);
-        for(Occupant o : occupants) {
-            if(resideRull.mayResideTogether(existed, o))
+        for (Occupant o : occupants) {
+            if (resideRull.mayResideTogether(existed, o))
                 return true;
         }
         return false;

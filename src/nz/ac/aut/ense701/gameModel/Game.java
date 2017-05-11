@@ -907,7 +907,7 @@ public class Game
             OccupantsRandomiser or = new OccupantsRandomiser(
                     island.getNumRows(), dataManager.getAllOccupantInstances());
             // set up the occupantsRandomiser
-            or.setRecurssionIndex(1);
+            or.setRecursionIndex(1);
             or.setDoubleOccupantsPercentage(0.1);
             or.setResideRull((existedOccupants, candidate) -> {
                 for(Occupant ex : existedOccupants) {
