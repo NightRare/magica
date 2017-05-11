@@ -11,7 +11,8 @@ package nz.ac.aut.ense701.gameModel;
  */
 public class Time {
     
-    private int turn;
+    // protected so can be unit tested
+    protected int turn;
     
     public Time() {
         this.turn = 0;
