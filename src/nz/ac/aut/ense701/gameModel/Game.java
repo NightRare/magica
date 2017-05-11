@@ -904,6 +904,7 @@ public class Game
         if(island.getNumRows() == island.getNumColumns()) {
             Map<Occupant, Integer> occCounts = dataManager.getAllOccupantTemplatesWithCount();
             OccupantsRandomiser or = new OccupantsRandomiser(island.getNumRows(), occCounts);
+            or.setRecurssionIndex(1);
             Set<Occupant>[][] oMap = or.distributeOccupantsRandomly();
 
             for(int r = 0; r < island.getNumRows(); r++) {

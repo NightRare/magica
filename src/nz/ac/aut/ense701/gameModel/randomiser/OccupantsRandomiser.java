@@ -94,7 +94,26 @@ public class OccupantsRandomiser {
     //endregion
 
     public Set<Occupant>[][] distributeOccupantsRandomly() {
-        return distributeOccupantsRandomly(length, occupantsPool);
+        List<Occupant> occupants = new ArrayList<>();
+        Set<Occupant>[][] oMap = new HashSet[length][length];
+
+        for (Map.Entry<Occupant, Integer> o : occupantsPool.entrySet()) {
+            Occupant[] array = duplicatMulti(o.getKey(), o.getValue());
+            occupants.addAll(Arrays.asList(array));
+        }
+
+        Map<Integer, Set<Occupant>> distOccUnits = distributeOccupantsRecursively(length, occupants, recursion);
+
+        for(int r = 0; r < oMap.length; r++) {
+            for(int c = 0; c < oMap[0].length; c++) {
+                int index = r * length + c;
+                oMap[r][c] = distOccUnits.get(index);
+                if(oMap[r][c] == null)
+                    oMap[r][c] = new HashSet<>();
+            }
+        }
+
+        return oMap;
     }
 
     //region PRIVATE STUFF
@@ -113,27 +132,24 @@ public class OccupantsRandomiser {
 
     private Random random;
 
-    private Set<Occupant>[][] distributeOccupantsRandomly(int length, Map<Occupant, Integer> occupantsPool) {
-        List<Occupant> occupants = new ArrayList<>();
-        Set<Occupant>[][] oMap = new HashSet[length][length];
+    private Map<Integer, Set<Occupant>> distributeOccupantsRecursively(int length, List<Occupant> occupants, int recursion) {
 
-        for (Map.Entry<Occupant, Integer> o : occupantsPool.entrySet()) {
-            Occupant[] array = duplicatMulti(o.getKey(), o.getValue());
-            occupants.addAll(Arrays.asList(array));
-        }
+        if(recursion == 0)
+            return distributeRandomly(bundleOccupants(occupants), length * length);
 
-        Map<Integer, Set<Occupant>> distOccUnits =
-                distributeRandomly(bundleOccupants(occupants), length * length);
+        Map<Integer, Set<Occupant>> oMap = new HashMap<>();
+        List<List<Occupant>> subMapOccupants = divideOccupants(occupants);
+        recursion--;
+        for(int i = 0; i < subMapOccupants.size(); i++) {
+            int subLength = length / 2;
+            Map<Integer, Set<Occupant>> subMap =
+                    distributeOccupantsRecursively(subLength, subMapOccupants.get(i), recursion);
 
-        for(int r = 0; r < oMap.length; r++) {
-            for(int c = 0; c < oMap[0].length; c++) {
-                int index = r * length + c;
-                oMap[r][c] = distOccUnits.get(index);
-                if(oMap[r][c] == null)
-                    oMap[r][c] = new HashSet<>();
+            for(int j = 0; j < subMap.size(); j++) {
+                int index = subLength * subLength * i + j;
+                oMap.put(index, subMap.get(j));
             }
         }
-
         return oMap;
     }
 
@@ -154,6 +170,31 @@ public class OccupantsRandomiser {
         }
 
         return dist;
+    }
+
+    private List<List<Occupant>> divideOccupants(List<Occupant> occupants) {
+
+        List<List<Occupant>> subMapOccupants = new ArrayList<>();
+        for(int i = 0; i < 4; i++) {
+            subMapOccupants.add(new ArrayList<>());
+        }
+
+        int index = 0;
+        while(!occupants.isEmpty()) {
+            int i = index % subMapOccupants.size();
+            Occupant o = null;
+            if(maintainOccupantTypesPercentage) {
+                o = occupants.remove(0);
+            }
+            else {
+                o = occupants.remove(random.nextInt(occupants.size()));
+            }
+            subMapOccupants.get(i).add(o);
+            index++;
+        }
+
+        Collections.shuffle(subMapOccupants, random);
+        return subMapOccupants;
     }
 
     private List<Set<Occupant>> bundleOccupants(List<Occupant> occupants) {
