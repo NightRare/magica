@@ -7,6 +7,8 @@ import java.util.*;
 
 import nz.ac.aut.ense701.gameModel.randomiser.OccupantsRandomiser;
 
+import javax.swing.text.html.HTMLDocument;
+
 /**
  * This is the class that knows the Kiwi Island game rules and state
  * and enforces those rules.
@@ -906,7 +908,30 @@ public class Game
         if(island.getNumRows() == island.getNumColumns()) {
             OccupantsRandomiser or = new OccupantsRandomiser(
                     island.getNumRows(), dataManager.getAllOccupantInstances());
+            // set up the occupantsRandomiser
             or.setRecurssionIndex(1);
+            or.setDoubleOccupantsPercentage(0.1);
+            or.setResideRull((existedOccupants, candidate) -> {
+                for(Occupant ex : existedOccupants) {
+                    // if same occupants existed
+                    if(ex.getName().equals(candidate.getName()))
+                        return false;
+                    // hazard should always be alone
+                    if(candidate instanceof Hazard)
+                        return false;
+
+                    // TODO now a fauna and a predator should not reside in the same square
+                    // as the player is not able to select which fauna to trap
+                    if(candidate.getClass().equals(Predator.class) &&
+                            ex.getClass().equals(Fauna.class))
+                        return false;
+                    if(candidate.getClass().equals(Fauna.class) &&
+                            ex.getClass().equals(Predator.class))
+                        return false;
+                }
+                return true;
+            });
+
             Set<Occupant>[][] oMap = or.distributeOccupantsRandomly();
 
             for(int r = 0; r < island.getNumRows(); r++) {

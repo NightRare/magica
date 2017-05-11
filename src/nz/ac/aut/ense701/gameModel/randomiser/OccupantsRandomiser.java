@@ -7,20 +7,18 @@ import java.util.*;
 import static nz.ac.aut.ense701.gameModel.utils.OccupantsDuplicator.duplicatMulti;
 
 /**
- *
- *
  * @author Yuan
  */
 public class OccupantsRandomiser {
 
     /**
-     *
      * Default settings:
-     * 1. random seed is the currentTimeMillis
-     * 2. recurssion = 0
-     * 3. maintainOccupantTypesPercentage = true;
-     * 4. doubleOccupantsPercentage = 0.0
-     * 5. allowSameOccupantsOnOnePosition = false;
+     * <p>random seed is the currentTimeMillis</p>
+     * <p>recurssion = 0</p>
+     * <p>maintainOccupantTypesPercentage = true</p>
+     * <p>doubleOccupantsPercentage = 0.0</p>
+     * <p>allowSameOccupantsOnOnePosition = false</p>
+     * <p>resideRull: always return true</p>
      *
      * @param length
      * @param allOccupantInstances
@@ -28,7 +26,7 @@ public class OccupantsRandomiser {
     public OccupantsRandomiser(int length, List<Occupant> allOccupantInstances) {
         Objects.requireNonNull(allOccupantInstances);
 
-        if(length < 1)
+        if (length < 1)
             throw new IllegalArgumentException("The length of a island cannot be less than 1");
 
         this.length = length;
@@ -38,7 +36,8 @@ public class OccupantsRandomiser {
         recursion = 0;
         maintainOccupantTypesPercentage = true;
         doubleOccupantsPercentage = 0.0;
-        allowSameOccupantsOnOnePosition = false;
+//  todo      allowSameOccupantsOnOnePosition = false;
+        resideRull = (existedOccupants, candidate) -> true;
     }
 
     //region ACCESSORS
@@ -56,13 +55,13 @@ public class OccupantsRandomiser {
     //region MODIFIERS
 
     public void setRecurssionIndex(int recurssionIndex) {
-        if(recurssionIndex < 0)
+        if (recurssionIndex < 0)
             throw new IllegalArgumentException("Recurssion index cannot be negative.");
 
         int deepestRecurssion = 0;
         int tempLength = length;
 
-        while(tempLength % 2 == 0 && recurssionIndex > 0) {
+        while (tempLength % 2 == 0 && recurssionIndex > 0) {
             tempLength /= 2;
             recurssionIndex--;
             deepestRecurssion++;
@@ -81,15 +80,15 @@ public class OccupantsRandomiser {
     }
 
     public void setDoubleOccupantsPercentage(double doubleOccupantsPercentage) {
-        if(doubleOccupantsPercentage < 0.0 || doubleOccupantsPercentage > 1.0)
+        if (doubleOccupantsPercentage < 0.0 || doubleOccupantsPercentage > 1.0)
             throw new IllegalArgumentException(
                     "Double occupants percentage must between 0.0 and 1.0 (both inclusive).");
         this.doubleOccupantsPercentage = doubleOccupantsPercentage;
     }
 
-    public void allowSameOccupantsOnOnePosition() {
-        allowSameOccupantsOnOnePosition = true;
-    }
+//   todo public void allowSameOccupantsOnOnePosition() {
+//        allowSameOccupantsOnOnePosition = true;
+//    }
 
     //endregion
 
@@ -99,16 +98,33 @@ public class OccupantsRandomiser {
 
         Map<Integer, Set<Occupant>> distOccUnits = distributeOccupantsRecursively(length, occupants, recursion);
 
-        for(int r = 0; r < oMap.length; r++) {
-            for(int c = 0; c < oMap[0].length; c++) {
+        for (int r = 0; r < oMap.length; r++) {
+            for (int c = 0; c < oMap[0].length; c++) {
                 int index = r * length + c;
                 oMap[r][c] = distOccUnits.get(index);
-                if(oMap[r][c] == null)
+                if (oMap[r][c] == null)
                     oMap[r][c] = new HashSet<>();
             }
         }
 
         return oMap;
+    }
+
+    public void setResideRull(ResideRull resideRull) {
+        Objects.requireNonNull(resideRull);
+        this.resideRull = resideRull;
+    }
+
+    public interface ResideRull {
+
+        /**
+         * Checks whether the candidate occupant may reside with the existed occupants in the same square.
+         *
+         * @param existedOccupants occupants already in the square
+         * @param candidate        candidate occupant
+         * @return true if candidate may reside with the existed occupants
+         */
+        public boolean mayResideTogether(List<Occupant> existedOccupants, Occupant candidate);
     }
 
     //region PRIVATE STUFF
@@ -123,14 +139,16 @@ public class OccupantsRandomiser {
 
     private double doubleOccupantsPercentage;
 
-    private boolean allowSameOccupantsOnOnePosition;
+// todo   private boolean allowSameOccupantsOnOnePosition;
 
     private Random random;
+
+    private ResideRull resideRull;
 
     private Map<Integer, Set<Occupant>> distributeOccupantsRecursively(
             int length, List<Occupant> occupants, int recursion) {
 
-        if(recursion == 0)
+        if (recursion == 0)
             return distributeRandomly(bundleOccupants(occupants), length * length);
 
         Map<Integer, Set<Occupant>> oMap = new HashMap<>();
@@ -139,35 +157,33 @@ public class OccupantsRandomiser {
         int subLength = length / 2;
         recursion--;
 
-        for(int i = 0; i < subMaps.length; i++) {
+        for (int i = 0; i < subMaps.length; i++) {
             subMaps[i] = distributeOccupantsRecursively(subLength, subMapOccupants.get(i), recursion);
         }
 
         // counters[0] for upper left sub map, [2] for lower left sub map, etc.
         int[] counters = new int[4];
-        for(int i = 0; i < counters.length; i++) {
+        for (int i = 0; i < counters.length; i++) {
             counters[i] = 0;
         }
 
         // mapping sub map to the super map
-        for(int i = 0; i < length * length; i++) {
+        for (int i = 0; i < length * length; i++) {
             // upper maps
-            if(i < subLength * length) {
+            if (i < subLength * length) {
                 // left map
-                if(i % length < subLength) {
+                if (i % length < subLength) {
                     oMap.put(i, subMaps[0].get(counters[0]++));
-                }
-                else {
+                } else {
                     oMap.put(i, subMaps[1].remove(counters[1]++));
                 }
             }
             // lower maps
             else {
                 // left map
-                if(i % length < subLength) {
+                if (i % length < subLength) {
                     oMap.put(i, subMaps[2].remove(counters[2]++));
-                }
-                else {
+                } else {
                     oMap.put(i, subMaps[3].remove(counters[3]++));
                 }
             }
@@ -176,17 +192,17 @@ public class OccupantsRandomiser {
     }
 
     private <T> Map<Integer, T> distributeRandomly(List<T> residents, int numOfSeats) {
-        if(residents.size() > numOfSeats)
+        if (residents.size() > numOfSeats)
             throw new IllegalArgumentException("The amount of residents cannot exceed the number of seats.");
 
         Map<Integer, T> dist = new HashMap<>();
         List<Integer> seats = new ArrayList<>(numOfSeats);
-        for(int i = 0; i < numOfSeats; i++) {
+        for (int i = 0; i < numOfSeats; i++) {
             seats.add(i);
             dist.put(i, null);
         }
 
-        while(!residents.isEmpty()) {
+        while (!residents.isEmpty()) {
             Integer seat = seats.remove(random.nextInt(seats.size()));
             dist.put(seat, residents.remove(0));
         }
@@ -197,18 +213,17 @@ public class OccupantsRandomiser {
     private List<List<Occupant>> divideOccupants(List<Occupant> occupants) {
 
         List<List<Occupant>> subMapOccupants = new ArrayList<>();
-        for(int i = 0; i < 4; i++) {
+        for (int i = 0; i < 4; i++) {
             subMapOccupants.add(new ArrayList<>());
         }
 
         int index = 0;
-        while(!occupants.isEmpty()) {
+        while (!occupants.isEmpty()) {
             int i = index % subMapOccupants.size();
             Occupant o = null;
-            if(maintainOccupantTypesPercentage) {
+            if (maintainOccupantTypesPercentage) {
                 o = occupants.remove(0);
-            }
-            else {
+            } else {
                 o = occupants.remove(random.nextInt(occupants.size()));
             }
             subMapOccupants.get(i).add(o);
@@ -222,27 +237,28 @@ public class OccupantsRandomiser {
     private List<Set<Occupant>> bundleOccupants(List<Occupant> occupants) {
         List<Set<Occupant>> occUnits = new ArrayList<>();
 
-        while(!occupants.isEmpty()) {
+        while (!occupants.isEmpty()) {
             Occupant firstOccupant = occupants.remove(0);
             Occupant secondOccupant = null;
 
             //if need to double up occupants
-            if(random.nextDouble() < doubleOccupantsPercentage
+            if (random.nextDouble() < doubleOccupantsPercentage
                     && !occupants.isEmpty()
-                    && (allowSameOccupantsOnOnePosition || hasDifferentOccupantNames(occupants)) ) {
+// TODO                   && (allowSameOccupantsOnOnePosition || hasDifferentOccupantNames(firstOccupant, occupants))
+                    && hasLegalCandidate(firstOccupant, occupants)) {
 
 
                 // if the name of second occupant is same as the first one
                 // then pick the second again
                 do {
                     secondOccupant = occupants.get(random.nextInt(occupants.size()));
-                } while (secondOccupant.getName().equals(firstOccupant.getName()));
+                } while (!resideRull.mayResideTogether(Arrays.asList(firstOccupant), secondOccupant));
                 occupants.remove(secondOccupant);
             }
 
             Set<Occupant> occSet = new HashSet<>();
             occSet.add(firstOccupant);
-            if(secondOccupant != null)
+            if (secondOccupant != null)
                 occSet.add(secondOccupant);
             occUnits.add(occSet);
         }
@@ -250,11 +266,19 @@ public class OccupantsRandomiser {
         return occUnits;
     }
 
-    private boolean hasDifferentOccupantNames(List<Occupant> occupants) {
+    private boolean hasDifferentOccupantNames(Occupant first, List<Occupant> occupants) {
+        for (Occupant o : occupants) {
+            if (!o.getName().equals(first.getName()))
+                return true;
+        }
+        return false;
+    }
 
-        Occupant first = occupants.get(0);
+    private boolean hasLegalCandidate(Occupant first, List<Occupant> occupants) {
+        List<Occupant> existed = new ArrayList<>();
+        existed.add(first);
         for(Occupant o : occupants) {
-            if(!o.getName().equals(first.getName()))
+            if(resideRull.mayResideTogether(existed, o))
                 return true;
         }
         return false;
