@@ -7,8 +7,6 @@ import java.util.*;
 
 import nz.ac.aut.ense701.gameModel.randomiser.OccupantsRandomiser;
 
-import javax.swing.text.html.HTMLDocument;
-
 /**
  * This is the class that knows the Kiwi Island game rules and state
  * and enforces those rules.
@@ -39,7 +37,7 @@ public class Game
     {   
         eventListeners = new HashSet<GameEventListener>();
         fToggle = new FeatureToggle();
-        
+        fToggle.disableIDataManager();
         createNewGame();
     }
     

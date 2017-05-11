@@ -26,7 +26,7 @@ public class FeatureToggle {
         mapVisible = false;
     }
 
-    public void diableIDataManager() {
+    public void disableIDataManager() {
         isUsingIDataManager = false;
     }
 
