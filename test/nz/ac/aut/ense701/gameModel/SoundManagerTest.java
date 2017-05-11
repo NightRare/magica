@@ -1,19 +1,16 @@
 package nz.ac.aut.ense701.gameModel;
 
-import junit.extensions.TestSetup;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.newdawn.slick.Sound;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 /**
- * Created by chin- on 2017/5/11.
+ * Created by Jing on 2017/5/11.
  */
 public class SoundManagerTest {
 

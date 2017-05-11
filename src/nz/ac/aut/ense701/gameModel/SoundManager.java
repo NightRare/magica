@@ -1,6 +1,5 @@
 package nz.ac.aut.ense701.gameModel;
 
-import nz.ac.aut.ense701.gui.AssetManager;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
 
@@ -9,10 +8,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
+ * Generate sound clips for faunas and predators.
  * Created by Jing on 2017/5/10.
  */
 public class SoundManager {
