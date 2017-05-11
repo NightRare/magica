@@ -135,15 +135,41 @@ public class OccupantsRandomiser {
 
         Map<Integer, Set<Occupant>> oMap = new HashMap<>();
         List<List<Occupant>> subMapOccupants = divideOccupants(occupants);
+        Map<Integer, Set<Occupant>>[] subMaps = new Map[4];
+        int subLength = length / 2;
         recursion--;
-        for(int i = 0; i < subMapOccupants.size(); i++) {
-            int subLength = length / 2;
-            Map<Integer, Set<Occupant>> subMap =
-                    distributeOccupantsRecursively(subLength, subMapOccupants.get(i), recursion);
 
-            for(int j = 0; j < subMap.size(); j++) {
-                int index = subLength * subLength * i + j;
-                oMap.put(index, subMap.get(j));
+        for(int i = 0; i < subMaps.length; i++) {
+            subMaps[i] = distributeOccupantsRecursively(subLength, subMapOccupants.get(i), recursion);
+        }
+
+        // counters[0] for upper left sub map, [2] for lower left sub map, etc.
+        int[] counters = new int[4];
+        for(int i = 0; i < counters.length; i++) {
+            counters[i] = 0;
+        }
+
+        // mapping sub map to the super map
+        for(int i = 0; i < length * length; i++) {
+            // upper maps
+            if(i < subLength * length) {
+                // left map
+                if(i % length < subLength) {
+                    oMap.put(i, subMaps[0].get(counters[0]++));
+                }
+                else {
+                    oMap.put(i, subMaps[1].remove(counters[1]++));
+                }
+            }
+            // lower maps
+            else {
+                // left map
+                if(i % length < subLength) {
+                    oMap.put(i, subMaps[2].remove(counters[2]++));
+                }
+                else {
+                    oMap.put(i, subMaps[3].remove(counters[3]++));
+                }
             }
         }
         return oMap;
