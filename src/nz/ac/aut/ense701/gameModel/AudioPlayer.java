@@ -10,7 +10,6 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import nz.ac.aut.ense701.gui.SoundManager;
 import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
@@ -28,8 +27,6 @@ public class AudioPlayer {
         
         try {
             musicMap.put("music", new Music("resource/sound/Intro_Theme.ogg"));
-            soundMap = SoundManager.SoundLoader();
-
         } catch (SlickException ex) {
             Logger.getLogger(AudioPlayer.class.getName()).log(Level.SEVERE, null, ex);
         }

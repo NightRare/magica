@@ -150,7 +150,7 @@ public class RenderingEngine {
      *
      * @param g2d graphics2D reference
      * @param sidePanel side panel object
-     * @param scAs scaling assistant
+     * @param scaleAssist scaling assistant
      */
     private void renderQuest(Graphics2D g2d, SidePanel sidePanel, ScalingAssistant scaleAssist) {
         //displays the quest clipboard image
@@ -173,7 +173,7 @@ public class RenderingEngine {
      *
      * @param g2d graphics2D reference
      * @param sidePanel side panel object
-     * @param scAs scaling assistant
+     * @param scaleAssist scaling assistant
      */
     private void renderStaminaBar(Graphics2D g2d, SidePanel sidePanel, ScalingAssistant scaleAssist) {
         //display Max Stamina
@@ -376,10 +376,13 @@ public class RenderingEngine {
     }
 
     private void renderOccupants(Graphics2D g2d, SidePanel sidePanel, ScalingAssistant scaleAssist) {
-        
-        Occupant o = sidePanel.getOccupants()[0];
+        Occupant[] occupants = sidePanel.getOccupants();
+        //Don't draw image if there's no animal.
+        if (occupants.length == 0)
+            return;
+        Occupant o = occupants[0];
         BufferedImage bi = AssetManager.getAssetManager().getOccupantPortrait(o.getName());
-        g2d.drawImage(bi, 
+        g2d.drawImage(bi,
             scaleAssist.scale(35), scaleAssist.scale(12+315+100), //X & Y offset 
             scaleAssist.scale(225), scaleAssist.scale(130), //width & height
             null);
