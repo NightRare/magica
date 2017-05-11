@@ -20,13 +20,8 @@ public class GameNotification {
     private final Game game;
     private Player player;
     
-    private final ScalingAssistant scaleAssist;
     private BufferedImage taggedBubble, trappedBubble;
     
-    
-    private int playerLocationX;
-    private int playerLocationY;
-    private int bubblePositionOffset;
     private boolean kiwiCounted = false;
     private boolean predatorTrapped = false;
     private static int displayTime = 50;
@@ -35,26 +30,19 @@ public class GameNotification {
     
     public GameNotification(Game game) {
         this.game = game;
-        player = game.getPlayer();
-        playerLocationX = getPlayerPosition_X();
-        playerLocationY = getPlayerPosition_Y();
-        bubblePositionOffset = getBubblePositionOffset();
-        scaleAssist = ScalingAssistant.getScalingAssistant();
         taggedBubble = AssetManager.getAssetManager().getTaggedBubble();
         trappedBubble = AssetManager.getAssetManager().getTrappedBubble();
     }
     
-    private int getPlayerPosition_X() {
-        return GUIConfigs.colToX(player.getPosition().getColumn());
-    }
     
-    private int getPlayerPosition_Y() {
-        return GUIConfigs.rowToY(player.getPosition().getRow());
-    }
     
     private int getBubblePositionOffset(){
         //reminder: do something when player is near side panel
         return GUIConfigs.colToX(player.getPosition().getColumn()-2);
+    }
+    
+    private int getPlayerPosition_Y() {
+        return GUIConfigs.rowToY(player.getPosition().getRow());
     }
     
     public void render(Graphics2D g2d) {
@@ -66,8 +54,6 @@ public class GameNotification {
         if(predatorTrapped){
             g2d.drawImage(trappedBubble,null,getBubblePositionOffset(),getPlayerPosition_Y());
         }
-        
-        
     }
     
     public void update(){

@@ -52,7 +52,7 @@ public class Game
         this.dataManager = dataManager;
         
         createNewGame();
-        this.notify = new GameNotification(this);
+        this.notification = new GameNotification(this);
     }
     
     
@@ -395,7 +395,7 @@ public class Game
     }
     
     public GameNotification getNotification(){
-        return notify;
+        return notification;
     }
     
     /***************************************************************************************************************
@@ -506,7 +506,8 @@ public class Game
                 Kiwi kiwi = (Kiwi) occupant;
                 if (!kiwi.counted()) {
                     kiwi.count();
-                    notify.kiwiCounted();
+                    //notify player that kiwi has been counted
+                    notification.kiwiCounted();
                     kiwiCount++;
                 }
             }
@@ -605,7 +606,7 @@ public class Game
                 this.setWinMessage(message);
             }
         }
-        // notify listeners about changes
+        // notification listeners about changes
             notifyGameEventListeners();
     }
     
@@ -696,7 +697,7 @@ public class Game
             //Predator has been trapped so remove
             island.removeOccupant(current, occupant); 
             //notify player that the predator is trapped
-            notify.predatorTrapped();
+            notification.predatorTrapped();
             predatorsTrapped++;
         }
         
@@ -965,5 +966,5 @@ public class Game
     private FeatureToggle fToggle;
     private IDataManager dataManager;
     
-    private GameNotification notify;
+    private GameNotification notification;
 }
