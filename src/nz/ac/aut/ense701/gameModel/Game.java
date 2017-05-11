@@ -36,7 +36,7 @@ public class Game
     public Game() 
     {   
         eventListeners = new HashSet<GameEventListener>();
-        fToggle = new FeatureToggle(false);
+        fToggle = new FeatureToggle();
         
         createNewGame();
     }
@@ -773,6 +773,8 @@ public class Game
             int numRows    = input.nextInt();
             int numColumns = input.nextInt();
             island = new Island(numRows, numColumns);
+            if(fToggle.isMapVisible())
+                island.setMapVisible();
 
             // read and setup the terrain
             setUpTerrain(input);

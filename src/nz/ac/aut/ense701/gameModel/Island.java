@@ -12,7 +12,6 @@ public class Island
     private GridSquare[][] islandGrid;
     private Position previousPlayerPos;
 
-   
     /**
      * Initial island constructor.
      * @param numRows the amount of rows on the island
@@ -335,6 +334,17 @@ public class Island
             System.out.println(rowTerrain);
         }
         System.out.println(horizontalLine);
+    }
+
+    /**
+     * Set all the grids of the island visible.
+     */
+    public void setMapVisible() {
+        for(int r = 0; r < numRows; r++) {
+            for(int c = 0; c < numColumns; c++) {
+                islandGrid[r][c].setVisible();
+            }
+        }
     }
 
     /*****************************************************************************************************************************

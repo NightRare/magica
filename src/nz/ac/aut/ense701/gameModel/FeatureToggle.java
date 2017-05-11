@@ -7,18 +7,39 @@ package nz.ac.aut.ense701.gameModel;
 
 /**
  * A feature toggle class where some newly added features can be marked as enabled/disabled.
- * 
+ *
  * @author Yuan
  */
 public class FeatureToggle {
-    
+
     private boolean isUsingIDataManager;
-    
-    public FeatureToggle(boolean isUsingIDataManager) {
-        this.isUsingIDataManager = isUsingIDataManager;
+    private boolean mapVisible;
+
+    /**
+     * <p>Default toggles:</p>
+     * <p>
+     * <p>isUsingIDataManager = true;</p>
+     * <p>mapVisible = false;</p>
+     */
+    public FeatureToggle() {
+        isUsingIDataManager = true;
+        mapVisible = false;
     }
-    
+
+    public void diableIDataManager() {
+        isUsingIDataManager = false;
+    }
+
+    public void debug_setMapVisible() {
+        mapVisible = true;
+    }
+
+
     public boolean isUsingIDataManager() {
         return isUsingIDataManager;
+    }
+
+    public boolean isMapVisible() {
+        return mapVisible;
     }
 }
