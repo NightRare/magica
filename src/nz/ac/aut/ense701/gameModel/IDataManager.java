@@ -10,7 +10,8 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * This interface processes the requests for persistent data.
+ * This interface processes the requests for persistent data. All the data got from
+ * the IDataManager should be a deep clone of the data persists in IDataManager instance.
  * 
  * @author Yuan
  */
