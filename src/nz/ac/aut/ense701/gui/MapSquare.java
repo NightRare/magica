@@ -77,9 +77,9 @@ public class MapSquare {
         boolean squareVisible = game.isVisible(row, column);
         boolean squareExplored = game.isExplored(row, column);
         
-        Color colour;
+        //Color colour;
         
-        BufferedImage image;
+        //BufferedImage image;
         
 
 //        switch (terrain) {
@@ -110,20 +110,21 @@ public class MapSquare {
         if (squareExplored || squareVisible) {
             
             label = game.getOccupantStringRepresentation(row,column);
-            texture = empty;
+            //texture = empty;
             
             if (squareVisible && !squareExplored) 
             {
-              texture = empty;
+              //texture = empty;
             }
-            texture = empty; //Sets up appropriate textures for the map
+            //texture = empty; //Sets up appropriate textures for the map
             
             if(game.getState()==GameState.LOST){
-                texture = grey; } //When the player dies, then it reverts all textures that was used to grey.
+                //texture = grey; 
+            } //When the player dies, then it reverts all textures that was used to grey.
 
         } else {
             
-            texture = black;
+            //texture = black;
             label = "";
            
         }
@@ -141,9 +142,9 @@ public class MapSquare {
         return label;
     }
 
-    public Color getColour() {
-        return tileColour;
-    }
+//    public Color getColour() {
+//        return tileColour;
+//    }
     
      public BufferedImage getTexture(){
         return texture;

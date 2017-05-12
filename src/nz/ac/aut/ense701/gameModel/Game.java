@@ -481,6 +481,8 @@ public class Game
             player.increaseStamina(food.getEnergy());
             // player has consumed the food: remove from inventory
             player.drop(food);
+            //notify player that food is consumed
+            notification.foodConsumed();
             // use successful: everybody has to know that
             notifyGameEventListeners();
         }

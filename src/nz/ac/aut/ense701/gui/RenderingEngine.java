@@ -237,7 +237,16 @@ public class RenderingEngine {
                 maxStaminawidth, valueOf(STAMINA_BAR, IMG_HEIGHT)));
 
         //displays Current Stamina
-        g2d.setColor(new Color(57, 181, 75));//rgb color values
+        if(currentStaminawidth >= maxStaminawidth*0.8){//80%+ of health
+            g2d.setColor(new Color(57, 181, 75));//green
+        }else if(currentStaminawidth >= maxStaminawidth*0.6){//60%+
+            g2d.setColor(new Color(216, 216, 48));//yellow
+        }else if(currentStaminawidth >= maxStaminawidth*0.4){//40%+
+            g2d.setColor(new Color(201, 147, 40));//orange
+        }else if(currentStaminawidth >= maxStaminawidth*0.2){//20%+
+            g2d.setColor(new Color(216, 26, 26));//red
+        }
+        
 
         g2d.fill(new Rectangle2D.Double(
                 valueOf(STAMINA_BAR, X_OFFSET), valueOf(STAMINA_BAR, Y_OFFSET),

@@ -20,10 +20,11 @@ public class GameNotification {
     private final Game game;
     private Player player;
     
-    private BufferedImage taggedBubble, trappedBubble;
+    private BufferedImage taggedBubble, trappedBubble, yumBubble;
     
     private boolean kiwiCounted = false;
     private boolean predatorTrapped = false;
+    private boolean foodConsumed = false;
     private static int displayTime = 50;
     
     
@@ -32,6 +33,7 @@ public class GameNotification {
         this.game = game;
         taggedBubble = AssetManager.getAssetManager().getTaggedBubble();
         trappedBubble = AssetManager.getAssetManager().getTrappedBubble();
+        yumBubble = AssetManager.getAssetManager().getYumBubble();
     }
     
     
@@ -46,31 +48,33 @@ public class GameNotification {
     }
     
     public void render(Graphics2D g2d) {
-        if(kiwiCounted){
-            g2d.drawImage(taggedBubble, null, getBubblePositionOffset(),getPlayerPosition_Y());
-        }
-        if(predatorTrapped){
-            g2d.drawImage(trappedBubble,null,getBubblePositionOffset(),getPlayerPosition_Y());
-        }
+        if(kiwiCounted){ showBubble(g2d,taggedBubble); }
+        if(predatorTrapped){ showBubble(g2d,trappedBubble); }
+        if(foodConsumed){ showBubble(g2d,yumBubble); }
+    }
+    
+    public void showBubble(Graphics2D g2d, BufferedImage image){
+        g2d.drawImage(image, null, getBubblePositionOffset(),getPlayerPosition_Y());
     }
     
     public void update(){
         taggedBubble = AssetManager.getAssetManager().getTaggedBubble();
         trappedBubble = AssetManager.getAssetManager().getTrappedBubble();
+        yumBubble = AssetManager.getAssetManager().getYumBubble();
         player = game.getPlayer();
         notificationCounter();
     }
     
     private void notificationCounter(){
-        if(kiwiCounted || predatorTrapped){
+        if(kiwiCounted || predatorTrapped || foodConsumed){
             displayTime--;
             if(displayTime == 0){
                 kiwiCounted = false;
                 predatorTrapped = false;
+                foodConsumed = false;
                 displayTime = 50;
             }
         }
-        
     }
     
     public void kiwiCounted(){
@@ -81,5 +85,7 @@ public class GameNotification {
         this.predatorTrapped = true;
     }
     
-    
+    public void foodConsumed(){
+        this.foodConsumed = true;
+    }
 }
