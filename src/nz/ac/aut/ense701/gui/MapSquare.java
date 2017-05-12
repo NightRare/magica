@@ -29,7 +29,7 @@ public class MapSquare {
     private String label;
 
     
-    public BufferedImage water, scrub, wetland, forest, sand, black, grey = null;
+    public BufferedImage empty, water, scrub, wetland, forest, sand, black, grey = null;
     public BufferedImage animal, food, tool, hazard;
 
     private AssetManager assetManager;
@@ -52,7 +52,7 @@ public class MapSquare {
     
      public void textureLoad(){
         //Get Images # 5
-        water = assetManager.getWater();
+        empty = assetManager.getEmpty();
         scrub = assetManager.getScrub();
         wetland = assetManager.getWetland();
         forest = assetManager.getForest();
@@ -82,27 +82,27 @@ public class MapSquare {
         BufferedImage image;
         
 
-        switch (terrain) {
-                       
-            case SAND:
-                image = sand;
-                break;
-            case FOREST:
-                image = forest;
-                break;
-            case WETLAND:
-                image = wetland;
-                break;
-            case SCRUB:
-                image = scrub;
-                break;
-            case WATER:
-                image = water;
-                break;
-            default:
-                image = water;
-                break;
-        }
+//        switch (terrain) {
+//                       
+//            case SAND:
+//                image = sand;
+//                break;
+//            case FOREST:
+//                image = forest;
+//                break;
+//            case WETLAND:
+//                image = wetland;
+//                break;
+//            case SCRUB:
+//                image = scrub;
+//                break;
+//            case WATER:
+//                image = water;
+//                break;
+//            default:
+//                image = water;
+//                break;
+//        }
 
         // This code needs to be changed eventually once colours are moved away from
      
@@ -110,20 +110,20 @@ public class MapSquare {
         if (squareExplored || squareVisible) {
             
             label = game.getOccupantStringRepresentation(row,column);
-            
+            texture = empty;
             
             if (squareVisible && !squareExplored) 
             {
-              
+              texture = empty;
             }
-            texture = image; //Sets up appropriate textures for the map
+            texture = empty; //Sets up appropriate textures for the map
             
             if(game.getState()==GameState.LOST){
                 texture = grey; } //When the player dies, then it reverts all textures that was used to grey.
 
         } else {
             
-            texture = grey;
+            texture = black;
             label = "";
            
         }

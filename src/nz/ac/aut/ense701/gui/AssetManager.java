@@ -20,7 +20,7 @@ import nz.ac.aut.ense701.gameModel.Occupant;
  */
 public class AssetManager {
     
-    private BufferedImage water, scrub, wetland, forest, sand, player, black, grey, night; 
+    private BufferedImage map, empty, water, scrub, wetland, forest, sand, player, black, grey, night; 
     private BufferedImage animal, food, tool, hazard; //inventory items
     private BufferedImage tag, trap, collect; //action boxes
     private BufferedImage playerIcon,questIcon,inventoryEmpty,inventorySnack,
@@ -53,12 +53,13 @@ public class AssetManager {
     
     public void loadTextures() {
         ScalingAssistant scaleAssist = ScalingAssistant.getScalingAssistant();
-        
-        water = scaleAssist.getScaledImage((loader.loadImage("images/tile_water.png")), scaleAssist.getScale());
-        scrub = scaleAssist.getScaledImage((loader.loadImage("images/tile_scrub.png")), scaleAssist.getScale());
-        wetland = scaleAssist.getScaledImage((loader.loadImage("images/tile_wetland.png")), scaleAssist.getScale());
-        forest = scaleAssist.getScaledImage((loader.loadImage("images/tile_forest.png")), scaleAssist.getScale());
-        sand = scaleAssist.getScaledImage((loader.loadImage("images/tile_sand.png")), scaleAssist.getScale());
+        map = scaleAssist.getScaledImage((loader.loadImage("images/whole_map.png")), scaleAssist.getScale());
+        empty = scaleAssist.getScaledImage((loader.loadImage("images/debug.png")), scaleAssist.getScale());
+//        water = scaleAssist.getScaledImage((loader.loadImage("images/tile_water.png")), scaleAssist.getScale());
+//        scrub = scaleAssist.getScaledImage((loader.loadImage("images/tile_scrub.png")), scaleAssist.getScale());
+//        wetland = scaleAssist.getScaledImage((loader.loadImage("images/tile_wetland.png")), scaleAssist.getScale());
+//        forest = scaleAssist.getScaledImage((loader.loadImage("images/tile_forest.png")), scaleAssist.getScale());
+//        sand = scaleAssist.getScaledImage((loader.loadImage("images/tile_sand.png")), scaleAssist.getScale());
         player = scaleAssist.getScaledImage((loader.loadImage("images/player_01.png")), scaleAssist.getScale());
         black = scaleAssist.getScaledImage((loader.loadImage("images/black.png")), scaleAssist.getScale());
         grey = scaleAssist.getScaledImage((loader.loadImage("images/grey.png")), scaleAssist.getScale());
@@ -123,6 +124,14 @@ public class AssetManager {
             );
     }
     */
+    
+    public BufferedImage getMap() {
+        return map;
+    }
+    
+    public BufferedImage getEmpty() {
+        return empty;
+    }
     
     public BufferedImage getWater() {
         return water;

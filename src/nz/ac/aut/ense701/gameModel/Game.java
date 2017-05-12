@@ -41,6 +41,7 @@ public class Game
         fToggle = new FeatureToggle(false);
         
         createNewGame();
+        this.notification = new GameNotification(this);
     }
     
     
@@ -485,10 +486,10 @@ public class Game
             else if(tool.isScrewdriver())// Use screwdriver (to fix trap)
             {
                 if(player.hasTrap())
-                    {
-                        Tool trap = player.getTrap();
-                        trap.fix();
-                    }
+                {
+                    Tool trap = player.getTrap();
+                    trap.fix();
+                }
             }
         }
         updateGameState();
@@ -696,9 +697,10 @@ public class Game
             Occupant occupant = island.getPredator(current);
             //Predator has been trapped so remove
             island.removeOccupant(current, occupant); 
+            
+            predatorsTrapped++;
             //notify player that the predator is trapped
             notification.predatorTrapped();
-            predatorsTrapped++;
         }
         
         return hadPredator;

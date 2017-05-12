@@ -46,8 +46,6 @@ public class GameNotification {
     }
     
     public void render(Graphics2D g2d) {
-        //g2d.drawImage(taggedBubble, null, playerLocationX, playerLocationY);
-        System.out.println(kiwiCounted);
         if(kiwiCounted){
             g2d.drawImage(taggedBubble, null, getBubblePositionOffset(),getPlayerPosition_Y());
         }
