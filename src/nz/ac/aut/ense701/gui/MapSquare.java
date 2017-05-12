@@ -29,7 +29,7 @@ public class MapSquare {
     private String label;
 
     
-    public BufferedImage water, scrub, wetland, forest, sand, player, black, grey = null;
+    public BufferedImage empty, water, scrub, wetland, forest, sand, black, grey = null;
     public BufferedImage animal, food, tool, hazard;
 
     private AssetManager assetManager;
@@ -52,12 +52,11 @@ public class MapSquare {
     
      public void textureLoad(){
         //Get Images # 5
-        water = assetManager.getWater();
+        empty = assetManager.getEmpty();
         scrub = assetManager.getScrub();
         wetland = assetManager.getWetland();
         forest = assetManager.getForest();
         sand = assetManager.getSand();
-        player = assetManager.getPlayer();
         black = assetManager.getBlack();
         grey = assetManager.getGrey();
     }
@@ -83,27 +82,27 @@ public class MapSquare {
         BufferedImage image;
         
 
-        switch (terrain) {
-                       
-            case SAND:
-                image = sand;
-                break;
-            case FOREST:
-                image = forest;
-                break;
-            case WETLAND:
-                image = wetland;
-                break;
-            case SCRUB:
-                image = scrub;
-                break;
-            case WATER:
-                image = water;
-                break;
-            default:
-                image = water;
-                break;
-        }
+//        switch (terrain) {
+//                       
+//            case SAND:
+//                image = sand;
+//                break;
+//            case FOREST:
+//                image = forest;
+//                break;
+//            case WETLAND:
+//                image = wetland;
+//                break;
+//            case SCRUB:
+//                image = scrub;
+//                break;
+//            case WATER:
+//                image = water;
+//                break;
+//            default:
+//                image = water;
+//                break;
+//        }
 
         // This code needs to be changed eventually once colours are moved away from
      
@@ -111,24 +110,20 @@ public class MapSquare {
         if (squareExplored || squareVisible) {
             
             label = game.getOccupantStringRepresentation(row,column);
-            
+            texture = empty;
             
             if (squareVisible && !squareExplored) 
             {
-              
+              texture = empty;
             }
-            texture = image; //Sets up appropriate textures for the map
+            texture = empty; //Sets up appropriate textures for the map
             
-            
-            if(game.hasPlayer(row, column)){
-                texture = player; //Sets up Player Icon to the current location of the player.
-            } 
             if(game.getState()==GameState.LOST){
                 texture = grey; } //When the player dies, then it reverts all textures that was used to grey.
 
         } else {
             
-            texture = grey;
+            texture = black;
             label = "";
            
         }
@@ -154,29 +149,13 @@ public class MapSquare {
         return texture;
     }
     
-    public BufferedImage getOccupantImage(String label){
+    public BufferedImage getOccupantIcon(String label){
         BufferedImage img = null;
-        if (label.length()==0) return img;
-        switch(label.charAt(0)){
-            case 'F':
-                img = animal;
-                break;
-            case 'K':
-                img = animal;
-                break;
-            case 'P':
-                img = animal;
-                break;
-            case 'H':
-                img = hazard;
-                break;
-            case 'T':
-                img = tool;
-                break;
-            case 'E':
-                img = food;
-                break;
-        }
+        if (label.length() == 0) return img;
+        if(label.matches("[FKP]+")) img = animal;
+        if(label.matches("H")) img = hazard;
+        if(label.matches("T")) img = tool;
+        if(label.matches("E")) img = food;
         return img;
     }
     

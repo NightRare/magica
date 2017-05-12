@@ -34,6 +34,8 @@ public class GameLoop implements Runnable{
     
     private ArrayList<MapSquare> mapSquareList;
     private SidePanel sidePanel;
+    PlayerSprite playerSprite;
+    private GameNotification notification;
 
     /**
      * The constructor for GameLoop takes a game object. Game represents the game model.
@@ -44,6 +46,8 @@ public class GameLoop implements Runnable{
         this.running = false;
         tickMachine = new TickMachine(this);
         renderingEngine = new RenderingEngine(this);
+        playerSprite = new PlayerSprite(game);
+        notification = game.getNotification();
         
         // Initialise the map grid
         initialiseMapSquareList();
@@ -102,10 +106,9 @@ public class GameLoop implements Runnable{
         }
         g2d = (Graphics2D) bs.getDrawGraphics();
         
-        g2d.clearRect(0, 0, GUIConfigs.width, GUIConfigs.height);
+        g2d.clearRect(0, 0, GUIConfigs.WINDOW_WIDTH, GUIConfigs.WINDOW_HEIGHT);
         
         renderingEngine.render(g2d);
-        
         bs.show();
         g2d.dispose();
     }
@@ -176,6 +179,15 @@ public class GameLoop implements Runnable{
     public boolean getRunning(){
         return running;
     }
+
+    public Game getGame() {
+        return game;
+    }
+    
+    public PlayerSprite getPlayerSprite() {
+        return this.playerSprite;
+    }
+    
     
     
 }

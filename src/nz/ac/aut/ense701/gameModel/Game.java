@@ -7,6 +7,8 @@ import java.util.*;
 
 import nz.ac.aut.ense701.gameModel.randomiser.OccupantsRandomiser;
 
+import nz.ac.aut.ense701.gui.GameNotification;
+
 /**
  * This is the class that knows the Kiwi Island game rules and state
  * and enforces those rules.
@@ -39,6 +41,7 @@ public class Game
         fToggle = new FeatureToggle();
         fToggle.disableIDataManager();
         createNewGame();
+        this.notification = new GameNotification(this);
     }
     
     
@@ -51,6 +54,7 @@ public class Game
         this.dataManager = dataManager;
 
         createNewGame();
+        this.notification = new GameNotification(this);
     }
       
     
@@ -71,6 +75,7 @@ public class Game
         loseMessage = "";
         playerMessage = "";
         notifyGameEventListeners();
+        this.time = new Time();
     }
 
     /***********************************************************************************************************************
@@ -389,6 +394,10 @@ public class Game
         return !("".equals(playerMessage));
     }
     
+    public GameNotification getNotification(){
+        return notification;
+    }
+    
     /***************************************************************************************************************
      * Mutator Methods
     ****************************************************************************************************************/
@@ -476,10 +485,10 @@ public class Game
             else if(tool.isScrewdriver())// Use screwdriver (to fix trap)
             {
                 if(player.hasTrap())
-                    {
-                        Tool trap = player.getTrap();
-                        trap.fix();
-                    }
+                {
+                    Tool trap = player.getTrap();
+                    trap.fix();
+                }
             }
         }
         updateGameState();
@@ -497,6 +506,8 @@ public class Game
                 Kiwi kiwi = (Kiwi) occupant;
                 if (!kiwi.counted()) {
                     kiwi.count();
+                    //notify player that kiwi has been counted
+                    notification.kiwiCounted();
                     kiwiCount++;
                 }
             }
@@ -523,6 +534,9 @@ public class Game
             player.moveToPosition(newPosition, terrain);
             island.updatePlayerPosition(player);
             successfulMove = true;
+            
+            // tick time
+            passTime();
                     
             // Is there a hazard?
             checkForHazard();
@@ -682,7 +696,10 @@ public class Game
             Occupant occupant = island.getPredator(current);
             //Predator has been trapped so remove
             island.removeOccupant(current, occupant); 
+            
             predatorsTrapped++;
+            //notify player that the predator is trapped
+            notification.predatorTrapped();
         }
         
         return hadPredator;
@@ -966,7 +983,19 @@ public class Game
             }
         }
     }
+    
+    // ticks time over
+    private void passTime() {
+        time.tick();
+    }
+    
+    // returns whether it is day or night
+    public LightLevel lightLevel() {
+        return time.dayOrNight();
+    }
+    
 
+    private Time time;
     private Island island;
     private Player player;
     private GameState state;
@@ -986,4 +1015,6 @@ public class Game
     
     private FeatureToggle fToggle;
     private IDataManager dataManager;
+    
+    private GameNotification notification;
 }

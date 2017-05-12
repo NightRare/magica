@@ -33,5 +33,10 @@ public class TickMachine {
         //update side panel
         loop.getSidePanel().checkStats();
         
+        //update player sprite
+        loop.getPlayerSprite().tick();
+        
+        //update notifications
+        loop.getGame().getNotification().update();
     }
 }

@@ -1,5 +1,6 @@
 package nz.ac.aut.ense701.gameModel;
 
+import nz.ac.aut.ense701.gui.GameNotification;
 import org.junit.Test;
 
 /**
@@ -492,7 +493,7 @@ public class GameTest extends junit.framework.TestCase
     public void testPlayerMoveNotEnoughStamina(){
         // Reduce player's stamina to less than is needed for the most challenging move
         //Most challenging move is WEST as Terrain is water
-        player.reduceStamina(97.0);
+        player.reduceStamina(98.0);
         assertFalse("Player should not have required stamina", game.playerMove(MoveDirection.WEST));
         //Game not over as there other moves player has enough stamina for
         assertTrue("Game should not be over", game.getState()== GameState.PLAYING);
