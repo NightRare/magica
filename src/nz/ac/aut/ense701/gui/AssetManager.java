@@ -23,8 +23,8 @@ public class AssetManager {
     private BufferedImage map, empty, water, scrub, wetland, forest, sand, player, black, grey, night; 
     private BufferedImage animal, food, tool, hazard; //inventory items
     private BufferedImage tag, trap, collect; //action boxes
-    private BufferedImage playerIcon,questIcon,inventoryEmpty,inventorySnack,
-                inventoryToolbox,inventoryApple,inventoryTrap;
+    private BufferedImage playerFace_happy,playerFace_neutral, playerFace_hungry, playerFace_tired,questIcon,
+            inventoryEmpty,inventorySnack, inventoryToolbox,inventoryApple,inventoryTrap;
     private BufferedImage taggedBubble, trappedBubble, yumBubble;
     private HashMap<String, BufferedImage> occupantsPortraits;
     private IDataManager dataManager;
@@ -71,8 +71,11 @@ public class AssetManager {
         tool = scaleAssist.getScaledImage((loader.loadImage("images/map_icons/tool.png")), scaleAssist.getScale());
         hazard = scaleAssist.getScaledImage((loader.loadImage("images/map_icons/hazard.png")), scaleAssist.getScale());
         
-        playerIcon = scaleAssist.getScaledImage((loader.loadImage("images/sidepanel_player.png")), scaleAssist.getScale());
-        questIcon = scaleAssist.getScaledImage((loader.loadImage("images/sidepanel_quest.png")), scaleAssist.getScale());
+        playerFace_happy = scaleAssist.getScaledImage((loader.loadImage("images/side_panel/happy.png")), scaleAssist.getScale());
+        playerFace_neutral = scaleAssist.getScaledImage((loader.loadImage("images/side_panel/neutral.png")), scaleAssist.getScale());
+        playerFace_hungry = scaleAssist.getScaledImage((loader.loadImage("images/side_panel/hungry.png")), scaleAssist.getScale());
+        playerFace_tired = scaleAssist.getScaledImage((loader.loadImage("images/side_panel/tired.png")), scaleAssist.getScale());
+        questIcon = scaleAssist.getScaledImage((loader.loadImage("images/side_panel/quest_board.png")), scaleAssist.getScale());
         inventoryEmpty = scaleAssist.getScaledImage((loader.loadImage("images/inventory_empty.png")), scaleAssist.getScale());
         inventorySnack = scaleAssist.getScaledImage((loader.loadImage("images/inventory_snack.png")), scaleAssist.getScale());
         inventoryToolbox = scaleAssist.getScaledImage((loader.loadImage("images/inventory_screwdriver.png")), scaleAssist.getScale());
@@ -183,8 +186,20 @@ public class AssetManager {
         return hazard;
     }
 
-    public BufferedImage getPlayerIcon() {
-        return playerIcon;
+    public BufferedImage getPlayerFace_happy() {
+        return playerFace_happy;
+    }
+    
+    public BufferedImage getPlayerFace_neutral() {
+        return playerFace_neutral;
+    }
+    
+    public BufferedImage getPlayerFace_hungry() {
+        return playerFace_hungry;
+    }
+    
+    public BufferedImage getPlayerFace_tired() {
+        return playerFace_tired;
     }
 
     public BufferedImage getQuestIcon() {
