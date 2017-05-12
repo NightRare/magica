@@ -15,7 +15,6 @@ import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.io.IOException;
 
-import com.sun.istack.internal.NotNull;
 import nz.ac.aut.ense701.gameModel.jsonModels.*;
 
 import static nz.ac.aut.ense701.gameModel.utils.OccupantsDuplicator.duplicatMulti;
@@ -50,8 +49,8 @@ public class JsonProcessor implements IDataManager {
      * @throws IllegalStateException    if the read data from local file failed; or if the data integrity of any of
      *                                  the Json files is corrupted; currently this only supports non-primitive type fileds.
      */
-    public static IDataManager make(@NotNull String occupantsFilePath, @NotNull String occupantsMapFilePath,
-                                    @NotNull String occupantsPoolFilePath) {
+    public static IDataManager make(String occupantsFilePath, String occupantsMapFilePath,
+                                    String occupantsPoolFilePath) {
         if (occupantsFilePath == null || occupantsMapFilePath == null
                 || occupantsFilePath.isEmpty() || occupantsMapFilePath.isEmpty())
             throw new IllegalArgumentException(
@@ -78,7 +77,7 @@ public class JsonProcessor implements IDataManager {
      * @return
      */
     @Override
-    public Set<Occupant> getOccupantsInPosition(@NotNull Position position) {
+    public Set<Occupant> getOccupantsInPosition(Position position) {
         if (position == null)
             throw new IllegalArgumentException("The position cannot be null.");
 

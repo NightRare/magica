@@ -3,10 +3,8 @@ package nz.ac.aut.ense701.gameModel.randomiser;
 import nz.ac.aut.ense701.gameModel.*;
 import nz.ac.aut.ense701.gameModel.utils.OccupantsDuplicator;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.MockitoAnnotations;
 
 import java.util.*;
 
@@ -25,7 +23,6 @@ public class OccupantsRandomiserTest {
 
     @Before
     public void setUp() {
-//        MockitoAnnotations.initMocks(this);
 
         allOccupantInstances = new ArrayList<>();
         Occupant[] kiwis = OccupantsDuplicator.duplicatMulti(
