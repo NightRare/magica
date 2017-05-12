@@ -155,8 +155,8 @@ public class MapSquare {
         if (label.length() == 0) return img;
         if(label.matches("[FKP]+")) img = animal;
         if(label.matches("H")) img = hazard;
-        if(label.matches("T+")) img = tool;
-        if(label.matches("E")) img = food;
+        if(label.contains("T")) img = tool;
+        if(label.contains("E")) img = food;
         return img;
     }
     
