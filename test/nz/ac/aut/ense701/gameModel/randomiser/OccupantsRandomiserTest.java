@@ -1,6 +1,5 @@
 package nz.ac.aut.ense701.gameModel.randomiser;
 
-import com.intellij.psi.tree.ILeafElementType;
 import nz.ac.aut.ense701.gameModel.*;
 import nz.ac.aut.ense701.gameModel.utils.OccupantsDuplicator;
 import org.junit.After;
