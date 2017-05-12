@@ -63,7 +63,7 @@ public class GUI {
         canvas.setMinimumSize(new Dimension(GUIConfigs.WINDOW_WIDTH, GUIConfigs.WINDOW_HEIGHT));
         
         // add mouse listeners and keypressed listeners here
-        NavigationKeyListener keyListener = new NavigationKeyListener(game);
+        NavigationKeyListener keyListener = new NavigationKeyListener(game, loop);
         ClickListener clickListener = new ClickListener(game, loop);
         ShortcutListener shortcutListener = new ShortcutListener(game);
         

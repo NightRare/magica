@@ -147,5 +147,7 @@ public class SidePanel {
         return infoOccupant;
     }
    
-    
+    public void clearInfoOccupant() {
+        this.infoOccupant = null;
+    }
 }
