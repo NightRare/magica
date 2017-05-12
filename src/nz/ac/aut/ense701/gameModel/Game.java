@@ -144,6 +144,17 @@ public class Game
         return player;
     }
     
+    
+      /**
+     * Get a grid square with a particular position of the player(originally).
+     * @param position of the square
+     * @return if any occupants are present in the current Square
+     */
+    public boolean hasAnyOccupant(Position position){
+          GridSquare square = island.getCurrentGridSquare(position);
+           return  square.getOccupants().length != 0;
+    }
+    
     /**
      * Checks if possible to move the player in the specified direction.
      * 
@@ -311,7 +322,7 @@ public class Game
         {
             Item item = (Item) itemToCollect;
             result = item.isOkToCarry();
-        }
+        } else AudioPlayer.getSound("error_sound").play();
         return result;
     }
     
@@ -327,7 +338,7 @@ public class Game
         {
             Kiwi kiwi = (Kiwi) itemToCount;
             result = !kiwi.counted();
-        }
+        } else AudioPlayer.getSound("error_sound").play();
         return result;
     }
     /**
@@ -361,7 +372,7 @@ public class Game
                     result = false;
                 }
             }            
-        }
+        } else AudioPlayer.getSound("error_sound").play();
         return result;
     }
     

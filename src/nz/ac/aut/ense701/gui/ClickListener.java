@@ -226,7 +226,7 @@ public class ClickListener implements MouseListener {
      */
     private void useOrDrop(MouseEvent e, int boxNumber){
         int boxIndex = boxNumber -1;
-        if(game.getPlayerInventory().length == 0){}
+        if(game.getPlayerInventory().length == 0){AudioPlayer.getSound("error_sound").play();}
             if(game.getPlayerInventory().length >= boxNumber){
                 if(e.getClickCount()>1){game.dropItem(game.getPlayerInventory()[boxIndex]);} 
                 else if(e.getClickCount()==1){game.useItem(game.getPlayerInventory()[boxIndex]);}
@@ -243,6 +243,10 @@ public class ClickListener implements MouseListener {
         ScalingAssistant sA = ScalingAssistant.getScalingAssistant();
         //TAG if player is on a square where there is a Kiwi
         if((e.getX() > sA.scale(35)) && (e.getX() < sA.scale(35+65))){
+            if(!game.hasAnyOccupant(game.getPlayer().getPosition())){
+                AudioPlayer.getSound("error_sound").play();
+            }
+            
             for(Occupant o: game.getOccupantsPlayerPosition()){
                 if(game.canCount(o)){
                     game.countKiwi();
@@ -251,12 +255,21 @@ public class ClickListener implements MouseListener {
         }
         //TRAP if player is on a square where there is a predator
         if((e.getX() > sA.scale(35+65+15)) && (e.getX() < sA.scale(35+(65*2)+15))){
+            if(!game.hasAnyOccupant(game.getPlayer().getPosition())){
+                AudioPlayer.getSound("error_sound").play();
+            }
             for(Occupant o: game.getOccupantsPlayerPosition()){
                     if(game.getPlayer().hasTrap()){game.useItem(game.getPlayer().getTrap());}
+                    else if(o.getStringRepresentation().contains("K")){
+                        AudioPlayer.getSound("error_sound").play();
+                    } else  AudioPlayer.getSound("error_sound").play();
            }
         }
         //COLLECT if player is on a square where there is tool / food
         if((e.getX() > sA.scale(35+((65+15)*2))) && (e.getX() < sA.scale(35+(65*3)+30))){
+            if(!game.hasAnyOccupant(game.getPlayer().getPosition())){
+                AudioPlayer.getSound("error_sound").play();
+            }
             for(Occupant o: game.getOccupantsPlayerPosition()){
                 if(game.canCollect(o)){
                     game.collectItem(o);
