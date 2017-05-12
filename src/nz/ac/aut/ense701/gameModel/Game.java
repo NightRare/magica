@@ -1,5 +1,7 @@
 package nz.ac.aut.ense701.gameModel;
 
+import org.newdawn.slick.Sound;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -76,6 +78,13 @@ public class Game
         playerMessage = "";
         notifyGameEventListeners();
         this.time = new Time();
+        //Background Music
+        AudioPlayer.load();
+        AudioPlayer.getMusic("music").loop();
+
+        //Load sound clips
+        soundMap = SoundManager.SoundLoader("data/Occupants.json",
+                "data/OccupantsMap.json", "data/OccupantsPool.json");
     }
 
     /***********************************************************************************************************************
@@ -606,6 +615,9 @@ public class Game
                 this.setWinMessage(message);
             }
         }
+
+        playFaunaSoundOrNot();
+
         // notify listeners about changes
             notifyGameEventListeners();
     }
@@ -704,7 +716,22 @@ public class Game
         
         return hadPredator;
     }
-    
+
+    /**
+     * Checks if the player has met any fauna and play its sound
+     * if they do.
+     */
+    private void playFaunaSoundOrNot() {
+        Occupant[] occupantsEncountered = island.getOccupants(player.getPosition());
+        for (Occupant o : occupantsEncountered) {
+            for (Occupant faunaWithSound : soundMap.keySet()) {
+                if (faunaWithSound.getName().equals(o.getName())) {
+                    soundMap.get(faunaWithSound).play();
+                }
+            }
+        }
+    }
+
     /**
      * Checks if the player has met a hazard and applies hazard impact.
      * Fatal hazards kill player and end game.
@@ -1009,12 +1036,14 @@ public class Game
     private final double STAMINA_PUNISH_CAP_FAUNA = 10.0;    
         
     private String winMessage = "";
-    private String loseMessage  = "";
-    private String playerMessage  = "";   
+    private String loseMessage = "";
+    private String playerMessage = "";
 
     
     private FeatureToggle fToggle;
     private IDataManager dataManager;
     
     private GameNotification notification;
+    private Map<Occupant, Sound> soundMap;
+
 }

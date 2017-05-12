@@ -450,8 +450,11 @@ public class RenderingEngine {
     }
 
     private void renderOccupants(Graphics2D g2d, SidePanel sidePanel, ScalingAssistant scaleAssist) {
-
-        Occupant o = sidePanel.getOccupants()[0];
+        Occupant[] occupants = sidePanel.getOccupants();
+        //Don't draw image if there's no animal.
+        if (occupants.length == 0)
+            return;
+        Occupant o = occupants[0];
         BufferedImage bi = AssetManager.getAssetManager().getOccupantPortrait(o.getName());
         g2d.drawImage(bi, 
             scaleAssist.scale(35), scaleAssist.scale(12+315+100), //X & Y offset 

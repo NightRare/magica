@@ -35,3 +35,4 @@ nbdist/
 # Intellij
 .idea/
 magica.iml
+/out/
