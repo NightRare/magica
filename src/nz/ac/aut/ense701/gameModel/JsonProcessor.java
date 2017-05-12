@@ -15,6 +15,7 @@ import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.io.IOException;
 
+import com.sun.istack.internal.NotNull;
 import nz.ac.aut.ense701.gameModel.jsonModels.*;
 
 import static nz.ac.aut.ense701.gameModel.utils.OccupantsDuplicator.duplicatMulti;
@@ -41,15 +42,16 @@ public class JsonProcessor implements IDataManager {
     /**
      * Static factory of JsonProcessor.
      *
-     * @param occupantsFilePath    the file path of Occupants.json
-     * @param occupantsMapFilePath the file path of OccupantsMap.json
+     * @param occupantsFilePath     the file path of Occupants.json
+     * @param occupantsMapFilePath  the file path of OccupantsMap.json
+     * @param occupantsPoolFilePath the file path of OccupantsPool.json
      * @return an instance of IDataManager.
      * @throws IllegalArgumentException if any of the arguments is {@code null} or empty.
      * @throws IllegalStateException    if the read data from local file failed; or if the data integrity of any of
      *                                  the Json files is corrupted; currently this only supports non-primitive type fileds.
      */
-    public static IDataManager make(String occupantsFilePath, String occupantsMapFilePath,
-                                    String occupantsPoolFilePath) {
+    public static IDataManager make(@NotNull String occupantsFilePath, @NotNull String occupantsMapFilePath,
+                                    @NotNull String occupantsPoolFilePath) {
         if (occupantsFilePath == null || occupantsMapFilePath == null
                 || occupantsFilePath.isEmpty() || occupantsMapFilePath.isEmpty())
             throw new IllegalArgumentException(
@@ -69,8 +71,14 @@ public class JsonProcessor implements IDataManager {
         return new JsonProcessor(od, jom, aoi);
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @param position the position which the occupants reside in
+     * @return
+     */
     @Override
-    public Set<Occupant> getOccupantsInPosition(Position position) {
+    public Set<Occupant> getOccupantsInPosition(@NotNull Position position) {
         if (position == null)
             throw new IllegalArgumentException("The position cannot be null.");
 
@@ -91,6 +99,11 @@ public class JsonProcessor implements IDataManager {
         return occupants;
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @return
+     */
     @Override
     public Set<Occupant> getAllOccupantTemplates() {
         Set<Occupant> templates = new HashSet();
@@ -100,6 +113,11 @@ public class JsonProcessor implements IDataManager {
         return templates;
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @return
+     */
     @Override
     public List<Occupant> getAllOccupantInstances() {
         List<Occupant> all = new ArrayList<>();
@@ -170,6 +188,14 @@ public class JsonProcessor implements IDataManager {
                     "did not include \"description\" for " + occupant.getName());
     }
 
+    private static void requireDataIntegerity(JsonOccupantsPool occupantsPool) {
+        Objects.requireNonNull(occupantsPool.food, "did not include \"food\"");
+        Objects.requireNonNull(occupantsPool.faunae, "did not include \"faunae\"");
+        Objects.requireNonNull(occupantsPool.tools, "did not include \"tools\"");
+        Objects.requireNonNull(occupantsPool.hazards, "did not include \"hazards\"");
+        Objects.requireNonNull(occupantsPool.predators, "did not include \"predators\"");
+        Objects.requireNonNull(occupantsPool.kiwis, "did not include \"kiwis\"");
+    }
 
     private static Map<String, Occupant> loadOccupantsDictionary(Gson gson, String occupantsFilePath) {
         JsonOccupants jo;
@@ -212,13 +238,16 @@ public class JsonProcessor implements IDataManager {
     private static List<Occupant> loadAllOccupantInstances(Gson gson, Map<String, Occupant> occupantsDictionary,
                                                            String occupantsPoolFilePath) {
         JsonOccupantsPool pool;
-        try {
-            try (Reader reader = new FileReader(occupantsPoolFilePath)) {
-                pool = gson.fromJson(reader, JsonOccupantsPool.class);
-            }
+
+        try (Reader reader = new FileReader(occupantsPoolFilePath)) {
+            pool = gson.fromJson(reader, JsonOccupantsPool.class);
+            requireDataIntegerity(pool);
         } catch (IOException e) {
             return null;
+        } catch (NullPointerException e) {
+            throw new IllegalStateException(occupantsPoolFilePath + " " + e.getMessage());
         }
+
         // TODO add integrity check
         List<Occupant> allOccupantInstances = new ArrayList<>();
 

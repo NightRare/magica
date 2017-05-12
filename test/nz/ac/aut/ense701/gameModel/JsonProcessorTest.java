@@ -7,6 +7,7 @@ package nz.ac.aut.ense701.gameModel;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -145,9 +146,9 @@ public class JsonProcessorTest extends junit.framework.TestCase {
     }
 
     @Test
-    public void testDataIntegrity() {
+    public void testDataIntegrity_occupantTemplateFileLacksOccupantGroup() {
 
-        // hazards missed
+        // hazards missing
         occupantsJson = "{\n" +
                 "	\"tools\":[],\n" +
                 "	\"food\": [],\n" +
@@ -165,14 +166,18 @@ public class JsonProcessorTest extends junit.framework.TestCase {
         } catch (IllegalStateException e) {
             // pass test
         }
+    }
 
-        // description missed
+    @Test
+    public void testDataIntegrity_occupantTemplateFileLacksFieldOfCertainOccupant() {
+
+        // description missing
         occupantsJson = "{\n" +
                 "	\"tools\":\n" +
                 "	[\n" +
                 "		{\n" +
                 "			\"name\":\"Trap\",\n" +
-                "                       \"weight\":1.0,\n" +
+                "           \"weight\":1.0,\n" +
                 "			\"size\":1.0,\n" +
                 "			\"portrait\":\"\"\n" +
                 "		}\n" +
@@ -190,13 +195,16 @@ public class JsonProcessorTest extends junit.framework.TestCase {
         try {
             dataManager = JsonProcessor.make(OCCUPANTS_FILEPATH, OCCUPANTSMAP_FILEPATH, OCCUPANTPOOL_FILEPATH);
 
-//            fail("Should have thrown Exception");
+            fail("Should have thrown Exception");
         } catch (IllegalStateException e) {
             // pass test
         }
+    }
 
+    @Test
+    public void testDataIntegrity_occupantsMapFileLacksProperty() {
 
-        // position missed
+        // position missing
         occupantsJson = "[\n" +
                 "	{\n" +
                 "		\"occupants\":[\n" +
@@ -216,6 +224,37 @@ public class JsonProcessorTest extends junit.framework.TestCase {
         }
     }
 
+    @Test
+    public void testDataIntegrity_occupantsPoolFileLacksOccupantGroup() {
+
+        // faunae missing
+        occupantsPoolJson = "{\n" +
+                "  \"food\":{\n" +
+                "  },\n" +
+                "\n" +
+                "  \"tools\":{\n" +
+                "    \"Trap\":3\n" +
+                "  },\n" +
+                "\n" +
+                "  \"kiwis\": {\n" +
+                "  },\n" +
+                "\n" +
+                "  \"predators\":{\n" +
+                "  },\n" +
+                "\n" +
+                "  \"hazards\":{\n" +
+                "  }\n" +
+                "}";
+        writeJsonToFiles(occupantsPoolJson, OCCUPANTPOOL_FILEPATH);
+
+        try {
+            dataManager = JsonProcessor.make(OCCUPANTS_FILEPATH, OCCUPANTSMAP_FILEPATH, OCCUPANTPOOL_FILEPATH);
+
+            fail("Should have thrown Exception");
+        } catch (IllegalStateException e) {
+            // pass test
+        }
+    }
 
     @Test
     public void testGetOccupantsInPosition() {
@@ -289,6 +328,47 @@ public class JsonProcessorTest extends junit.framework.TestCase {
 
         set = dataManager.getAllOccupantTemplates();
         for (Occupant o : set) {
+            assertTrue("Should be a Tool", o instanceof Tool);
+            Tool tool = (Tool) o;
+            assertFalse("The trap should not be broken", tool.isBroken());
+        }
+    }
+
+    @Test
+    public void testGetAllOccupantInstances() {
+        List<Occupant> all = dataManager.getAllOccupantInstances();
+        assertEquals(3, all.size());
+        for (Occupant o : all) {
+            assertTrue("Should be a Tool", o instanceof Tool);
+            Tool tool = (Tool) o;
+            assertTrue("Name should be Trap", tool.getName().equals("Trap"));
+            assertEquals("Weight should be 1.0", 1.0, tool.getWeight());
+            assertEquals("Size should be 2.0", 2.0, tool.getSize());
+        }
+    }
+
+    @Test
+    public void testGetAllOccupantInstancesDeepCloneValid() {
+        // changes applied to the occupant list should not
+        // affect the original object in JsonProcessor
+        dataManager.getAllOccupantInstances().add(
+                new Fauna(null, "Fish", "A test fish"));
+
+        List<Occupant> all = dataManager.getAllOccupantInstances();
+        assertEquals("The number of all occupant instances should still "
+                + "be 3.", 3, all.size());
+
+        // changes applied to any occupant should not affect the original object
+        // in JsonProcessor
+        for (Occupant o : all) {
+            assertTrue("Should be a Tool", o instanceof Tool);
+            Tool tool = (Tool) o;
+            tool.setBroken();
+        }
+
+        // get the data again, should not be changed
+        all = dataManager.getAllOccupantInstances();
+        for (Occupant o : all) {
             assertTrue("Should be a Tool", o instanceof Tool);
             Tool tool = (Tool) o;
             assertFalse("The trap should not be broken", tool.isBroken());

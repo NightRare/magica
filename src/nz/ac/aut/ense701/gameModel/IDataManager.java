@@ -5,6 +5,8 @@
  */
 package nz.ac.aut.ense701.gameModel;
 
+import com.sun.istack.internal.NotNull;
+
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -24,7 +26,7 @@ public interface IDataManager {
      * @return the set of occupants.
      * @throws IllegalArgumentException if position is {@code null}.
      */
-    public Set<Occupant> getOccupantsInPosition(Position position);
+    public Set<Occupant> getOccupantsInPosition(@NotNull Position position);
     
     /**
      * Get all the Occupant template objects which are defined in 
