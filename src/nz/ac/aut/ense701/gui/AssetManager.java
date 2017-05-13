@@ -51,10 +51,10 @@ public class AssetManager {
     
     public void loadTextures() {
         ScalingAssistant scaleAssist = ScalingAssistant.getScalingAssistant();
-        map = scaleAssist.getScaledImage((loader.loadImage("images/whole_map.png")), scaleAssist.getScale());
-        visible = scaleAssist.getScaledImage((loader.loadImage("images/visible.png")), scaleAssist.getScale());
-        dark = scaleAssist.getScaledImage((loader.loadImage("images/dark.png")), scaleAssist.getScale());
-        fog = scaleAssist.getScaledImage((loader.loadImage("images/fog.png")), scaleAssist.getScale());
+        map = scaleAssist.getScaledImage((loader.loadImage("images/map_objects/whole_map.png")), scaleAssist.getScale());
+        visible = scaleAssist.getScaledImage((loader.loadImage("images/map_objects/visible.png")), scaleAssist.getScale());
+        dark = scaleAssist.getScaledImage((loader.loadImage("images/map_objects/dark.png")), scaleAssist.getScale());
+        fog = scaleAssist.getScaledImage((loader.loadImage("images/map_objects/fog.png")), scaleAssist.getScale());
         player = scaleAssist.getScaledImage((loader.loadImage("images/map_icons/player_1.png")), scaleAssist.getScale());
         night = scaleAssist.getScaledImage((loader.loadImage("images/night.png")), scaleAssist.getScale());
         
@@ -68,11 +68,11 @@ public class AssetManager {
         playerFace_hungry = scaleAssist.getScaledImage((loader.loadImage("images/side_panel/hungry.png")), scaleAssist.getScale());
         playerFace_tired = scaleAssist.getScaledImage((loader.loadImage("images/side_panel/tired.png")), scaleAssist.getScale());
         questIcon = scaleAssist.getScaledImage((loader.loadImage("images/side_panel/quest_board.png")), scaleAssist.getScale());
-        inventoryEmpty = scaleAssist.getScaledImage((loader.loadImage("images/inventory_empty.png")), scaleAssist.getScale());
-        inventorySnack = scaleAssist.getScaledImage((loader.loadImage("images/inventory_snack.png")), scaleAssist.getScale());
-        inventoryToolbox = scaleAssist.getScaledImage((loader.loadImage("images/inventory_screwdriver.png")), scaleAssist.getScale());
-        inventoryApple = scaleAssist.getScaledImage((loader.loadImage("images/inventory_apple.png")), scaleAssist.getScale());
-        inventoryTrap = scaleAssist.getScaledImage((loader.loadImage("images/inventory_trap.png")), scaleAssist.getScale());
+        inventoryEmpty = scaleAssist.getScaledImage((loader.loadImage("images/inventory_icons/inventory_empty.png")), scaleAssist.getScale());
+        inventorySnack = scaleAssist.getScaledImage((loader.loadImage("images/inventory_icons/inventory_snack.png")), scaleAssist.getScale());
+        inventoryToolbox = scaleAssist.getScaledImage((loader.loadImage("images/inventory_icons/inventory_screwdriver.png")), scaleAssist.getScale());
+        inventoryApple = scaleAssist.getScaledImage((loader.loadImage("images/inventory_icons/inventory_apple.png")), scaleAssist.getScale());
+        inventoryTrap = scaleAssist.getScaledImage((loader.loadImage("images/inventory_icons/inventory_trap.png")), scaleAssist.getScale());
         
         tag = scaleAssist.getScaledImage((loader.loadImage("images/action/tag.png")), scaleAssist.getScale());
         trap = scaleAssist.getScaledImage((loader.loadImage("images/action/trap.png")), scaleAssist.getScale());
