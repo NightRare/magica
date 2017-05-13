@@ -1,3 +1,20 @@
 {
+  "food":{
+  },
 
+  "tools":{
+    "Trap":3
+  },
+
+  "faunae":{
+  },
+
+  "kiwis": {
+  },
+
+  "predators":{
+  },
+
+  "hazards":{
+  }
 }

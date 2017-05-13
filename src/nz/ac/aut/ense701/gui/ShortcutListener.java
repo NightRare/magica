@@ -10,6 +10,7 @@ import java.awt.event.KeyListener;
 import javax.swing.JOptionPane;
 import nz.ac.aut.ense701.gameModel.Game;
 import nz.ac.aut.ense701.gameModel.Occupant;
+import org.lwjgl.openal.AL;
 
 /**
  *
@@ -47,8 +48,10 @@ public class ShortcutListener implements KeyListener{
                     "Do you want to exit?", "Exit the game.", 
                     JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE);
             
-            if(result == JOptionPane.OK_OPTION)
-                System.exit(0);
+            if(result == JOptionPane.OK_OPTION){
+                 AL.destroy();
+                System.exit(0);}
+           
         }
         
     }

@@ -17,9 +17,11 @@ import nz.ac.aut.ense701.gameModel.MoveDirection;
 public class NavigationKeyListener implements KeyListener{
     
     Game game;
+    GameLoop loop;
     
-    public NavigationKeyListener(Game game) {
+    public NavigationKeyListener(Game game, GameLoop loop) {
         this.game = game;
+        this.loop = loop;
     }
     
     /**
@@ -27,6 +29,7 @@ public class NavigationKeyListener implements KeyListener{
      * @param direction the direction to move the player. 
      */
     private void move(MoveDirection direction){
+        loop.getSidePanel().clearInfoOccupant(); // hack fix for info occupant being retained
         if (this.game.isPlayerMovePossible(direction)) {
             game.playerMove(direction);
         }

@@ -35,12 +35,9 @@ public class AssetManager {
     
     private AssetManager()  {
         this.loader = new BufferedImageLoader();
-        try {
-            dataManager = JsonProcessor.make("data/Occupants.json",
-                    "data/OccupantsMap.json", "data/OccupantsPool.json");
-        } catch (IOException ex) {
-            Logger.getLogger(AssetManager.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        dataManager = JsonProcessor.make("data/Occupants.json",
+                "data/OccupantsMap.json", "data/OccupantsPool.json");
+
         loadTextures();
         loadOccupantsPortraits();
     }

@@ -11,6 +11,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import javax.swing.ButtonGroup;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -18,6 +20,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JRadioButtonMenuItem;
 import nz.ac.aut.ense701.gameModel.Game;
+import org.lwjgl.openal.AL;
 
 /**
  * Replacement User Interface
@@ -53,6 +56,12 @@ public class GUI {
         frame = new JFrame(GUIConfigs.TITLE);
         frame.setSize(GUIConfigs.WINDOW_WIDTH, GUIConfigs.WINDOW_HEIGHT);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                AL.destroy();
+            }
+        });
         frame.setResizable(false);
         frame.setLocationRelativeTo(null);
         
@@ -63,7 +72,7 @@ public class GUI {
         canvas.setMinimumSize(new Dimension(GUIConfigs.WINDOW_WIDTH, GUIConfigs.WINDOW_HEIGHT));
         
         // add mouse listeners and keypressed listeners here
-        NavigationKeyListener keyListener = new NavigationKeyListener(game);
+        NavigationKeyListener keyListener = new NavigationKeyListener(game, loop);
         ClickListener clickListener = new ClickListener(game, loop);
         ShortcutListener shortcutListener = new ShortcutListener(game);
         

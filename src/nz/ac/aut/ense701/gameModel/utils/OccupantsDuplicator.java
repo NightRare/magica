@@ -69,7 +69,7 @@ public class OccupantsDuplicator {
     }
 
     /**
-     * Return a list of deep clones of the given Occupant.
+     * Return a list of deep clones of the given Occupant. The list does not include the template itself.
      *
      * @param template the template to be duplicated from
      * @param amount the amount of duplicates

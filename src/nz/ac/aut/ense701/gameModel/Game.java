@@ -30,6 +30,7 @@ public class Game
     public static final int WEIGHT_INDEX = 3;
     public static final int MAXSIZE_INDEX = 4;
     public static final int SIZE_INDEX = 5;
+    public static final int INVENTORY_LIMIT = 3; 
     
     
 
@@ -80,8 +81,8 @@ public class Game
         this.time = new Time();
         //Background Music
         AudioPlayer.load();
-        AudioPlayer.getMusic("music").loop();
-
+        AudioPlayer.getMusic("music").loop(1.0f,0.1f);
+        
         //Load sound clips
         soundMap = SoundManager.SoundLoader("data/Occupants.json",
                 "data/OccupantsMap.json", "data/OccupantsPool.json");
@@ -142,6 +143,17 @@ public class Game
     public Player getPlayer()
     {
         return player;
+    }
+    
+    
+      /**
+     * Get a grid square with a particular position of the player(originally).
+     * @param position of the square
+     * @return if any occupants are present in the current Square
+     */
+    public boolean hasAnyOccupant(Position position){
+          GridSquare square = island.getCurrentGridSquare(position);
+           return  square.getOccupants().length != 0;
     }
     
     /**
@@ -306,12 +318,13 @@ public class Game
      */
     public boolean canCollect(Object itemToCollect)
     {
-        boolean result = (itemToCollect != null)&&(itemToCollect instanceof Item);
+        boolean result = (itemToCollect != null)&&(itemToCollect instanceof Item)
+                    &&(player.getInventory().size()<INVENTORY_LIMIT);
         if(result)
         {
             Item item = (Item) itemToCollect;
             result = item.isOkToCarry();
-        }
+        } else AudioPlayer.getSound("error_sound").play();
         return result;
     }
     
@@ -327,7 +340,7 @@ public class Game
         {
             Kiwi kiwi = (Kiwi) itemToCount;
             result = !kiwi.counted();
-        }
+        } else AudioPlayer.getSound("error_sound").play();
         return result;
     }
     /**
@@ -361,7 +374,7 @@ public class Game
                     result = false;
                 }
             }            
-        }
+        } else AudioPlayer.getSound("error_sound").play();
         return result;
     }
     
@@ -842,10 +855,6 @@ public class Game
         catch(FileNotFoundException e)
         {
             System.err.println("Unable to find data file '" + fileName + "'");
-        }
-        catch(IOException e)
-        {
-            System.err.println("Problem encountered processing file.");
         }
     }
 
