@@ -28,7 +28,7 @@ public class Main
 
         // initialise FeatureToggle
         FeatureToggle ft = new FeatureToggle();
-        ft.debug_setMapVisible();
+        //ft.debug_setMapVisible();
 
         // initialise IDataManager
         IDataManager dm = JsonProcessor.make("data/Occupants.json",
