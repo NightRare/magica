@@ -29,8 +29,7 @@ public class Game
     public static final int WEIGHT_INDEX = 3;
     public static final int MAXSIZE_INDEX = 4;
     public static final int SIZE_INDEX = 5;
-    public static final int INVENTORY_LIMIT = 3; 
-    
+    public static final int INVENTORY_LIMIT = 3;    
     
 
     /**
@@ -71,7 +70,7 @@ public class Game
         predatorsTrapped = 0;
         kiwiCount = 0;
         initialiseIslandFromFile("data/IslandData.txt");
-        drawIsland();
+        drawIsland();        
         state = GameState.PLAYING;
         winMessage = "";
         loseMessage = "";
@@ -308,6 +307,7 @@ public class Game
     public void drawIsland()
     {  
           island.draw();
+          island.draw(DEBUG_MAP_CELL_SIZE);
     }
     
      /**
@@ -1058,8 +1058,9 @@ public class Game
     private Set<GameEventListener> eventListeners;
     
     private final double MIN_REQUIRED_CATCH = 0.8;
-    private final double STAMINA_PUNISH_CAP_FAUNA = 10.0;    
-        
+    private final double STAMINA_PUNISH_CAP_FAUNA = 10.0;
+    private static final int DEBUG_MAP_CELL_SIZE = 12;
+    
     private String winMessage = "";
     private String loseMessage = "";
     private String playerMessage = "";
