@@ -30,6 +30,7 @@ public class Game
     public static final int WEIGHT_INDEX = 3;
     public static final int MAXSIZE_INDEX = 4;
     public static final int SIZE_INDEX = 5;
+    public static final int INVENTORY_LIMIT = 3; 
     
     
 
@@ -306,7 +307,8 @@ public class Game
      */
     public boolean canCollect(Object itemToCollect)
     {
-        boolean result = (itemToCollect != null)&&(itemToCollect instanceof Item);
+        boolean result = (itemToCollect != null)&&(itemToCollect instanceof Item)
+                    &&(player.getInventory().size()<INVENTORY_LIMIT);
         if(result)
         {
             Item item = (Item) itemToCollect;
