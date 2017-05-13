@@ -841,10 +841,6 @@ public class Game
         {
             System.err.println("Unable to find data file '" + fileName + "'");
         }
-        catch(IOException e)
-        {
-            System.err.println("Problem encountered processing file.");
-        }
     }
 
 

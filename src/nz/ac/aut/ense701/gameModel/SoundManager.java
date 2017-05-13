@@ -24,13 +24,8 @@ public class SoundManager {
             throw new IllegalArgumentException("File path cannot be empty.");
         }
 
-        IDataManager dataManager = null;
-        try {
-            dataManager = JsonProcessor.make(occupantsFilePath, 
-                    occupantsMapFilePath, occupantsPoolFilePath);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        IDataManager dataManager = JsonProcessor.make(occupantsFilePath,
+                occupantsMapFilePath, occupantsPoolFilePath);
 
         Map<Occupant, Sound> soundMap = new HashMap<>();
 

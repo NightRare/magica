@@ -25,23 +25,19 @@ public class Main
         // set the locale to English regardless of the system environment
         Locale.setDefault(Locale.ENGLISH);
 
-        try {
-            // initialise FeatureToggle
-            FeatureToggle ft = new FeatureToggle();
-            ft.debug_setMapVisible();
 
-            // initialise IDataManager
-            IDataManager dm = JsonProcessor.make("data/Occupants.json",
-                    "data/OccupantsMap.json", "data/OccupantsPool.json");
+        // initialise FeatureToggle
+        FeatureToggle ft = new FeatureToggle();
+        ft.debug_setMapVisible();
 
-            Game game = new Game(ft, dm);
-            GameLoop gameLoop = new GameLoop(game);
+        // initialise IDataManager
+        IDataManager dm = JsonProcessor.make("data/Occupants.json",
+                "data/OccupantsMap.json", "data/OccupantsPool.json");
 
-            gameLoop.start();
-        } catch (IOException ex) {
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        Game game = new Game(ft, dm);
+        GameLoop gameLoop = new GameLoop(game);
 
+        gameLoop.start();
     }
 
 }
