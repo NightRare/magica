@@ -62,7 +62,7 @@ public class SidePanel {
     }
 
     public void loadImages() {
-        playerIcon = assetManager.getPlayerIcon();
+        playerIcon = assetManager.getPlayerFace_happy();
         questIcon = assetManager.getQuestIcon();
         inventoryEmpty = assetManager.getInventoryEmpty();
         inventorySnack = assetManager.getInventorySnack();
