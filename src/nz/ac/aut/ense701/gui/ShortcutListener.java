@@ -33,10 +33,12 @@ public class ShortcutListener implements KeyListener{
             case KeyEvent.VK_C:
             {
                 collectItem();
+                break;
             }
             case KeyEvent.VK_T:
             {
                 tagKiwi();
+                break;
             }
         }        
     }
