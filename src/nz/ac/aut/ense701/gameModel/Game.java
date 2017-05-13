@@ -4,7 +4,6 @@ import org.newdawn.slick.Sound;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.*;
 
 import nz.ac.aut.ense701.gameModel.randomiser.OccupantsRandomiser;
@@ -71,7 +70,7 @@ public class Game
         totalKiwis = 0;
         predatorsTrapped = 0;
         kiwiCount = 0;
-        initialiseIslandFromFile("IslandData.txt");
+        initialiseIslandFromFile("data/IslandData.txt");
         drawIsland();
         state = GameState.PLAYING;
         winMessage = "";
