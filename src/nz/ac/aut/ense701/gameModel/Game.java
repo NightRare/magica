@@ -81,8 +81,8 @@ public class Game
         this.time = new Time();
         //Background Music
         AudioPlayer.load();
-        AudioPlayer.getMusic("music").loop();
-
+        AudioPlayer.getMusic("music").loop(1.0f,0.1f);
+        
         //Load sound clips
         soundMap = SoundManager.SoundLoader("data/Occupants.json",
                 "data/OccupantsMap.json", "data/OccupantsPool.json");
@@ -143,6 +143,17 @@ public class Game
     public Player getPlayer()
     {
         return player;
+    }
+    
+    
+      /**
+     * Get a grid square with a particular position of the player(originally).
+     * @param position of the square
+     * @return if any occupants are present in the current Square
+     */
+    public boolean hasAnyOccupant(Position position){
+          GridSquare square = island.getCurrentGridSquare(position);
+           return  square.getOccupants().length != 0;
     }
     
     /**
@@ -313,7 +324,7 @@ public class Game
         {
             Item item = (Item) itemToCollect;
             result = item.isOkToCarry();
-        }
+        } else AudioPlayer.getSound("error_sound").play();
         return result;
     }
     
@@ -329,7 +340,7 @@ public class Game
         {
             Kiwi kiwi = (Kiwi) itemToCount;
             result = !kiwi.counted();
-        }
+        } else AudioPlayer.getSound("error_sound").play();
         return result;
     }
     /**
@@ -363,7 +374,7 @@ public class Game
                     result = false;
                 }
             }            
-        }
+        } else AudioPlayer.getSound("error_sound").play();
         return result;
     }
     

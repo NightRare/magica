@@ -240,7 +240,22 @@ public class Island
             occupant.setPosition(position);
         }
         return success;
-    }    
+    }
+    
+     /**
+     * Get a grid square with a particular position using a public getter method
+     * @param position of the square
+     * @return Square with this position
+     */
+     public GridSquare getCurrentGridSquare(Position position)
+    {
+        GridSquare result = null;
+        if ( position.isOnIsland() )
+        {
+            result = islandGrid[position.getRow()][position.getColumn()];
+        }
+        return result;
+    }
 
     
     /**
