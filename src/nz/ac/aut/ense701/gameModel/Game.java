@@ -80,8 +80,8 @@ public class Game
         this.time = new Time();
         //Background Music
         AudioPlayer.load();
-        AudioPlayer.getMusic("music").loop();
-
+        AudioPlayer.getMusic("music").loop(1.0f,0.1f);
+        
         //Load sound clips
         soundMap = SoundManager.SoundLoader("data/Occupants.json",
                 "data/OccupantsMap.json", "data/OccupantsPool.json");
