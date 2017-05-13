@@ -1,12 +1,14 @@
 package nz.ac.aut.ense701.gameModel;
 
+import org.newdawn.slick.Sound;
+
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.HashSet;
-import java.util.Locale;
-import java.util.Scanner;
-import java.util.Set;
-import nz.ac.aut.ense701.gui.GameLoop;
+import java.io.IOException;
+import java.util.*;
+
+import nz.ac.aut.ense701.gameModel.randomiser.OccupantsRandomiser;
+
 import nz.ac.aut.ense701.gui.GameNotification;
 
 /**
@@ -38,25 +40,24 @@ public class Game
     public Game() 
     {   
         eventListeners = new HashSet<GameEventListener>();
-        fToggle = new FeatureToggle(false);
-        
+        fToggle = new FeatureToggle();
+        fToggle.disableIDataManager();
         createNewGame();
         this.notification = new GameNotification(this);
     }
     
     
     public Game(FeatureToggle fToggle, IDataManager dataManager) {
-        if(fToggle == null || dataManager == null) 
-            throw new IllegalArgumentException("The fToggle and dataManager cannot be null.");
+        Objects.requireNonNull(fToggle);
+        Objects.requireNonNull(dataManager);
+
         eventListeners = new HashSet<GameEventListener>();
         this.fToggle = fToggle;
         this.dataManager = dataManager;
-        
+
         createNewGame();
         this.notification = new GameNotification(this);
     }
-    
-    
       
     
     /**
@@ -77,6 +78,13 @@ public class Game
         playerMessage = "";
         notifyGameEventListeners();
         this.time = new Time();
+        //Background Music
+        AudioPlayer.load();
+        AudioPlayer.getMusic("music").loop();
+
+        //Load sound clips
+        soundMap = SoundManager.SoundLoader("data/Occupants.json",
+                "data/OccupantsMap.json", "data/OccupantsPool.json");
     }
 
     /***********************************************************************************************************************
@@ -473,6 +481,8 @@ public class Game
             player.increaseStamina(food.getEnergy());
             // player has consumed the food: remove from inventory
             player.drop(food);
+            //notify player that food is consumed
+            notification.foodConsumed();
             // use successful: everybody has to know that
             notifyGameEventListeners();
         }
@@ -607,7 +617,10 @@ public class Game
                 this.setWinMessage(message);
             }
         }
-        // notification listeners about changes
+
+        playFaunaSoundOrNot();
+
+        // notify listeners about changes
             notifyGameEventListeners();
     }
     
@@ -705,7 +718,22 @@ public class Game
         
         return hadPredator;
     }
-    
+
+    /**
+     * Checks if the player has met any fauna and play its sound
+     * if they do.
+     */
+    private void playFaunaSoundOrNot() {
+        Occupant[] occupantsEncountered = island.getOccupants(player.getPosition());
+        for (Occupant o : occupantsEncountered) {
+            for (Occupant faunaWithSound : soundMap.keySet()) {
+                if (faunaWithSound.getName().equals(o.getName())) {
+                    soundMap.get(faunaWithSound).play();
+                }
+            }
+        }
+    }
+
     /**
      * Checks if the player has met a hazard and applies hazard impact.
      * Fatal hazards kill player and end game.
@@ -791,6 +819,8 @@ public class Game
             int numRows    = input.nextInt();
             int numColumns = input.nextInt();
             island = new Island(numRows, numColumns);
+            if(fToggle.isMapVisible())
+                island.setMapVisible();
 
             // read and setup the terrain
             setUpTerrain(input);
@@ -813,10 +843,10 @@ public class Game
         {
             System.err.println("Unable to find data file '" + fileName + "'");
         }
-//        catch(IOException e)
-//        {
-//            System.err.println("Problem encountered processing file.");
-//        }
+        catch(IOException e)
+        {
+            System.err.println("Problem encountered processing file.");
+        }
     }
 
 
@@ -919,18 +949,65 @@ public class Game
      */
     private void setUpOccupants() {
 
-        for(int r = 0; r < island.getNumRows(); r++) {
-            for(int c = 0; c < island.getNumColumns(); c++) {
-                Position pos = new Position(island, r, c);
-                Set<Occupant> occupants = dataManager.getOccupantsInPosition(
-                        pos);
+        if(island.getNumRows() == island.getNumColumns()) {
+            OccupantsRandomiser or = new OccupantsRandomiser(
+                    island.getNumRows(), dataManager.getAllOccupantInstances());
+            // set up the occupantsRandomiser
+            or.setRecursionIndex(1);
+            or.setDoubleOccupantsPercentage(0.1);
+            or.setResideRull((existedOccupants, candidate) -> {
+                for(Occupant ex : existedOccupants) {
+                    // if same occupants existed
+                    if(ex.getName().equals(candidate.getName()))
+                        return false;
+                    // hazard should always be alone
+                    if(candidate instanceof Hazard)
+                        return false;
 
-                for(Occupant o : occupants) {
-                    if(o instanceof Kiwi)
-                        totalKiwis++;
-                    if(o instanceof Predator)
-                        totalPredators++;
-                    island.addOccupant(pos, o);
+                    // TODO now a fauna and a predator should not reside in the same square
+                    // as the player is not able to select which fauna to trap
+                    if(candidate.getClass().equals(Predator.class) &&
+                            ex.getClass().equals(Fauna.class))
+                        return false;
+                    if(candidate.getClass().equals(Fauna.class) &&
+                            ex.getClass().equals(Predator.class))
+                        return false;
+                }
+                return true;
+            });
+
+            Set<Occupant>[][] oMap = or.distributeOccupantsRandomly();
+
+            for(int r = 0; r < island.getNumRows(); r++) {
+                for(int c = 0; c < island.getNumColumns(); c++) {
+                    Position pos = new Position(island, r, c);
+                    Set<Occupant> occupants = oMap[r][c];
+
+                    for(Occupant o : occupants) {
+                        if(o instanceof Kiwi)
+                            totalKiwis++;
+                        if(o instanceof Predator)
+                            totalPredators++;
+                        island.addOccupant(pos, o);
+                    }
+                }
+            }
+        }
+        else {
+
+            for(int r = 0; r < island.getNumRows(); r++) {
+                for(int c = 0; c < island.getNumColumns(); c++) {
+                    Position pos = new Position(island, r, c);
+                    Set<Occupant> occupants = dataManager.getOccupantsInPosition(
+                            pos);
+
+                    for(Occupant o : occupants) {
+                        if(o instanceof Kiwi)
+                            totalKiwis++;
+                        if(o instanceof Predator)
+                            totalPredators++;
+                        island.addOccupant(pos, o);
+                    }
                 }
             }
         }
@@ -961,12 +1038,14 @@ public class Game
     private final double STAMINA_PUNISH_CAP_FAUNA = 10.0;    
         
     private String winMessage = "";
-    private String loseMessage  = "";
-    private String playerMessage  = "";   
+    private String loseMessage = "";
+    private String playerMessage = "";
 
     
     private FeatureToggle fToggle;
     private IDataManager dataManager;
     
     private GameNotification notification;
+    private Map<Occupant, Sound> soundMap;
+
 }

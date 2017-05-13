@@ -24,27 +24,15 @@ public class Main
     {
         // set the locale to English regardless of the system environment
         Locale.setDefault(Locale.ENGLISH);
-        
-//        // create the game object
-//        final Game game = new Game();
-//        // create the GUI for the game
-//        final KiwiCountUI  gui  = new KiwiCountUI(game);
-//        // make the GUI visible
-//        java.awt.EventQueue.invokeLater(new Runnable() 
-//        {
-//            @Override
-//            public void run() 
-//            {
-//                gui.setVisible(true);
-//            }
-//        });
 
         try {
             // initialise FeatureToggle
-            FeatureToggle ft = new FeatureToggle(true);
+            FeatureToggle ft = new FeatureToggle();
+            ft.debug_setMapVisible();
 
             // initialise IDataManager
-            IDataManager dm = JsonProcessor.make("data/Occupants.json", "data/OccupantsMap.json");
+            IDataManager dm = JsonProcessor.make("data/Occupants.json",
+                    "data/OccupantsMap.json", "data/OccupantsPool.json");
 
             Game game = new Game(ft, dm);
             GameLoop gameLoop = new GameLoop(game);

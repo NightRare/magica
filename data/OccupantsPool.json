@@ -1,0 +1,44 @@
+{
+  "food":{
+    "Orange Juice":6,
+    "Muesli Bar":6,
+    "Sandwich":5,
+    "Apple":4
+  },
+
+  "tools":{
+    "Trap":5,
+    "Screwdriver":1
+  },
+
+  "faunae":{
+    "Fernbird":3,
+    "Heron":3,
+    "Robin":3,
+    "Crab":2,
+    "Tui":3,
+    "Oystercatcher":3
+  },
+
+  "kiwis": {
+    "Kiwi": 18
+  },
+
+  "predators":{
+    "Stoat":3,
+    "Cat":2,
+    "Kiore":2,
+    "Rat":3,
+    "Possum":3
+  },
+
+  "hazards":{
+    "Pond":1,
+    "Broken trap":1,
+    "Rock":1,
+    "Fall":3,
+    "Sunburn":4,
+    "Small cliff":4,
+    "Cliff":1
+  }
+}

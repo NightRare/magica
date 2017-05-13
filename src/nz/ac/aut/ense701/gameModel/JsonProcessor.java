@@ -7,18 +7,18 @@ package nz.ac.aut.ense701.gameModel;
 
 import java.io.FileReader;
 import java.io.Reader;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.Map;
-import java.util.Objects;
+import java.util.function.BiConsumer;
+
 import nz.ac.aut.ense701.gameModel.jsonModels.*;
+
+import static nz.ac.aut.ense701.gameModel.utils.OccupantsDuplicator.duplicatMulti;
+import static nz.ac.aut.ense701.gameModel.utils.OccupantsDuplicator.duplicate;
 
 /**
  * A JSON Implementation of IDataManager.
@@ -29,11 +29,14 @@ public class JsonProcessor implements IDataManager{
 
     private Map<String, Occupant> occupantsDictionary;
     private List<JsonOccupantsPosition> jsonOccupantsMap;
+    private JsonOccupantsPool jsonOccupantsPool;
+    private List<Occupant> allOccupantInstance;
     
     private JsonProcessor(Map<String, Occupant> occupantsDictionary, 
-            List<JsonOccupantsPosition> jsonOccupantsMap) {        
+            List<JsonOccupantsPosition> jsonOccupantsMap, JsonOccupantsPool jsonOccupantsPool) {
         this.occupantsDictionary = occupantsDictionary;
         this.jsonOccupantsMap = jsonOccupantsMap;
+        this.jsonOccupantsPool = jsonOccupantsPool;
     }
     
     /**
@@ -47,7 +50,8 @@ public class JsonProcessor implements IDataManager{
      * @throws IllegalStateException if the data integrity of any of the Json files 
      *          is corrupted; currently this only supports non-primitive type fileds.
      */
-    public static IDataManager make(String occupantsFilePath, String occupantsMapFilePath) 
+    public static IDataManager make(String occupantsFilePath, String occupantsMapFilePath,
+                                    String occupantsPoolFilePath)
             throws IOException {
         if(occupantsFilePath == null || occupantsMapFilePath == null
                 || occupantsFilePath.isEmpty() || occupantsMapFilePath.isEmpty())
@@ -81,7 +85,13 @@ public class JsonProcessor implements IDataManager{
             throw new IllegalStateException("Occupant data damaged. " + ex.getMessage());
         }
 
-        return new JsonProcessor(od, jom);
+        JsonOccupantsPool pool;
+        try(Reader reader = new FileReader(occupantsPoolFilePath)) {
+            pool = gson.fromJson(reader, JsonOccupantsPool.class);
+        }
+        // TODO add integrity check
+
+        return new JsonProcessor(od, jom, pool);
     }
     
     @Override
@@ -98,7 +108,7 @@ public class JsonProcessor implements IDataManager{
             
             for(String name : jop.occupants) {
                 // clone from a "prototype"
-                Occupant o = cloneOccupant(occupantsDictionary.get(name));
+                Occupant o = duplicate(occupantsDictionary.get(name));
                 o.setPosition(position);
                 occupants.add(o);
             }
@@ -110,11 +120,29 @@ public class JsonProcessor implements IDataManager{
     public Set<Occupant> getAllOccupantTemplates() {
         Set<Occupant> templates = new HashSet();
         for(Occupant o : occupantsDictionary.values()) {
-            templates.add(cloneOccupant(o));
+            templates.add(duplicate(o));
         }
         return templates;
     }
-    
+
+    @Override
+    public List<Occupant> getAllOccupantInstances() {
+        if(allOccupantInstance != null)
+            return new ArrayList<>(allOccupantInstance);
+
+        allOccupantInstance = new ArrayList<>();
+
+        Map<String, Integer> oneType = null;
+        while((oneType = getNextOccupantType(jsonOccupantsPool)) != null) {
+            oneType.forEach((s, i) -> {
+                Occupant[] typeInstances = duplicatMulti(occupantsDictionary.get(s), i);
+                allOccupantInstance.addAll(Arrays.asList(typeInstances));
+            });
+            oneType.clear();
+        }
+        return allOccupantInstance;
+    }
+
     // make a dictionary of all the types of Occupants so that they can be got by
     // names.
     private static Map<String, Occupant> makeOccupantDictionary(JsonOccupants occupantTypes) {
@@ -134,57 +162,7 @@ public class JsonProcessor implements IDataManager{
         
         return occupantsDictionary;
     }
-    
-    // a method to deep clone an Occupant object
-    private static Occupant cloneOccupant(Occupant template) {
-        
-        Position position = template.getPosition();
-        String name = template.getName();
-        String description = template.getDescription();
-        String portrait = template.getPortrait();
-        
-        if(template instanceof Hazard) {
-            Hazard hazard = (Hazard) template;
-            return new Hazard(position, name, description, portrait, hazard.getImpact());
-        }
-        
-        if(template instanceof Item) {
-            Item item = (Item) template;
-            double weight = item.getWeight();
-            double size = item.getSize();
-            
-            if(template instanceof Food) {
-                Food food = (Food) template;
-                return new Food(position, name, description, portrait, weight, size, food.getEnergy());
-            }
-            
-            if(template instanceof Tool) {
-                return new Tool(position, name, description, portrait, weight, size);
-            }
-            
-            throw new IllegalArgumentException("An Item (abstract class) object cannot "
-                    + "be cloned.");
-        }
-        
-        if(template instanceof Fauna) {
-            
-            String link = ((Fauna) template).getLink();
-            
-            if(template instanceof Kiwi) {
-                return new Kiwi(position, name, description, portrait, link);
-            }
-            
-            if(template instanceof Predator) {
-                return new Predator(position, name, description, portrait, link);
-            }
-            
-            return new Fauna(position, name, description, portrait, link);
-        }
-        
-        throw new IllegalArgumentException("An Occupant (abstract class) object "
-                + "cannot be cloned.");
-    }
-    
+
     /**
      * Checks whether the deserialised JsonOccupants contains non-nullable fields
      * 
@@ -214,7 +192,7 @@ public class JsonProcessor implements IDataManager{
      * Checks whether any of the deserialised Occupants contains 
      * non-nullable fields
      * 
-     * @param occupantsPosition 
+     * @param occupant
      */
     private static void requireDataIntegerity(Occupant occupant) {
         if(occupant.getName() == null || occupant.getName().isEmpty())
@@ -222,5 +200,21 @@ public class JsonProcessor implements IDataManager{
         if(occupant.getDescription() == null || occupant.getDescription().isEmpty())
             throw new NullPointerException(
                     "did not include \"description\" for " + occupant.getName());
+    }
+
+    private Map<String, Integer> getNextOccupantType(JsonOccupantsPool pool) {
+        if(!pool.food.isEmpty())
+            return pool.food;
+        if(!pool.tools.isEmpty())
+            return pool.tools;
+        if(!pool.faunae.isEmpty())
+            return pool.faunae;
+        if(!pool.kiwis.isEmpty())
+            return pool.kiwis;
+        if(!pool.predators.isEmpty())
+            return pool.predators;
+        if(!pool.hazards.isEmpty())
+            return pool.hazards;
+        return null;
     }
 }

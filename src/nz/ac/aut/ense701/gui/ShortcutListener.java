@@ -9,6 +9,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import javax.swing.JOptionPane;
 import nz.ac.aut.ense701.gameModel.Game;
+import nz.ac.aut.ense701.gameModel.Occupant;
 
 /**
  *
@@ -54,9 +55,9 @@ public class ShortcutListener implements KeyListener{
     
     private void collectItem() {
         // temporarily set to one of the occupants in the square
-        Object obj = (game.getOccupantsPlayerPosition())[0];
-        
-        game.collectItem(obj);
+        Occupant[] occupants = game.getOccupantsPlayerPosition();
+        if(occupants.length > 0)
+            game.collectItem(occupants[0]);
     }
     
     private void tagKiwi() {

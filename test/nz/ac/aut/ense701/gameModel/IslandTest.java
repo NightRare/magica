@@ -169,5 +169,15 @@ public class IslandTest extends junit.framework.TestCase
         assertEquals(testIsland.getPredator(onIsland), cat);
     }
 
-
+    @Test
+    public void testSetMapVisible(){
+        testIsland.setMapVisible();
+        for(int r = 0; r < testIsland.getNumRows(); r++) {
+            for(int c = 0; c < testIsland.getNumColumns(); c++) {
+                assertTrue(testIsland.isVisible(
+                        new Position(testIsland, r, c)
+                ));
+            }
+        }
+    }
 }
