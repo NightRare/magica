@@ -261,20 +261,10 @@ public class ClickListener implements MouseListener {
             for(Occupant o: game.getOccupantsPlayerPosition()){
                     if(game.getPlayer().hasTrap()){
                         game.useItem(game.getPlayer().getTrap());
-                            if(o.getStringRepresentation().contains("K"))
-                                AudioPlayer.getSound("error_sound").play();
-                            else if(o.getStringRepresentation().contains("E"))
-                                AudioPlayer.getSound("error_sound").play();
-                            else if(o.getStringRepresentation().contains("T"))
-                                AudioPlayer.getSound("error_sound").play();
-                            else if(o.getStringRepresentation().contains("F"))
-                                AudioPlayer.getSound("error_sound").play();
-                            else if(o.getStringRepresentation().contains("H"))
+                            if(!o.getStringRepresentation().contains("P") && !o.getStringRepresentation().contains("F"))
                                 AudioPlayer.getSound("error_sound").play();
                     }
-                    else if(o.getStringRepresentation().contains("K")){
-                        AudioPlayer.getSound("error_sound").play();
-                    } else  AudioPlayer.getSound("error_sound").play();
+                     else  AudioPlayer.getSound("error_sound").play();
            }
         }
         //COLLECT if player is on a square where there is tool / food
