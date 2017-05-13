@@ -21,6 +21,7 @@ public class NavigationKeyListener implements KeyListener{
     
     public NavigationKeyListener(Game game, GameLoop loop) {
         this.game = game;
+        this.loop = loop;
     }
     
     /**
