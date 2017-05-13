@@ -103,6 +103,7 @@ public class ClickListener implements MouseListener {
      * @param direction the direction to move the player.
      */
     private void move(MoveDirection direction) {
+        loop.getSidePanel().clearInfoOccupant();
         if (this.game.isPlayerMovePossible(direction)) {
             game.playerMove(direction);
         }

@@ -156,7 +156,7 @@ public class RenderingEngine {
         return scaleAssist.scale(array[index]);
 
     }
-
+    
     /**
      * Renders a Player Icon for the Side Panel
      *
@@ -165,11 +165,21 @@ public class RenderingEngine {
      * @param scAs scaling assistant
      */
     private void renderPlayerIcon(Graphics2D g2d, SidePanel sp) {
-
+        BufferedImage image = AssetManager.getAssetManager().getPlayerFace_happy();
+        //display player status through facial expression
+        if(sp.currentStamina() >= sp.totalStamina() *0.75){//80%+ of health
+            image = AssetManager.getAssetManager().getPlayerFace_happy();
+        }else if(sp.currentStamina() >= sp.totalStamina() *0.50){//60%+
+            image = AssetManager.getAssetManager().getPlayerFace_neutral();
+        }else if(sp.currentStamina() >= sp.totalStamina() *0.25){//40%+
+            image = AssetManager.getAssetManager().getPlayerFace_hungry();
+        }else if(sp.currentStamina() < sp.totalStamina() *0.25){
+            image = AssetManager.getAssetManager().getPlayerFace_tired();
+        }
+        
         //display images
-        g2d.drawImage(sp.showPlayerIcon(),
+        g2d.drawImage(image,
                 valueOf(PLAYER_ICON, X_OFFSET), valueOf(PLAYER_ICON, Y_OFFSET),
-                valueOf(PLAYER_ICON, IMG_WIDTH), valueOf(PLAYER_ICON, IMG_HEIGHT),
                 null);
     }
 
@@ -184,17 +194,13 @@ public class RenderingEngine {
 
         //setup quest object values
         int fontSize = scaleAssist.scale(18);
-
         int textLeftMargin = scaleAssist.scale(65 + CLIPBOARD_ICON[X_OFFSET]);
-
         int kiwiTextTopMargin = scaleAssist.scale(78 + CLIPBOARD_ICON[Y_OFFSET]);
-
         int predatorTextTopMargin = scaleAssist.scale(125 + CLIPBOARD_ICON[Y_OFFSET]);
 
         //displays the quest clipboard image
-        g2d.drawImage(sidePanel.showQuests(),
+        g2d.drawImage(AssetManager.getAssetManager().getQuestIcon(),
                 valueOf(CLIPBOARD_ICON, X_OFFSET), valueOf(CLIPBOARD_ICON, Y_OFFSET),
-                valueOf(CLIPBOARD_ICON, IMG_WIDTH), valueOf(CLIPBOARD_ICON, IMG_HEIGHT),
                 null);
 
         //set the text color as gray
@@ -237,7 +243,16 @@ public class RenderingEngine {
                 maxStaminawidth, valueOf(STAMINA_BAR, IMG_HEIGHT)));
 
         //displays Current Stamina
-        g2d.setColor(new Color(57, 181, 75));//rgb color values
+        if(currentStaminawidth >= maxStaminawidth*0.75){
+            g2d.setColor(new Color(57, 181, 75));//green
+        }else if(currentStaminawidth >= maxStaminawidth*0.50){
+            g2d.setColor(new Color(216, 216, 48));//yellow
+        }else if(currentStaminawidth >= maxStaminawidth*0.25){
+            g2d.setColor(new Color(201, 147, 40));//orange
+        }else if(currentStaminawidth < maxStaminawidth*0.25){
+            g2d.setColor(new Color(216, 26, 26));//red
+        }
+        
 
         g2d.fill(new Rectangle2D.Double(
                 valueOf(STAMINA_BAR, X_OFFSET), valueOf(STAMINA_BAR, Y_OFFSET),

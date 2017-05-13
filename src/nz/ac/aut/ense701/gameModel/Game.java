@@ -4,7 +4,6 @@ import org.newdawn.slick.Sound;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.*;
 
 import nz.ac.aut.ense701.gameModel.randomiser.OccupantsRandomiser;
@@ -30,6 +29,7 @@ public class Game
     public static final int WEIGHT_INDEX = 3;
     public static final int MAXSIZE_INDEX = 4;
     public static final int SIZE_INDEX = 5;
+    public static final int INVENTORY_LIMIT = 3; 
     
     
 
@@ -70,7 +70,7 @@ public class Game
         totalKiwis = 0;
         predatorsTrapped = 0;
         kiwiCount = 0;
-        initialiseIslandFromFile("IslandData.txt");
+        initialiseIslandFromFile("data/IslandData.txt");
         drawIsland();
         state = GameState.PLAYING;
         winMessage = "";
@@ -317,7 +317,8 @@ public class Game
      */
     public boolean canCollect(Object itemToCollect)
     {
-        boolean result = (itemToCollect != null)&&(itemToCollect instanceof Item);
+        boolean result = (itemToCollect != null)&&(itemToCollect instanceof Item)
+                    &&(player.getInventory().size()<INVENTORY_LIMIT);
         if(result)
         {
             Item item = (Item) itemToCollect;
@@ -492,6 +493,8 @@ public class Game
             player.increaseStamina(food.getEnergy());
             // player has consumed the food: remove from inventory
             player.drop(food);
+            //notify player that food is consumed
+            notification.foodConsumed();
             // use successful: everybody has to know that
             notifyGameEventListeners();
         }
@@ -852,10 +855,6 @@ public class Game
         {
             System.err.println("Unable to find data file '" + fileName + "'");
         }
-        catch(IOException e)
-        {
-            System.err.println("Problem encountered processing file.");
-        }
     }
 
 
@@ -957,36 +956,22 @@ public class Game
      * the old txt file.
      */
     private void setUpOccupants() {
-
+        
         if(island.getNumRows() == island.getNumColumns()) {
-            OccupantsRandomiser or = new OccupantsRandomiser(
-                    island.getNumRows(), dataManager.getAllOccupantInstances());
-            // set up the occupantsRandomiser
-            or.setRecursionIndex(1);
-            or.setDoubleOccupantsPercentage(0.1);
-            or.setResideRull((existedOccupants, candidate) -> {
-                for(Occupant ex : existedOccupants) {
-                    // if same occupants existed
-                    if(ex.getName().equals(candidate.getName()))
-                        return false;
-                    // hazard should always be alone
-                    if(candidate instanceof Hazard)
-                        return false;
-
-                    // TODO now a fauna and a predator should not reside in the same square
-                    // as the player is not able to select which fauna to trap
-                    if(candidate.getClass().equals(Predator.class) &&
-                            ex.getClass().equals(Fauna.class))
-                        return false;
-                    if(candidate.getClass().equals(Fauna.class) &&
-                            ex.getClass().equals(Predator.class))
-                        return false;
+            boolean validMap = true;
+            Set<Occupant>[][] oMap = null;
+            
+            do{            
+                oMap = setUpOccupantsRandomiser().distributeOccupantsRandomly();            
+                // if a hazard spawned on the original square of the player, redo
+                // TODO this is a temporary fix for "player start on hazard" issue, will refactor later
+                for(Occupant o : oMap[player.getPosition().getRow()]
+                        [player.getPosition().getColumn()]) {
+                    if(o instanceof Hazard)
+                        validMap = false;
                 }
-                return true;
-            });
-
-            Set<Occupant>[][] oMap = or.distributeOccupantsRandomly();
-
+            } while (!validMap);
+            
             for(int r = 0; r < island.getNumRows(); r++) {
                 for(int c = 0; c < island.getNumColumns(); c++) {
                     Position pos = new Position(island, r, c);
@@ -1020,6 +1005,35 @@ public class Game
                 }
             }
         }
+    }
+    
+    private OccupantsRandomiser setUpOccupantsRandomiser() {
+        OccupantsRandomiser or = new OccupantsRandomiser(
+                island.getNumRows(), dataManager.getAllOccupantInstances());
+        // set up the occupantsRandomiser
+        or.setRecursionIndex(1);
+        or.setDoubleOccupantsPercentage(0.1);
+        or.setResideRull((existedOccupants, candidate) -> {
+            for(Occupant ex : existedOccupants) {
+                // if same occupants existed
+                if(ex.getName().equals(candidate.getName()))
+                    return false;
+                // hazard should always be alone
+                if(candidate instanceof Hazard)
+                    return false;
+
+                // TODO now a fauna and a predator should not reside in the same square
+                // as the player is not able to select which fauna to trap
+                if(candidate.getClass().equals(Predator.class) &&
+                        ex.getClass().equals(Fauna.class))
+                    return false;
+                if(candidate.getClass().equals(Fauna.class) &&
+                        ex.getClass().equals(Predator.class))
+                    return false;
+            }
+            return true;
+        });
+        return or;
     }
     
     // ticks time over
