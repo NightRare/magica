@@ -5,48 +5,47 @@
  */
 package nz.ac.aut.ense701.gameModel;
 
-import java.util.HashMap;
-import java.util.Map;
-import static junit.framework.Assert.assertFalse;
-import static junit.framework.Assert.assertTrue;
-import org.junit.Test;
-import org.newdawn.slick.Music;
-import org.newdawn.slick.Sound;
+import org.junit.Assert;
 
 /**
  *
  * @author K Cortez
  */
 public class AudioTest {
-    public static Map<String, Sound> soundMap = new HashMap<String, Sound>();
-    public static Map<String, Music> musicMap = new HashMap<String, Music>();
     
     public AudioTest(){
     
     }
     
- @Test
-    public void testSoundMap(){
-        assertTrue("Should have sound files", soundMap.isEmpty());
+     /**
+     * Test AudioPlayer should not return null if load() is called.
+     */
+    public void testMusicPlaying(){
+        boolean playing = false;
+        
+        AudioPlayer.load();
+   
+        if(AudioPlayer.getMusic("music").playing()==true){
+            playing = true;
+        }
+
+        Assert.assertTrue(playing);
         
     }
     
- @Test
-    public void testMusicMap(){
+    /**
+     * Test AudioPlayer should return null if load() has not been called
+    */
+    public void testNullPlayingSound(){
+        boolean playing = false;
         
-        assertTrue("Should be empty", musicMap.isEmpty());
+        if(AudioPlayer.getMusic("music").playing()){
+            playing = true;
+        }
+
+        Assert.assertFalse(playing);
+        
     }
     
-  @Test
-    public void testMusicMapObject(){
-        
-        assertFalse("Should have sound files", musicMap.containsKey("bg-music"));
-    }   
-    
-  @Test
-    public void testSoundMapObject(){
-        
-        assertFalse("Should have sound files", soundMap.containsKey("sm-music"));
-    }   
     
 }
