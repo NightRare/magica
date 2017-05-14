@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package nz.ac.aut.ense701.gameModel;
+package nz.ac.aut.ense701.audio;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -26,8 +26,8 @@ public class AudioPlayer {
     public static void load(){
         
         try {
-            soundMap.put("error_sound",new Sound("resource/sound/Beep10.ogg"));
-            musicMap.put("music", new Music("resource/sound/KiwiIslandBG.ogg"));
+            soundMap.put("error_sound",new Sound("sound/Beep10.ogg"));
+            musicMap.put("music", new Music("sound/KiwiIslandBG.ogg"));
         } catch (SlickException ex) {
             Logger.getLogger(AudioPlayer.class.getName()).log(Level.SEVERE, null, ex);
         }

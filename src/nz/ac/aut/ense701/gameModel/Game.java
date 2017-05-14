@@ -1,5 +1,7 @@
 package nz.ac.aut.ense701.gameModel;
 
+import nz.ac.aut.ense701.audio.SoundManager;
+import nz.ac.aut.ense701.audio.AudioPlayer;
 import org.newdawn.slick.Sound;
 
 import java.io.File;
@@ -79,7 +81,7 @@ public class Game
         this.time = new Time();
         //Background Music
         AudioPlayer.load();
-        AudioPlayer.getMusic("music").loop(1.0f,0.1f);
+        AudioPlayer.getMusic("music").loop(1.0f,0.4f);
         
         //Load sound clips
         soundMap = SoundManager.SoundLoader("data/Occupants.json",

@@ -5,6 +5,7 @@
  */
 package nz.ac.aut.ense701.gui;
 
+import nz.ac.aut.ense701.audio.AudioPlayer;
 import java.awt.Desktop;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;

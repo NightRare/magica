@@ -1,5 +1,6 @@
-package nz.ac.aut.ense701.gameModel;
+package nz.ac.aut.ense701.audio;
 
+import nz.ac.aut.ense701.audio.SoundManager;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -8,6 +9,9 @@ import org.newdawn.slick.Sound;
 
 import java.util.HashMap;
 import java.util.Map;
+import nz.ac.aut.ense701.gameModel.Fauna;
+import nz.ac.aut.ense701.gameModel.Occupant;
+import nz.ac.aut.ense701.gameModel.Predator;
 
 /**
  * Created by Jing on 2017/5/11.

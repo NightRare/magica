@@ -1,4 +1,4 @@
-package nz.ac.aut.ense701.gameModel;
+package nz.ac.aut.ense701.audio;
 
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
@@ -8,6 +8,12 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import nz.ac.aut.ense701.gameModel.Food;
+import nz.ac.aut.ense701.gameModel.Hazard;
+import nz.ac.aut.ense701.gameModel.IDataManager;
+import nz.ac.aut.ense701.gameModel.JsonProcessor;
+import nz.ac.aut.ense701.gameModel.Occupant;
+import nz.ac.aut.ense701.gameModel.Tool;
 
 /**
  * Generate sound clips for faunas and predators.
