@@ -47,6 +47,13 @@
       "weight": 0.5,
       "size": 0.75,
       "portrait": "images/occupants/tool/screwdriver.jpg"
+    },
+    {
+      "name": "Mouse Trap",
+      "description": "A trap for mouse",
+      "weight": 1.0,
+      "size": 1.0,
+      "portrait": "images/occupants/tool/mouseTrap.jpg"
     }
   ],
   "faunae": [

@@ -85,6 +85,15 @@ public class Tool extends Item
       return name.equalsIgnoreCase("Screwdriver"); 
     }
     
+      /**
+    * Check if this tool is a mouse trap
+    * @return true if screwdriver
+     */    
+    public boolean isMouseTrap() {
+       String name = this.getName();
+      return name.equalsIgnoreCase("Mouse Trap"); 
+    }
+    
     
     @Override
     public String getStringRepresentation() 

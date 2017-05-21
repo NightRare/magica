@@ -368,6 +368,11 @@ public class Game
                 {
                     result = player.getTrap().isBroken();
                 }
+                //Mouse trap can only be used if there is a predator to catch
+                else if (tool.isMouseTrap())
+                { //Will be subject for change
+                     result = island.hasNonKiwiFauna(player.getPosition());
+                }
                 else
                 {
                     result = false;
@@ -504,6 +509,9 @@ public class Game
             if (tool.isTrap()&& !tool.isBroken())
             {
                  success = useTrap(); 
+            }
+            else if(tool.isMouseTrap()&& !tool.isBroken()){
+                success = useTrap(); 
             }
             else if(tool.isScrewdriver())// Use screwdriver (to fix trap)
             {
@@ -705,7 +713,7 @@ public class Game
                         + " stamina to take care of it.";
             }
         }
-        
+    
         return false;
     }
     
@@ -721,16 +729,31 @@ public class Game
         {
             Occupant occupant = island.getPredator(current);
             //Predator has been trapped so remove
+            System.out.println(occupant.getName());
+            System.out.println(player.getTrap().getName());
+            if(predatorViaMouseTrap(occupant.getName(),player.getTrap().getName())){
             island.removeOccupant(current, occupant); 
             
             predatorsTrapped++;
             //notify player that the predator is trapped
-            notification.predatorTrapped();
+            notification.predatorTrapped();}
         }
         
         return hadPredator;
     }
-
+    
+    
+     /**
+     * Checks if the player has met any fauna and play its sound
+     * if they do.
+     */
+    private boolean predatorViaMouseTrap(String predator, String trapType){
+        if(predator.equalsIgnoreCase("Cat")&& trapType.equalsIgnoreCase("Mouse Trap")){
+            return true;
+        }else return false;
+    }
+    
+    
     /**
      * Checks if the player has met any fauna and play its sound
      * if they do.

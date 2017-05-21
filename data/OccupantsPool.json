@@ -8,7 +8,8 @@
 
   "tools":{
     "Trap":5,
-    "Screwdriver":1
+    "Screwdriver":1,
+    "Mouse Trap": 3
   },
 
   "faunae":{

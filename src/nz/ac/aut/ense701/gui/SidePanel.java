@@ -23,7 +23,7 @@ public class SidePanel {
     private final Game game;
 
     private BufferedImage playerIcon, questIcon, inventoryEmpty, inventorySnack,
-            inventoryScrewdriver, inventoryApple, inventoryTrap;
+            inventoryScrewdriver, inventoryApple, inventoryTrap, inventoryMouseTrap;
     
     private BufferedImage tag,trap,collect;
 
@@ -72,6 +72,7 @@ public class SidePanel {
         tag = assetManager.getActionTag();
         collect = assetManager.getActionCollect();
         trap = assetManager.getActionTrap();
+        inventoryMouseTrap = assetManager.getInventoryMouseTrap();
     }
 
     public BufferedImage showPlayerIcon() {
@@ -117,12 +118,13 @@ public class SidePanel {
         imgArray[2] = inventoryEmpty;
         for (int i = 0; i < inventoryList().size(); i++) {
             switch (((Item) inventoryList().get(i)).getName().toLowerCase()) {
-                case "trap": imgArray[i] = inventoryTrap;break;
+                case "trap": imgArray[i] = inventoryTrap;break;  
                 case "screwdriver": imgArray[i] = inventoryScrewdriver;break;
                 case "orange juice": imgArray[i] = inventorySnack;break;
                 case "sandwich": imgArray[i] = inventorySnack;break;
                 case "muesli bar": imgArray[i] = inventorySnack;break;
                 case "apple": imgArray[i] = inventoryApple;break;
+                case "mouse trap": imgArray[i] = inventoryMouseTrap;break;  
             }
         }
         return imgArray;

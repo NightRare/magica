@@ -210,6 +210,8 @@ public class Player
                 if (tool.isTrap())
                 {
                     found = true;
+                } else if(tool.isMouseTrap()){
+                    found = true;
                 }
             }
         }
@@ -231,6 +233,9 @@ public class Player
                 tool = (Tool) item;
                 if (tool.isTrap())
                 {
+                    trap = tool;
+                }
+                else if(tool.isMouseTrap()){
                     trap = tool;
                 }
             }
