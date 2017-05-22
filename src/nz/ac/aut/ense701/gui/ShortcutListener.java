@@ -7,9 +7,8 @@ package nz.ac.aut.ense701.gui;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.Objects;
 import javax.swing.JOptionPane;
-import nz.ac.aut.ense701.gameModel.Game;
-import nz.ac.aut.ense701.gameModel.Occupant;
 import org.lwjgl.openal.AL;
 
 /**
@@ -18,10 +17,18 @@ import org.lwjgl.openal.AL;
  */
 public class ShortcutListener implements KeyListener{
 
-    private Game game;
+    private ClickListener mouseActions;
     
-    public ShortcutListener(Game game) {
-        this.game = game;
+    /**
+     * Initialises a ShortcutListener which provides a more convenient way to perform
+     * certain types of actions.
+     * 
+     * @param mouseActions the ClickListener in which all the interactive actions
+     *        are defined and implemented
+     */
+    public ShortcutListener(ClickListener mouseActions) {
+        Objects.requireNonNull(mouseActions);
+        this.mouseActions = mouseActions;
     }
     
     @Override
@@ -32,12 +39,12 @@ public class ShortcutListener implements KeyListener{
         switch(e.getKeyCode()) {
             case KeyEvent.VK_C:
             {
-                collectItem();
+                mouseActions.performCollecting();
                 break;
             }
             case KeyEvent.VK_T:
             {
-                tagKiwi();
+                mouseActions.performTagging();
                 break;
             }
         }        
@@ -52,20 +59,8 @@ public class ShortcutListener implements KeyListener{
             
             if(result == JOptionPane.OK_OPTION){
                  AL.destroy();
-                System.exit(0);}
-           
-        }
-        
-    }
-    
-    private void collectItem() {
-        // temporarily set to one of the occupants in the square
-        Occupant[] occupants = game.getOccupantsPlayerPosition();
-        if(occupants.length > 0)
-            game.collectItem(occupants[0]);
-    }
-    
-    private void tagKiwi() {
-        game.countKiwi();
+                System.exit(0);
+            }           
+        }        
     }
 }

@@ -4,8 +4,6 @@ import nz.ac.aut.ense701.gameModel.Occupant;
 
 import java.util.*;
 
-import static nz.ac.aut.ense701.gameModel.utils.OccupantsDuplicator.duplicatMulti;
-
 /**
  * A randomiser for randomly distribute occupants on a square map.
  * <p>
