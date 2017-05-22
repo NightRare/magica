@@ -6,10 +6,8 @@
 package nz.ac.aut.ense701.gui;
 
 import java.awt.image.BufferedImage;
-import java.io.IOException;
 import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 import nz.ac.aut.ense701.gameModel.IDataManager;
 import nz.ac.aut.ense701.gameModel.JsonProcessor;
 import nz.ac.aut.ense701.gameModel.Occupant;
@@ -104,7 +102,7 @@ public class AssetManager {
     private void loadOccupantsPortraits () {
         ScalingAssistant scaleAssist = ScalingAssistant.getScalingAssistant();
         occupantsPortraits = new HashMap();
-        for (Occupant o : dataManager.getAllOccupantTemplates() ) {
+        for (Occupant o : dataManager.getAllOccupantPrototypes() ) {
             BufferedImage bf = scaleAssist.getScaledImage(
                 (loader.loadImage(o.getPortrait())), 
                 scaleAssist.getScale());

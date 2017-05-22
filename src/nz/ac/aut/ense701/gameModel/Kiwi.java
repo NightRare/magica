@@ -1,6 +1,8 @@
 
 package nz.ac.aut.ense701.gameModel;
 
+import java.util.Map;
+
 /**
  * Kiwi represents a kiwi living on the island
  * @author AS
@@ -28,9 +30,9 @@ public class Kiwi  extends Fauna
      * @param name the name of the kiwi object
      * @param description a longer description of the kiwi
      */
-    public Kiwi(Position pos, String name, String description, String portrait, String link) 
+    public Kiwi(Position pos, String name, String description, String portrait, String link, Map<Terrain, Double> habitats)
     {
-        super(pos, name, description, portrait, link);
+        super(pos, name, description, portrait, link, habitats);
         counted = false;
     } 
     

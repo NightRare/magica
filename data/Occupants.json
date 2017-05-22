@@ -6,7 +6,14 @@
       "weight": 2.0,
       "size": 1.0,
       "energy": 50.0,
-      "portrait": "images/occupants/food/sandwich.jpg"
+      "portrait": "images/occupants/food/sandwich.jpg",
+      "habitats": {
+        "SAND":0.2,
+        "FOREST":0.2,
+        "WETLAND":0.2,
+        "SCRUB":0.2,
+        "WATER":0.2
+      }
     },
     {
       "name": "Muesli Bar",
@@ -14,7 +21,14 @@
       "weight": 1.0,
       "size": 1.0,
       "energy": 50.0,
-      "portrait": "images/occupants/food/muesli_bar.jpg"
+      "portrait": "images/occupants/food/muesli_bar.jpg",
+      "habitats": {
+        "SAND":0.2,
+        "FOREST":0.2,
+        "WETLAND":0.2,
+        "SCRUB":0.2,
+        "WATER":0.2
+      }
     },
     {
       "name": "Apple",
@@ -22,7 +36,14 @@
       "weight": 2.0,
       "size": 3.0,
       "energy": 50.0,
-      "portrait": "images/occupants/food/apple.jpg"
+      "portrait": "images/occupants/food/apple.jpg",
+      "habitats": {
+        "SAND":0.2,
+        "FOREST":0.2,
+        "WETLAND":0.2,
+        "SCRUB":0.2,
+        "WATER":0.2
+      }
     },
     {
       "name": "Orange Juice",
@@ -30,7 +51,14 @@
       "weight": 2.0,
       "size": 3.0,
       "energy": 50.0,
-      "portrait": "images/occupants/food/orange_juice.jpg"
+      "portrait": "images/occupants/food/orange_juice.jpg",
+      "habitats": {
+        "SAND":0.2,
+        "FOREST":0.2,
+        "WETLAND":0.2,
+        "SCRUB":0.2,
+        "WATER":0.2
+      }
     }
   ],
   "tools": [
@@ -39,14 +67,28 @@
       "description": "A trap for predators",
       "weight": 1.0,
       "size": 1.0,
-      "portrait": "images/occupants/tool/trap.jpg"
+      "portrait": "images/occupants/tool/trap.jpg",
+      "habitats": {
+        "SAND":0.25,
+        "FOREST":0.25,
+        "WETLAND":0.25,
+        "SCRUB":0.25,
+        "WATER":0.0
+      }
     },
     {
       "name": "Screwdriver",
       "description": "A screwdriver that is useful for fixing traps",
       "weight": 0.5,
       "size": 0.75,
-      "portrait": "images/occupants/tool/screwdriver.jpg"
+      "portrait": "images/occupants/tool/screwdriver.jpg",
+      "habitats": {
+        "SAND":0.25,
+        "FOREST":0.25,
+        "WETLAND":0.25,
+        "SCRUB":0.25,
+        "WATER":0.0
+      }
     }
   ],
   "faunae": [
@@ -54,37 +96,79 @@
       "name": "Oystercatcher",
       "description": "This black and white wader is unique to the Chatham Islands. It is an endangered species with a high risk of extinction due to its very small population and range. They eat marine molluscs, worms, and other invertebrates.",
       "portrait": "images/occupants/fauna/oystercatcher.jpg",
-      "link": "http://www.doc.govt.nz/nature/native-animals/birds/birds-a-z/variable-oystercatcher-torea/"
+      "link": "http://www.doc.govt.nz/nature/native-animals/birds/birds-a-z/variable-oystercatcher-torea/",
+      "habitats": {
+        "SAND":0.2,
+        "FOREST":0.0,
+        "WETLAND":0.3,
+        "SCRUB":0.0,
+        "WATER":0.5
+      }
     },
     {
       "name": "Crab",
       "description": "Oh, crab! They live in all the world's oceans, in fresh water, and on land, are generally covered with a thick exoskeleton and have a single pair of claws. It's sure that they only like seafood.",
       "portrait": "images/occupants/fauna/crab.jpg",
-      "link": "https://en.wikipedia.org/wiki/Crab"
+      "link": "https://en.wikipedia.org/wiki/Crab",
+      "habitats": {
+        "SAND":0.15,
+        "FOREST":0.0,
+        "WETLAND":0.15,
+        "SCRUB":0.0,
+        "WATER":0.7
+      }
     },
     {
       "name": "Fernbird",
       "description": "The at risk fernbird/mātātā is an endemic species which inhabits wetlands throughout Kiwiisland. They are closely related to the grassbirds Megalurus of Australia and Africa, and are sometimes included in that genus.",
       "portrait": "images/occupants/fauna/fernbird.jpg",
-      "link": "http://www.doc.govt.nz/nature/native-animals/birds/birds-a-z/fernbird-matata/"
+      "link": "http://www.doc.govt.nz/nature/native-animals/birds/birds-a-z/fernbird-matata/",
+      "habitats": {
+        "SAND":0.1,
+        "FOREST":0.35,
+        "WETLAND":0.2,
+        "SCRUB":0.35,
+        "WATER":0.0
+      }
     },
     {
       "name": "Heron",
       "description": "The white heron has always been rare in Kiwiisland and it has gained almost mythical status. This graceful bird has long, slender legs and a long, thin S-shaped neck, which has a distinct kink when flying. They are theaten by predators like stoats, possums and harrier hawks.",
       "portrait": "images/occupants/fauna/heron.jpg",
-      "link": "http://www.doc.govt.nz/nature/native-animals/birds/birds-a-z/white-heron-kotuku/"
+      "link": "http://www.doc.govt.nz/nature/native-animals/birds/birds-a-z/white-heron-kotuku/",
+      "habitats": {
+        "SAND":0.2,
+        "FOREST":0.2,
+        "WETLAND":0.2,
+        "SCRUB":0.2,
+        "WATER":0.2
+      }
     },
     {
       "name": "Robin",
       "description": "The Kiwiisland robin is a sparrow-sized bird found only in New Zealand. They are friendly and trusting, often coming to within a couple of metres of people. They forage for invertebrates, such as worms and beetles among the leaf litter on the ground.",
       "portrait": "images/occupants/fauna/robin.jpg",
-      "link": "http://www.doc.govt.nz/nature/native-animals/birds/birds-a-z/nz-robin-toutouwai/"
+      "link": "http://www.doc.govt.nz/nature/native-animals/birds/birds-a-z/nz-robin-toutouwai/",
+      "habitats": {
+        "SAND":0.0,
+        "FOREST":0.5,
+        "WETLAND":0.0,
+        "SCRUB":0.5,
+        "WATER":0.0
+      }
     },
     {
       "name": "Tui",
       "description": "Tūī are endemic to Kiwiisland and belong to the honeyeater family, which means they feed mainly on nectar from flowers of native plants.",
       "portrait": "images/occupants/fauna/tui.jpg",
-      "link": "http://www.doc.govt.nz/nature/native-animals/birds/birds-a-z/tui/"
+      "link": "http://www.doc.govt.nz/nature/native-animals/birds/birds-a-z/tui/",
+      "habitats": {
+        "SAND":0.0,
+        "FOREST":0.5,
+        "WETLAND":0.0,
+        "SCRUB":0.5,
+        "WATER":0.0
+      }
     }
   ],
   "kiwis": [
@@ -92,7 +176,14 @@
       "name": "Kiwi",
       "description": "The kiwi is a unique and curious bird: it cannot fly, has loose, hair-like feathers, strong legs and no tail. It is the national icon of New Zealand and unofficial national emblem. Tag the kiwi when you see one, make sure they live safely and freely.",
       "portrait": "images/occupants/kiwi/kiwi.jpg",
-      "link": "http://www.doc.govt.nz/nature/native-animals/birds/birds-a-z/kiwi/"
+      "link": "http://www.doc.govt.nz/nature/native-animals/birds/birds-a-z/kiwi/",
+      "habitats": {
+        "SAND":0.25,
+        "FOREST":0.25,
+        "WETLAND":0.25,
+        "SCRUB":0.25,
+        "WATER":0.0
+      }
     }
   ],
   "predators": [
@@ -100,31 +191,66 @@
       "name": "Rat",
       "description": "Please learn about rats in Kiwiisland and pest control measures that can reduce this threat to native plants and animals. They eat native animals, eggs and a wide range of native fruit and plants, which puts them in competition with native wildlife for food.",
       "portrait": "images/occupants/predator/rat.jpg",
-      "link": "http://www.doc.govt.nz/nature/pests-and-threats/animal-pests/rats/"
+      "link": "http://www.doc.govt.nz/nature/pests-and-threats/animal-pests/rats/",
+      "habitats": {
+        "SAND":0.2,
+        "FOREST":0.2,
+        "WETLAND":0.2,
+        "SCRUB":0.2,
+        "WATER":0.2
+      }
     },
     {
       "name": "Cat",
       "description": "Help protect wildlife in your neighbourhood from the cat. Earn a Kiwi Guardians medal for trapping cats - there are a lot of tricks you can use to trap them. Tell us how your challenge went and we’ll send you Kiwi Guardians Wildlife Protector medal.",
       "portrait": "images/occupants/predator/cat.jpg",
-      "link": "http://www.doc.govt.nz/nature/pests-and-threats/animal-pests/pets/"
+      "link": "http://www.doc.govt.nz/nature/pests-and-threats/animal-pests/pets/",
+      "habitats": {
+        "SAND":0.25,
+        "FOREST":0.25,
+        "WETLAND":0.25,
+        "SCRUB":0.25,
+        "WATER":0.0
+      }
     },
     {
       "name": "Kiore",
       "description": "Kiore have brown fur, which is darker along the spine, with grey and white on the belly. They are also thought to have been responsible for the extinction or reduction on the mainland of a significant number of native species.",
       "portrait": "images/occupants/predator/kiore.jpg",
-      "link": "http://www.doc.govt.nz/nature/pests-and-threats/animal-pests/rats/"
+      "link": "http://www.doc.govt.nz/nature/pests-and-threats/animal-pests/rats/",
+      "habitats": {
+        "SAND":0.2,
+        "FOREST":0.2,
+        "WETLAND":0.2,
+        "SCRUB":0.2,
+        "WATER":0.2
+      }
     },
     {
       "name": "Stoat",
       "description": "Stoats look like weasels, but larger and have longer tails and a straight line where the brown fur on their backs meets the white belly fur. Stoats are now considered \"public enemy number one\" for Kiwiisland birds.",
       "portrait": "images/occupants/predator/stoat.jpg",
-      "link": "http://www.doc.govt.nz/nature/pests-and-threats/animal-pests/stoats/"
+      "link": "http://www.doc.govt.nz/nature/pests-and-threats/animal-pests/stoats/",
+      "habitats": {
+        "SAND":0.2,
+        "FOREST":0.2,
+        "WETLAND":0.2,
+        "SCRUB":0.2,
+        "WATER":0.2
+      }
     },
     {
       "name": "Possum",
       "description": "The possum has a thick, bushy tail, a pointed snout and long, fox-like tapering ears.Possums can live anywhere yet forests are the major habitat, especially hardwood mixed forests. Possums compete with native birds for habitat and for food such as insects and berries.",
       "portrait": "images/occupants/predator/possum.jpg",
-      "link": "http://www.doc.govt.nz/nature/pests-and-threats/animal-pests/possums/"
+      "link": "http://www.doc.govt.nz/nature/pests-and-threats/animal-pests/possums/",
+      "habitats": {
+        "SAND":0.3,
+        "FOREST":0.35,
+        "WETLAND":0.0,
+        "SCRUB":0.35,
+        "WATER":0.0
+      }
     }
   ],
   "hazards": [
@@ -132,43 +258,92 @@
       "name": "Cliff",
       "description": "A fall down a steep rocky cliff",
       "impact": 1.0,
-      "portrait": "images/occupants/hazard/cliff.jpg"
+      "portrait": "images/occupants/hazard/cliff.jpg",
+      "habitats": {
+        "SAND":0.1,
+        "FOREST":0.3,
+        "WETLAND":0.3,
+        "SCRUB":0.3,
+        "WATER":0.0
+      }
     },
     {
       "name": "Pond",
       "description": "A fall into a deep pond",
       "impact": 1.0,
-      "portrait": "images/occupants/hazard/pond.jpg"
+      "portrait": "images/occupants/hazard/pond.jpg",
+      "habitats": {
+        "SAND":0.0,
+        "FOREST":0.25,
+        "WETLAND":0.25,
+        "SCRUB":0.25,
+        "WATER":0.25
+      }
     },
     {
       "name": "Rock",
       "description": "A large falling rock",
       "impact": 1.0,
-      "portrait": "images/occupants/hazard/rock.jpg"
+      "portrait": "images/occupants/hazard/rock.jpg",
+      "habitats": {
+        "SAND":0.2,
+        "FOREST":0.2,
+        "WETLAND":0.2,
+        "SCRUB":0.2,
+        "WATER":0.2
+      }
     },
     {
       "name": "Sunburn",
       "description": "Too much sun has given you bad sunburn and",
       "impact": 0.3,
-      "portrait": "images/occupants/hazard/sunburn.jpg"
+      "portrait": "images/occupants/hazard/sunburn.jpg",
+      "habitats": {
+        "SAND":0.3,
+        "FOREST":0.0,
+        "WETLAND":0.2,
+        "SCRUB":0.1,
+        "WATER":0.4
+      }
     },
     {
       "name": "Fall",
       "description": "Tripping on roots hurt your ankle and",
       "impact": 0.5,
-      "portrait": "images/occupants/hazard/fall.jpg"
+      "portrait": "images/occupants/hazard/fall.jpg",
+      "habitats": {
+        "SAND":0.0,
+        "FOREST":0.0,
+        "WETLAND":0.0,
+        "SCRUB":0.0,
+        "WATER":1.0
+      }
     },
     {
       "name": "Small cliff",
       "description": "A fall down a small cliff",
       "impact": 0.3,
-      "portrait": "images/occupants/hazard/small_cliff.jpg"
+      "portrait": "images/occupants/hazard/small_cliff.jpg",
+      "habitats": {
+        "SAND":0.1,
+        "FOREST":0.3,
+        "WETLAND":0.3,
+        "SCRUB":0.3,
+        "WATER":0.0
+      }
     },
     {
       "name": "Broken trap",
       "description": "Your predator trap has broken",
       "impact": 0.0,
-      "portrait": "images/occupants/hazard/broken_trap.jpg"
+      "portrait": "images/occupants/hazard/broken_trap.jpg",
+      "habitats": {
+        "SAND":0.25,
+        "FOREST":0.25,
+        "WETLAND":0.25,
+        "SCRUB":0.25,
+        "WATER":0.0
+      }
     }
   ]
 }

@@ -25,13 +25,13 @@ public class OccupantsRandomiserTest {
     public void setUp() {
 
         allOccupantInstances = new ArrayList<>();
-        Occupant[] kiwis = OccupantsDuplicator.duplicatMulti(
+        Occupant[] kiwis = OccupantsDuplicator.duplicateMulti(
                 new Kiwi(null, "Kiwi", "Kiwi desc"), 8);
-        Occupant[] predators = OccupantsDuplicator.duplicatMulti(
+        Occupant[] predators = OccupantsDuplicator.duplicateMulti(
                 new Predator(null, "Cat", "Cat desc"), 8);
-        Occupant[] faunae = OccupantsDuplicator.duplicatMulti(
+        Occupant[] faunae = OccupantsDuplicator.duplicateMulti(
                 new Fauna(null, "Tui", "Tui desc"), 8);
-        Occupant[] hazards = OccupantsDuplicator.duplicatMulti(
+        Occupant[] hazards = OccupantsDuplicator.duplicateMulti(
                 new Hazard(null, "Fall", "Fall desc", 0.5), 8);
         allOccupantInstances.addAll(Arrays.asList(kiwis));
         allOccupantInstances.addAll(Arrays.asList(predators));
