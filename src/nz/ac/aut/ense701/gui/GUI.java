@@ -74,7 +74,7 @@ public class GUI {
         // add mouse listeners and keypressed listeners here
         NavigationKeyListener keyListener = new NavigationKeyListener(game, loop);
         ClickListener clickListener = new ClickListener(game, loop);
-        ShortcutListener shortcutListener = new ShortcutListener(game);
+        ShortcutListener shortcutListener = new ShortcutListener(clickListener);
         
         frame.addKeyListener(keyListener);
         canvas.addKeyListener(keyListener);
