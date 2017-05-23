@@ -1,6 +1,7 @@
 package nz.ac.aut.ense701.gameModel.randomiser;
 
 import nz.ac.aut.ense701.gameModel.Occupant;
+import nz.ac.aut.ense701.gameModel.Terrain;
 
 import java.util.*;
 
@@ -26,16 +27,16 @@ public class OccupantsRandomiser {
      * <p>allowSameOccupantsOnOnePosition = false</p>
      * <p>resideRull: always return true</p>
      *
-     * @param length               the length of the square map
+     * @param mapLength               the mapLength of the square map
      * @param allOccupantInstances the list of all occupant instances
      */
-    public OccupantsRandomiser(int length, List<Occupant> allOccupantInstances) {
+    public OccupantsRandomiser(int mapLength, List<Occupant> allOccupantInstances) {
         Objects.requireNonNull(allOccupantInstances);
 
-        if (length < 1)
-            throw new IllegalArgumentException("The length of a island cannot be less than 1");
+        if (mapLength < 1)
+            throw new IllegalArgumentException("The mapLength of a island cannot be less than 1");
 
-        this.length = length;
+        this.mapLength = mapLength;
         this.allOccupantInstances = allOccupantInstances;
 
         random = new Random(System.currentTimeMillis());
@@ -43,6 +44,7 @@ public class OccupantsRandomiser {
         maintainOccupantTypesPercentage = true;
         doubleOccupantsPercentage = 0.0;
         resideRull = (existedOccupants, candidate) -> true;
+        terrainMap = null;
     }
 
     //region ACCESSORS
@@ -73,7 +75,7 @@ public class OccupantsRandomiser {
      * Set the recursion index. If the given index exceeds the possible max index, then the max will be
      * set automatically.
      * <p>
-     * If n>0, and the length of the map can be exactly divided by 2^n while cannot be exactly divided by 2^(n+1)
+     * If n>0, and the mapLength of the map can be exactly divided by 2^n while cannot be exactly divided by 2^(n+1)
      * , then n is the possible max recursion index.
      *
      * @param recurssionIndex the recursion index
@@ -84,7 +86,7 @@ public class OccupantsRandomiser {
             throw new IllegalArgumentException("Recurssion index cannot be negative.");
 
         int deepestRecurssion = 0;
-        int tempLength = length;
+        int tempLength = mapLength;
 
         while (tempLength % 2 == 0 && recurssionIndex > 0) {
             tempLength /= 2;
@@ -136,6 +138,13 @@ public class OccupantsRandomiser {
         Objects.requireNonNull(resideRull);
         this.resideRull = resideRull;
     }
+
+
+    public void setTerrainMap(TerrainMap terrainMap) {
+        Objects.requireNonNull(terrainMap);
+        this.terrainMap = terrainMap;
+    }
+
     //endregion
 
     /**
@@ -145,13 +154,18 @@ public class OccupantsRandomiser {
      */
     public Set<Occupant>[][] distributeOccupantsRandomly() {
         List<Occupant> occupants = new ArrayList<>(allOccupantInstances);
-        Set<Occupant>[][] oMap = new HashSet[length][length];
+        Set<Occupant>[][] oMap = new HashSet[mapLength][mapLength];
 
-        Map<Integer, Set<Occupant>> distOccUnits = distributeOccupantsRecursively(length, occupants, recursion);
+        Map<Integer, Set<Occupant>> distOccUnits = null;
+        if(terrainMap == null) {
+            distOccUnits = distributeOccupantsRecursively(mapLength, occupants, recursion);
+        } else {
+            distOccUnits = distributeOccupantsByTerrains();
+        }
 
         for (int r = 0; r < oMap.length; r++) {
             for (int c = 0; c < oMap[0].length; c++) {
-                int index = r * length + c;
+                int index = r * mapLength + c;
                 oMap[r][c] = distOccUnits.get(index);
                 if (oMap[r][c] == null)
                     oMap[r][c] = new HashSet<>();
@@ -173,9 +187,21 @@ public class OccupantsRandomiser {
         public boolean mayResideTogether(List<Occupant> existedOccupants, Occupant candidate);
     }
 
+    public interface TerrainMap {
+
+        /**
+         * Gets the terrain of the grid square according to its position.
+         *
+         * @param row the row number of the square
+         * @param column the column number of the square
+         * @return the Terrain of the square
+         */
+        public Terrain getTerrain(int row, int column);
+    }
+
     //region PRIVATE STUFF
 
-    private int length;
+    private int mapLength;
 
     private List<Occupant> allOccupantInstances;
 
@@ -188,6 +214,57 @@ public class OccupantsRandomiser {
     private Random random;
 
     private ResideRull resideRull;
+
+    private TerrainMap terrainMap;
+
+    private Map<Integer, Set<Occupant>> distributeOccupantsByTerrains() {
+
+        Map<Terrain, List<Set<Occupant>>> bundlesByTerrain = new HashMap<>();
+        Map<Terrain, List<Occupant>> poolsByTerrain = dividePoolByTerrain();
+        poolsByTerrain.forEach((t, o) -> bundlesByTerrain.put(t, bundleOccupants(o)));
+        Map<Terrain, List<Integer>> terrainSquares = new HashMap<>();
+        for (int r = 0; r < mapLength; r++) {
+            for (int c = 0; c < mapLength; c++) {
+                int index = r * mapLength + c;
+                Terrain t = terrainMap.getTerrain(r, c);
+                if(!terrainSquares.containsKey(t))
+                    terrainSquares.put(t, new ArrayList<>());
+                terrainSquares.get(t).add(index);
+            }
+        }
+
+        Map<Integer, Set<Occupant>> dist = new HashMap<>();
+        for(Terrain t : Terrain.values()) {
+                dist.putAll(distributeRandomly(bundlesByTerrain.get(t), terrainSquares.get(t)));
+        }
+
+        return dist;
+    }
+
+    private Map<Terrain, List<Occupant>> dividePoolByTerrain() {
+        List<Occupant> occupants = new ArrayList<>(allOccupantInstances);
+        Map<Terrain, List<Occupant>> poolByTerrain = new HashMap<>();
+
+        while (!occupants.isEmpty()) {
+            double randomMarker = random.nextDouble();
+            double probablitySection = 0.0;
+            Occupant o = occupants.remove(0);
+
+            for(Terrain t : Terrain.values()) {
+                if(!poolByTerrain.containsKey(t)) {
+                    poolByTerrain.put(t, new ArrayList<>());
+                }
+
+                probablitySection += o.getHabitatProbability(t);
+                if(randomMarker < probablitySection) {
+                    poolByTerrain.get(t).add(o);
+                    break;
+                }
+            }
+        }
+
+        return poolByTerrain;
+    }
 
     private Map<Integer, Set<Occupant>> distributeOccupantsRecursively(
             int length, List<Occupant> occupants, int recursion) {
@@ -239,16 +316,27 @@ public class OccupantsRandomiser {
         if (residents.size() > numOfSeats)
             throw new IllegalArgumentException("The amount of residents cannot exceed the number of seats.");
 
-        Map<Integer, T> dist = new HashMap<>();
         List<Integer> seats = new ArrayList<>(numOfSeats);
         for (int i = 0; i < numOfSeats; i++) {
             seats.add(i);
-            dist.put(i, null);
         }
+
+        return distributeRandomly(residents, seats);
+    }
+
+    private <T> Map<Integer, T> distributeRandomly(List<T> residents, List<Integer> seats) {
+        if (residents.size() > seats.size())
+            throw new IllegalArgumentException("The amount of residents cannot exceed the number of seats.");
+
+        Map<Integer, T> dist = new HashMap<>();
 
         while (!residents.isEmpty()) {
             Integer seat = seats.remove(random.nextInt(seats.size()));
             dist.put(seat, residents.remove(0));
+        }
+
+        while(!seats.isEmpty()) {
+            dist.put(seats.remove(0), null);
         }
 
         return dist;

@@ -1014,8 +1014,6 @@ public class Game
     private OccupantsRandomiser setUpOccupantsRandomiser() {
         OccupantsRandomiser or = new OccupantsRandomiser(
                 island.getNumRows(), dataManager.getAllOccupantInstances());
-        // set up the occupantsRandomiser
-        or.setRecursionIndex(1);
         or.setDoubleOccupantsPercentage(0.1);
         or.setResideRull((existedOccupants, candidate) -> {
             for(Occupant ex : existedOccupants) {
@@ -1037,6 +1035,16 @@ public class Game
             }
             return true;
         });
+
+        if(fToggle.occupantsOnCertainTerrains()) {
+            or.setTerrainMap((row, column) -> island.getTerrain(new Position(island, row, column)));
+        } else {
+            or.setRecursionIndex(1);
+        }
+
+        // set up the occupantsRandomiser
+
+
         return or;
     }
     
