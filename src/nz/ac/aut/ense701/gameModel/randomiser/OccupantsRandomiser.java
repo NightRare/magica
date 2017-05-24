@@ -27,7 +27,7 @@ public class OccupantsRandomiser {
      * <p>allowSameOccupantsOnOnePosition = false</p>
      * <p>resideRull: always return true</p>
      *
-     * @param mapLength               the mapLength of the square map
+     * @param mapLength            the mapLength of the square map
      * @param allOccupantInstances the list of all occupant instances
      */
     public OccupantsRandomiser(int mapLength, List<Occupant> allOccupantInstances) {
@@ -139,7 +139,12 @@ public class OccupantsRandomiser {
         this.resideRull = resideRull;
     }
 
-
+    /**
+     * Sets the terrain map which provides Terrain information about all the squares. Once this is set the randomiser
+     * will ignore the recursion index and distribute the occupants according to their Terrain constraints.
+     *
+     * @param terrainMap an instance implements TerrainMap
+     */
     public void setTerrainMap(TerrainMap terrainMap) {
         Objects.requireNonNull(terrainMap);
         this.terrainMap = terrainMap;
@@ -157,7 +162,7 @@ public class OccupantsRandomiser {
         Set<Occupant>[][] oMap = new HashSet[mapLength][mapLength];
 
         Map<Integer, Set<Occupant>> distOccUnits = null;
-        if(terrainMap == null) {
+        if (terrainMap == null) {
             distOccUnits = distributeOccupantsRecursively(mapLength, occupants, recursion);
         } else {
             distOccUnits = distributeOccupantsByTerrains();
@@ -192,7 +197,7 @@ public class OccupantsRandomiser {
         /**
          * Gets the terrain of the grid square according to its position.
          *
-         * @param row the row number of the square
+         * @param row    the row number of the square
          * @param column the column number of the square
          * @return the Terrain of the square
          */
@@ -220,22 +225,24 @@ public class OccupantsRandomiser {
     private Map<Integer, Set<Occupant>> distributeOccupantsByTerrains() {
 
         Map<Terrain, List<Set<Occupant>>> bundlesByTerrain = new HashMap<>();
-        Map<Terrain, List<Occupant>> poolsByTerrain = dividePoolByTerrain();
-        poolsByTerrain.forEach((t, o) -> bundlesByTerrain.put(t, bundleOccupants(o)));
+        dividePoolByTerrain().forEach((t, o) -> bundlesByTerrain.put(t, bundleOccupants(o)));
         Map<Terrain, List<Integer>> terrainSquares = new HashMap<>();
+
+        for (Terrain t : Terrain.values()) {
+            terrainSquares.put(t, new ArrayList<>());
+        }
+
         for (int r = 0; r < mapLength; r++) {
             for (int c = 0; c < mapLength; c++) {
                 int index = r * mapLength + c;
                 Terrain t = terrainMap.getTerrain(r, c);
-                if(!terrainSquares.containsKey(t))
-                    terrainSquares.put(t, new ArrayList<>());
                 terrainSquares.get(t).add(index);
             }
         }
 
         Map<Integer, Set<Occupant>> dist = new HashMap<>();
-        for(Terrain t : Terrain.values()) {
-                dist.putAll(distributeRandomly(bundlesByTerrain.get(t), terrainSquares.get(t)));
+        for (Terrain t : Terrain.values()) {
+            dist.putAll(distributeRandomly(bundlesByTerrain.get(t), terrainSquares.get(t)));
         }
 
         return dist;
@@ -245,18 +252,18 @@ public class OccupantsRandomiser {
         List<Occupant> occupants = new ArrayList<>(allOccupantInstances);
         Map<Terrain, List<Occupant>> poolByTerrain = new HashMap<>();
 
+        for (Terrain t : Terrain.values()) {
+            poolByTerrain.put(t, new ArrayList<>());
+        }
+
         while (!occupants.isEmpty()) {
             double randomMarker = random.nextDouble();
             double probablitySection = 0.0;
             Occupant o = occupants.remove(0);
 
-            for(Terrain t : Terrain.values()) {
-                if(!poolByTerrain.containsKey(t)) {
-                    poolByTerrain.put(t, new ArrayList<>());
-                }
-
+            for (Terrain t : Terrain.values()) {
                 probablitySection += o.getHabitatProbability(t);
-                if(randomMarker < probablitySection) {
+                if (randomMarker < probablitySection) {
                     poolByTerrain.get(t).add(o);
                     break;
                 }
@@ -335,7 +342,8 @@ public class OccupantsRandomiser {
             dist.put(seat, residents.remove(0));
         }
 
-        while(!seats.isEmpty()) {
+
+        while (!seats.isEmpty()) {
             dist.put(seats.remove(0), null);
         }
 
