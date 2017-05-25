@@ -24,16 +24,24 @@ public class PlayerSprite {
     private int yLocation;
     
     private static final int SPEED = 5;
-    private ScalingAssistant sA;
+    private final ScalingAssistant sA;
+    private final AssetManager assetMan;
     
+    // tick counter for sprite switch, only counts while moving
+    private int ticksElapsed;
+    private final int TICKS_PER_ALTERNATION = 10; // 10 seems ok...like the player is stepping between spaces. 2 and 3 seemed ok too though, but are potentially too fast for such a subtle change
+    private boolean alternate;
     
     public PlayerSprite(Game game) {
         this.game = game;
         this.player = game.getPlayer();
-        this.sprite = AssetManager.getAssetManager().getPlayer();
+        this.assetMan = AssetManager.getAssetManager();
+        this.sprite = assetMan.getPlayer();
         this.xLocation = getXPosition();
         this.yLocation = getYPosition();
         this.sA = ScalingAssistant.getScalingAssistant();
+        this.ticksElapsed = 0;
+        this.alternate = false;
     }
     
     // position refers to the underlying position in the game model
@@ -57,49 +65,62 @@ public class PlayerSprite {
      * Tick method for updating data associated with player sprite
      */
     public void tick() {
-        this.sprite = AssetManager.getAssetManager().getPlayer();
+        this.sprite = (alternate) ? assetMan.getPlayerAlt(): assetMan.getPlayer();
         player = game.getPlayer();
-        updateX();
-        updateY();
+        // if either x or y are being updated then inMotion true and ticks elapsed is updated
+        boolean mX = updateX();
+        boolean mY = updateY();
+        if (mX||mY) walk();
     }
     
     /**
-     * Updates the X location to be drawn at
+     * Switches the sprite to give impression of walking
      */
-    private void updateX() {
-        int x = xLocation;
+    public void walk() {
+        ticksElapsed ++;
+        if (ticksElapsed > TICKS_PER_ALTERNATION) {
+            alternate = !alternate;
+            ticksElapsed = 0;
+        }
+    }
+    
+    /**
+     * Updates the X location to be drawn at. Returns true if updated.
+     */
+    private boolean updateX() {
         int diff = getXPosition() - xLocation;
-        int direction = (diff != 0) ? diff / ((int) Math.abs((double) diff)) : 0;
+        if (diff == 0) return false;
+        int direction = diff / ((int) Math.abs((double) diff));
         int speed = sA.scale(SPEED);
         if (speed < Math.abs(diff)) {
             xLocation += speed * direction;
         } else {
             xLocation += diff;
         }
-        
         // to avoid strange effect where sprite can lag too far behind actual location
         if ((double) Math.abs(diff) > GUIConfigs.getSquareWidth() * 1.5) {
             xLocation = getXPosition();
         }
+        return true;
     }
     
     /**
-     * Updates the Y location to be drawn at
+     * Updates the Y location to be drawn at. Returns true if updated
      */
-    private void updateY() {
-        int y = yLocation;
+    private boolean updateY() {
         int diff = getYPosition() - yLocation;
-        int direction = (diff != 0) ? diff / ((int) Math.abs((double) diff)): 0;
+        if (diff == 0) return false;
+        int direction = diff / ((int) Math.abs((double) diff));
         int speed = sA.scale(SPEED);
         if (speed < Math.abs(diff)) {
             yLocation += speed * direction;
         } else {
             yLocation += diff;
         }
-        
         // To avoid strange effect where sprite can lag too far behind the actual location
         if ((double) Math.abs(diff) > GUIConfigs.getSquareHeight() * 1.5) {
             yLocation = getYPosition(); 
         }
+        return true;
     }
 }
