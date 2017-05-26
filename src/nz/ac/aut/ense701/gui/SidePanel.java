@@ -5,7 +5,6 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -16,7 +15,6 @@ import nz.ac.aut.ense701.gameModel.Game;
 import nz.ac.aut.ense701.gameModel.GameState;
 import nz.ac.aut.ense701.gameModel.Item;
 import nz.ac.aut.ense701.gameModel.Occupant;
-import nz.ac.aut.ense701.gameModel.Player;
 import nz.ac.aut.ense701.gameModel.Position;
 
 /**
@@ -41,7 +39,7 @@ public class SidePanel {
     //private GUI ui;
     
     //array indexes reference
-    private final int X_OFFSET, Y_OFFSET, IMG_WIDTH, IMG_HEIGHT, BOX_1, BOX_2, BOX_3;
+    private final int X_OFFSET, Y_OFFSET, BOX_1, BOX_2, BOX_3;
 
     //X offset, Y offset, WINDOW_WIDTH, and WINDOW_HEIGHT values of side panel images
     private final int[] PLAYER_ICON = {12, 12, 170, 155};
@@ -56,9 +54,6 @@ public class SidePanel {
         
         X_OFFSET = 0;
         Y_OFFSET = 1;
-
-        IMG_WIDTH = 2;
-        IMG_HEIGHT = 3;
 
         BOX_1 = 0;
         BOX_2 = 1;
@@ -201,10 +196,10 @@ public class SidePanel {
 
         //display Max Stamina
         g2d.setColor(Color.lightGray);
-
+        int STAMINA_HEIGHT_INDEX = 3;
         g2d.fill(new Rectangle2D.Double(
                 valueOf(STAMINA_BAR, X_OFFSET), valueOf(STAMINA_BAR, Y_OFFSET),
-                maxStaminawidth, valueOf(STAMINA_BAR, IMG_HEIGHT)));
+                maxStaminawidth, valueOf(STAMINA_BAR, STAMINA_HEIGHT_INDEX)));
 
         //displays Current Stamina
         if(currentStaminawidth >= maxStaminawidth*0.75){
@@ -220,7 +215,7 @@ public class SidePanel {
 
         g2d.fill(new Rectangle2D.Double(
                 valueOf(STAMINA_BAR, X_OFFSET), valueOf(STAMINA_BAR, Y_OFFSET),
-                currentStaminawidth, valueOf(STAMINA_BAR, IMG_HEIGHT)));
+                currentStaminawidth, valueOf(STAMINA_BAR, STAMINA_HEIGHT_INDEX)));
 
         //displays the text STAMINA
         g2d.setColor(Color.darkGray);
