@@ -17,7 +17,11 @@
     "Robin":3,
     "Crab":2,
     "Tui":3,
-    "Oystercatcher":3
+    "Oystercatcher":3,
+    "Bellbird":3,
+    "Brown Teal":3,
+    "Fantail":3,
+    "Kakapo":2
   },
 
   "kiwis": {
@@ -29,7 +33,11 @@
     "Cat":2,
     "Kiore":2,
     "Rat":3,
-    "Possum":3
+    "Possum":3,
+    "Ferret":3,
+    "Hedgehog":2,
+    "Weasel":2,
+    "Pet Dog":2
   },
 
   "hazards":{

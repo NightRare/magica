@@ -169,6 +169,58 @@
         "SCRUB":0.5,
         "WATER":0.0
       }
+    },
+    {
+      "name": "Bellbird",
+      "description": "Bellbird song comprises three distinct sounds resembling the chiming of bells. The melodious bellbird is still widespread but mammalian predators keep their numbers low.",
+      "portrait": "images/occupants/fauna/bellbird.jpg",
+      "link": "http://www.doc.govt.nz/nature/native-animals/birds/birds-a-z/bellbird-korimako/",
+      "habitats": {
+        "SAND":0.0,
+        "FOREST":0.5,
+        "WETLAND":0.0,
+        "SCRUB":0.5,
+        "WATER":0.0
+      }
+    },
+    {
+      "name": "Brown Teal",
+      "description": "The brown teal/pāteke is a small dabbling duck endemic to New Zealand. They are the rarest waterfowl on the mainland. Pāteke are still at risk of extinction if the threats to the species are not managed.",
+      "portrait": "images/occupants/fauna/brown_teal.jpg",
+      "link": "http://www.doc.govt.nz/nature/native-animals/birds/birds-a-z/brown-teal-pateke/",
+      "habitats": {
+        "SAND":0.0,
+        "FOREST":0.2,
+        "WETLAND":0.6,
+        "SCRUB":0.0,
+        "WATER":0.2
+      }
+    },
+    {
+      "name": "Fantail",
+      "description": "Known for its friendly ‘cheet cheet’ call and energetic flying antics, the aptly named fantail is one of the most common and widely distributed native birds on the New Zealand mainland.",
+      "portrait": "images/occupants/fauna/fantail.jpg",
+      "link": "http://www.doc.govt.nz/nature/native-animals/birds/birds-a-z/fantail-piwakawaka/",
+      "habitats": {
+        "SAND":0.0,
+        "FOREST":0.5,
+        "WETLAND":0.0,
+        "SCRUB":0.5,
+        "WATER":0.0
+      }
+    },
+    {
+      "name": "Kakapo",
+      "description": "The kākāpō (night parrot) is one of New Zealand’s unique treasures with fewer than 160 known surviving birds. It is listed internationally as a critically endangered species.",
+      "portrait": "images/occupants/fauna/kakapo.jpg",
+      "link": "http://www.doc.govt.nz/nature/native-animals/birds/birds-a-z/kakapo/",
+      "habitats": {
+        "SAND":0.0,
+        "FOREST":0.5,
+        "WETLAND":0.5,
+        "SCRUB":0.0,
+        "WATER":0.0
+      }
     }
   ],
   "kiwis": [
@@ -249,6 +301,58 @@
         "FOREST":0.35,
         "WETLAND":0.0,
         "SCRUB":0.35,
+        "WATER":0.0
+      }
+    },
+    {
+      "name": "Ferret",
+      "description": "Ferrets are small predators and are members of the mustelid family, along with stoats, weasels, badgers, mink and otters. Although rabbits are the main diet of ferrets, this mustelid will attack, kill and eat native species.",
+      "portrait": "images/occupants/predator/ferret.jpg",
+      "link": "http://www.doc.govt.nz/nature/pests-and-threats/animal-pests/ferrets/",
+      "habitats": {
+        "SAND":0.0,
+        "FOREST":0.5,
+        "WETLAND":0.5,
+        "SCRUB":0.0,
+        "WATER":0.0
+      }
+    },
+    {
+      "name": "Hedgehog",
+      "description": "Hedgehogs have voracious appetites. They pose a threat to native weta, skinks, and the eggs and chicks of ground-nesting birds.",
+      "portrait": "images/occupants/predator/hedgehog.jpg",
+      "link": "http://www.doc.govt.nz/nature/pests-and-threats/animal-pests/hedgehogs/",
+      "habitats": {
+        "SAND":0.0,
+        "FOREST":1.0,
+        "WETLAND":0.0,
+        "SCRUB":0.0,
+        "WATER":0.0
+      }
+    },
+    {
+      "name": "Weasel",
+      "description": "Weasels are found in low numbers in most habitat types in New Zealand but impact on lizard and invertebrate populations as well as bird life.",
+      "portrait": "images/occupants/predator/weasel.jpg",
+      "link": "http://www.doc.govt.nz/nature/pests-and-threats/animal-pests/weasels/",
+      "habitats": {
+        "SAND":0.0,
+        "FOREST":1.0,
+        "WETLAND":0.0,
+        "SCRUB":0.0,
+        "WATER":0.0
+      }
+    },
+    {
+      "name": "Pet Dog",
+      "description": "Kiwi deaths have been caused by pet dogs on daytime walks and by dogs not tied up at night, at home or camping.",
+      "portrait": "images/occupants/predator/dog.jpg",
+      "link": "http://www.doc.govt.nz/nature/pests-and-threats/animal-pests/pets/",
+      "habitats": {
+        "SAND":0.2,
+        "FOREST":0.7,
+        "WETLAND":0.1,
+        "SCRUB":0.0,
         "WATER":0.0
       }
     }
