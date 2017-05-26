@@ -7,21 +7,21 @@
   },
 
   "tools":{
-    "Trap":5,
+    "Trap":3,
     "Screwdriver":1
   },
 
   "faunae":{
-    "Fernbird":3,
-    "Heron":3,
-    "Robin":3,
+    "Fernbird":2,
+    "Heron":2,
+    "Robin":2,
     "Crab":2,
-    "Tui":3,
-    "Oystercatcher":3,
-    "Bellbird":3,
-    "Brown Teal":3,
-    "Fantail":3,
-    "Kakapo":2
+    "Tui":2,
+    "Oystercatcher":2,
+    "Bellbird":2,
+    "Brown Teal":2,
+    "Fantail":2,
+    "Kakapo":1
   },
 
   "kiwis": {
@@ -29,15 +29,15 @@
   },
 
   "predators":{
-    "Stoat":3,
+    "Stoat":2,
     "Cat":2,
     "Kiore":2,
     "Rat":3,
-    "Possum":3,
-    "Ferret":3,
+    "Possum":2,
+    "Ferret":1,
     "Hedgehog":2,
-    "Weasel":2,
-    "Pet Dog":2
+    "Weasel":1,
+    "Pet Dog":1
   },
 
   "hazards":{
@@ -45,8 +45,8 @@
     "Broken trap":1,
     "Rock":1,
     "Fall":3,
-    "Sunburn":4,
-    "Small cliff":4,
+    "Sunburn":3,
+    "Small cliff":5,
     "Cliff":1
   }
 }
