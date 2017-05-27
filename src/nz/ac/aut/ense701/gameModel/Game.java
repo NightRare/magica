@@ -1,5 +1,7 @@
 package nz.ac.aut.ense701.gameModel;
 
+import nz.ac.aut.ense701.audio.SoundManager;
+import nz.ac.aut.ense701.audio.AudioPlayer;
 import org.newdawn.slick.Sound;
 
 import java.io.File;
@@ -29,8 +31,7 @@ public class Game
     public static final int WEIGHT_INDEX = 3;
     public static final int MAXSIZE_INDEX = 4;
     public static final int SIZE_INDEX = 5;
-    public static final int INVENTORY_LIMIT = 3; 
-    
+    public static final int INVENTORY_LIMIT = 3;    
     
 
     /**
@@ -71,7 +72,7 @@ public class Game
         predatorsTrapped = 0;
         kiwiCount = 0;
         initialiseIslandFromFile("data/IslandData.txt");
-        drawIsland();
+        drawIsland();        
         state = GameState.PLAYING;
         winMessage = "";
         loseMessage = "";
@@ -80,7 +81,7 @@ public class Game
         this.time = new Time();
         //Background Music
         AudioPlayer.load();
-        AudioPlayer.getMusic("music").loop(1.0f,0.1f);
+        AudioPlayer.getMusic("music").loop(1.0f,0.4f);
         
         //Load sound clips
         soundMap = SoundManager.SoundLoader("data/Occupants.json",
@@ -308,6 +309,7 @@ public class Game
     public void drawIsland()
     {  
           island.draw();
+          island.draw(DEBUG_MAP_CELL_SIZE);
     }
     
      /**
@@ -914,38 +916,40 @@ public class Game
             int    occCol   = input.nextInt();
             Position occPos = new Position(island, occRow, occCol);
             Occupant occupant    = null;
+            Map<Terrain, Double> dummyHabitats = new HashMap<>();
+
 
             if ( occType.equals("T") )
             {
                 double weight = input.nextDouble();
                 double size   = input.nextDouble();
-                occupant = new Tool(occPos, occName, occDesc, "", weight, size);
+                occupant = new Tool(occPos, occName, occDesc, "", weight, size, dummyHabitats);
             }
             else if ( occType.equals("E") )
             {
                 double weight = input.nextDouble();
                 double size   = input.nextDouble();
                 double energy = input.nextDouble();
-                occupant = new Food(occPos, occName, occDesc, "", weight, size, energy);
+                occupant = new Food(occPos, occName, occDesc, "", weight, size, energy, dummyHabitats);
             }
             else if ( occType.equals("H") )
             {
                 double impact = input.nextDouble();
-                occupant = new Hazard(occPos, occName, occDesc, "", impact);
+                occupant = new Hazard(occPos, occName, occDesc, "", impact, dummyHabitats);
             }
             else if ( occType.equals("K") )
             {
-                occupant = new Kiwi(occPos, occName, occDesc, "", "");
+                occupant = new Kiwi(occPos, occName, occDesc, "", "", dummyHabitats);
                 totalKiwis++;
             }
             else if ( occType.equals("P") )
             {
-                occupant = new Predator(occPos, occName, occDesc, "", "");
+                occupant = new Predator(occPos, occName, occDesc, "", "", dummyHabitats);
                 totalPredators++;
             }
             else if ( occType.equals("F") )
             {
-                occupant = new Fauna(occPos, occName, occDesc, "", "");
+                occupant = new Fauna(occPos, occName, occDesc, "", "", dummyHabitats);
             }
             if ( occupant != null ) island.addOccupant(occPos, occupant);
         }
@@ -1010,8 +1014,6 @@ public class Game
     private OccupantsRandomiser setUpOccupantsRandomiser() {
         OccupantsRandomiser or = new OccupantsRandomiser(
                 island.getNumRows(), dataManager.getAllOccupantInstances());
-        // set up the occupantsRandomiser
-        or.setRecursionIndex(1);
         or.setDoubleOccupantsPercentage(0.1);
         or.setResideRull((existedOccupants, candidate) -> {
             for(Occupant ex : existedOccupants) {
@@ -1033,6 +1035,16 @@ public class Game
             }
             return true;
         });
+
+        if(fToggle.occupantsOnCertainTerrains()) {
+            or.setTerrainMap((row, column) -> island.getTerrain(new Position(island, row, column)));
+        } else {
+            or.setRecursionIndex(1);
+        }
+
+        // set up the occupantsRandomiser
+
+
         return or;
     }
     
@@ -1058,8 +1070,9 @@ public class Game
     private Set<GameEventListener> eventListeners;
     
     private final double MIN_REQUIRED_CATCH = 0.8;
-    private final double STAMINA_PUNISH_CAP_FAUNA = 10.0;    
-        
+    private final double STAMINA_PUNISH_CAP_FAUNA = 10.0;
+    private static final int DEBUG_MAP_CELL_SIZE = 12;
+    
     private String winMessage = "";
     private String loseMessage = "";
     private String playerMessage = "";

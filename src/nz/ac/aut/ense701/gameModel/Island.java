@@ -350,6 +350,82 @@ public class Island
         }
         System.out.println(horizontalLine);
     }
+    
+    public void draw (int sizeOfCells) {
+        if(sizeOfCells < 4 || sizeOfCells > 14)
+            throw new IllegalArgumentException("The size of cells cannot be less than"
+                    + "4 and bigger than 10");
+        
+        final int CELL_SIZE = sizeOfCells;
+        
+        // create the horizontal line as a string
+        String horizontalLine = "-";
+        for ( int col = 0; col < this.numColumns; col++ ) {
+            for ( int i = 0 ; i < CELL_SIZE ; i++ ) {
+                horizontalLine += "-";
+            }            
+            horizontalLine += "-";
+        }
+        
+        // print the content
+        for ( int row = 0; row < this.numRows; row++ ) 
+        { 
+            String rowOccupant1 = "|";
+            String rowOccupant2 = "|";
+            String rowTerrain  = "|";
+            for ( int col = 0; col < this.numColumns; col++ ) 
+            {
+                GridSquare g = islandGrid[row][col];
+                // create string with first occupant
+                String cellOccupant1 = g.hasPlayer() ? "@" : " ";
+                boolean onSecond = false;
+                for(Occupant o : g.getOccupants()) {
+                    if(onSecond)
+                        break;
+                    String name = o.getName().length() > (CELL_SIZE - 2) ? 
+                            o.getName().substring(0, CELL_SIZE - 2) : 
+                            o.getName();
+                    cellOccupant1 += name;
+                    onSecond = true;
+                }
+                for ( int i = cellOccupant1.length() ; i < CELL_SIZE ; i++ ) {
+                    cellOccupant1 += " ";
+                }
+                rowOccupant1 += cellOccupant1 + "|";
+                
+                // create string with second occupant
+                String cellOccupant2 = " ";
+                
+                onSecond = false;
+                for(Occupant o : g.getOccupants()) {
+                    if(!onSecond) {
+                        onSecond = true;
+                        continue;
+                    }
+                    String name = o.getName().length() > (CELL_SIZE - 2) ? 
+                            o.getName().substring(0, CELL_SIZE - 2) : 
+                            o.getName();
+                    cellOccupant2 += name;
+                }
+                for ( int i = cellOccupant2.length() ; i < CELL_SIZE ; i++ ) {
+                    cellOccupant2 += " ";
+                }
+                rowOccupant2 += cellOccupant2 + "|";
+
+                // create string with terrain
+                String cellTerrain = "";
+                for ( int i = 0 ; i < CELL_SIZE ; i++ ) {
+                    cellTerrain += g.getTerrainStringRepresentation();
+                }
+                rowTerrain += cellTerrain + "|";
+            }
+            System.out.println(horizontalLine);
+            System.out.println(rowOccupant1);
+            System.out.println(rowOccupant2);
+            System.out.println(rowTerrain);
+        }
+        System.out.println(horizontalLine);
+    }
 
     /**
      * Set all the grids of the island visible.

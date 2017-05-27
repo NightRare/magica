@@ -6,10 +6,8 @@
 package nz.ac.aut.ense701.gui;
 
 import java.awt.image.BufferedImage;
-import java.io.IOException;
 import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 import nz.ac.aut.ense701.gameModel.IDataManager;
 import nz.ac.aut.ense701.gameModel.JsonProcessor;
 import nz.ac.aut.ense701.gameModel.Occupant;
@@ -20,7 +18,7 @@ import nz.ac.aut.ense701.gameModel.Occupant;
  */
 public class AssetManager {
     
-    private BufferedImage map, empty, water, scrub, wetland, forest, sand, player, black, grey, night; 
+    private BufferedImage map, visible, water, scrub, wetland, forest, sand, player, dark, fog, night; 
     private BufferedImage animal, food, tool, hazard; //inventory items
     private BufferedImage tag, trap, collect; //action boxes
     private BufferedImage playerFace_happy,playerFace_neutral, playerFace_hungry, playerFace_tired,questIcon,
@@ -51,16 +49,11 @@ public class AssetManager {
     
     public void loadTextures() {
         ScalingAssistant scaleAssist = ScalingAssistant.getScalingAssistant();
-        map = scaleAssist.getScaledImage((loader.loadImage("images/whole_map.png")), scaleAssist.getScale());
-        empty = scaleAssist.getScaledImage((loader.loadImage("images/debug.png")), scaleAssist.getScale());
-//        water = scaleAssist.getScaledImage((loader.loadImage("images/tile_water.png")), scaleAssist.getScale());
-//        scrub = scaleAssist.getScaledImage((loader.loadImage("images/tile_scrub.png")), scaleAssist.getScale());
-//        wetland = scaleAssist.getScaledImage((loader.loadImage("images/tile_wetland.png")), scaleAssist.getScale());
-//        forest = scaleAssist.getScaledImage((loader.loadImage("images/tile_forest.png")), scaleAssist.getScale());
-//        sand = scaleAssist.getScaledImage((loader.loadImage("images/tile_sand.png")), scaleAssist.getScale());
+        map = scaleAssist.getScaledImage((loader.loadImage("images/map_objects/whole_map.png")), scaleAssist.getScale());
+        visible = scaleAssist.getScaledImage((loader.loadImage("images/map_objects/visible.png")), scaleAssist.getScale());
+        dark = scaleAssist.getScaledImage((loader.loadImage("images/map_objects/dark.png")), scaleAssist.getScale());
+        fog = scaleAssist.getScaledImage((loader.loadImage("images/map_objects/fog.png")), scaleAssist.getScale());
         player = scaleAssist.getScaledImage((loader.loadImage("images/map_icons/player_1.png")), scaleAssist.getScale());
-        black = scaleAssist.getScaledImage((loader.loadImage("images/black.png")), scaleAssist.getScale());
-        grey = scaleAssist.getScaledImage((loader.loadImage("images/grey.png")), scaleAssist.getScale());
         night = scaleAssist.getScaledImage((loader.loadImage("images/night.png")), scaleAssist.getScale());
         
         animal = scaleAssist.getScaledImage((loader.loadImage("images/map_icons/animal.png")), scaleAssist.getScale());
@@ -73,11 +66,11 @@ public class AssetManager {
         playerFace_hungry = scaleAssist.getScaledImage((loader.loadImage("images/side_panel/hungry.png")), scaleAssist.getScale());
         playerFace_tired = scaleAssist.getScaledImage((loader.loadImage("images/side_panel/tired.png")), scaleAssist.getScale());
         questIcon = scaleAssist.getScaledImage((loader.loadImage("images/side_panel/quest_board.png")), scaleAssist.getScale());
-        inventoryEmpty = scaleAssist.getScaledImage((loader.loadImage("images/inventory_empty.png")), scaleAssist.getScale());
-        inventorySnack = scaleAssist.getScaledImage((loader.loadImage("images/inventory_snack.png")), scaleAssist.getScale());
-        inventoryToolbox = scaleAssist.getScaledImage((loader.loadImage("images/inventory_screwdriver.png")), scaleAssist.getScale());
-        inventoryApple = scaleAssist.getScaledImage((loader.loadImage("images/inventory_apple.png")), scaleAssist.getScale());
-        inventoryTrap = scaleAssist.getScaledImage((loader.loadImage("images/inventory_trap.png")), scaleAssist.getScale());
+        inventoryEmpty = scaleAssist.getScaledImage((loader.loadImage("images/inventory_icons/inventory_empty.png")), scaleAssist.getScale());
+        inventorySnack = scaleAssist.getScaledImage((loader.loadImage("images/inventory_icons/inventory_snack.png")), scaleAssist.getScale());
+        inventoryToolbox = scaleAssist.getScaledImage((loader.loadImage("images/inventory_icons/inventory_screwdriver.png")), scaleAssist.getScale());
+        inventoryApple = scaleAssist.getScaledImage((loader.loadImage("images/inventory_icons/inventory_apple.png")), scaleAssist.getScale());
+        inventoryTrap = scaleAssist.getScaledImage((loader.loadImage("images/inventory_icons/inventory_trap.png")), scaleAssist.getScale());
         
         tag = scaleAssist.getScaledImage((loader.loadImage("images/action/tag.png")), scaleAssist.getScale());
         trap = scaleAssist.getScaledImage((loader.loadImage("images/action/trap.png")), scaleAssist.getScale());
@@ -109,7 +102,7 @@ public class AssetManager {
     private void loadOccupantsPortraits () {
         ScalingAssistant scaleAssist = ScalingAssistant.getScalingAssistant();
         occupantsPortraits = new HashMap();
-        for (Occupant o : dataManager.getAllOccupantTemplates() ) {
+        for (Occupant o : dataManager.getAllOccupantPrototypes() ) {
             BufferedImage bf = scaleAssist.getScaledImage(
                 (loader.loadImage(o.getPortrait())), 
                 scaleAssist.getScale());
@@ -131,8 +124,8 @@ public class AssetManager {
         return map;
     }
     
-    public BufferedImage getEmpty() {
-        return empty;
+    public BufferedImage getVisible() {
+        return visible;
     }
     
     public BufferedImage getWater() {
@@ -159,12 +152,12 @@ public class AssetManager {
         return player;
     }
 
-    public BufferedImage getBlack() {
-        return black;
+    public BufferedImage getDark() {
+        return dark;
     }
 
-    public BufferedImage getGrey() {
-        return grey;
+    public BufferedImage getFog() {
+        return fog;
     }
 
     public BufferedImage getAnimal() {

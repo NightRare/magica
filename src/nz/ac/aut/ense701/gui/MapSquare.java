@@ -29,7 +29,7 @@ public class MapSquare {
     private String label;
 
     
-    public BufferedImage empty, water, scrub, wetland, forest, sand, black, grey = null;
+    public BufferedImage visible, water, scrub, wetland, forest, sand, dark, fog = null;
     public BufferedImage animal, food, tool, hazard;
 
     private AssetManager assetManager;
@@ -52,13 +52,13 @@ public class MapSquare {
     
      public void textureLoad(){
         //Get Images # 5
-        empty = assetManager.getEmpty();
+        visible = assetManager.getVisible();
         scrub = assetManager.getScrub();
         wetland = assetManager.getWetland();
         forest = assetManager.getForest();
         sand = assetManager.getSand();
-        black = assetManager.getBlack();
-        grey = assetManager.getGrey();
+        dark = assetManager.getDark();
+        fog = assetManager.getFog();
     }
      
      public void loadOccupantImage(){
@@ -77,56 +77,18 @@ public class MapSquare {
         boolean squareVisible = game.isVisible(row, column);
         boolean squareExplored = game.isExplored(row, column);
         
-        //Color colour;
-        
-        //BufferedImage image;
-        
-
-//        switch (terrain) {
-//                       
-//            case SAND:
-//                image = sand;
-//                break;
-//            case FOREST:
-//                image = forest;
-//                break;
-//            case WETLAND:
-//                image = wetland;
-//                break;
-//            case SCRUB:
-//                image = scrub;
-//                break;
-//            case WATER:
-//                image = water;
-//                break;
-//            default:
-//                image = water;
-//                break;
-//        }
-
-        // This code needs to be changed eventually once colours are moved away from
-     
-        
         if (squareExplored || squareVisible) {
-            
+            //shows occupants
             label = game.getOccupantStringRepresentation(row,column);
-            //texture = empty;
-            
-            if (squareVisible && !squareExplored) 
-            {
-              //texture = empty;
-            }
-            //texture = empty; //Sets up appropriate textures for the map
-            
-            if(game.getState()==GameState.LOST){
-                //texture = grey; 
-            } //When the player dies, then it reverts all textures that was used to grey.
-
+            //shows the drawn map
+            texture = visible;
+            //a fog shows when the player hasn't explored certain squares
+            if (squareVisible && !squareExplored){ texture = fog; }
+            //When the player dies, then it reverts all textures that was used to dark.
+            if(game.getState()==GameState.LOST){ texture = dark; } 
         } else {
-            
-            //texture = black;
+            texture = dark;
             label = "";
-           
         }
     }
 

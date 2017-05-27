@@ -1,6 +1,8 @@
 
 package nz.ac.aut.ense701.gameModel;
 
+import java.util.Map;
+
 /**
  * This class represents a hazard that can be found on the island
  *  
@@ -36,9 +38,9 @@ public class Hazard extends Occupant {
      * @param portrait a portrait of an occupant
      * @param impact on player
      */
-    public Hazard(Position position, String name, String description, String portrait, double impact) {
+    public Hazard(Position position, String name, String description, String portrait, double impact, Map<Terrain, Double> habitats) {
         
-        super(position, name, description, portrait);
+        super(position, name, description, portrait, habitats);
         this.impact = impact;
         
     }

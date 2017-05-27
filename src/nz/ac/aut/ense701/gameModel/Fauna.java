@@ -2,6 +2,8 @@
 package nz.ac.aut.ense701.gameModel;
 
 
+import java.util.Map;
+
 /**
  * Fauna at this point represents any species that is not a kiwi or a predator on the island.
  * If we need additional endangered species this class should have descendant classes created.
@@ -32,9 +34,9 @@ public class Fauna extends Occupant
      * @param link a URL of Department of Conservation
      */
     
-    public Fauna(Position pos, String name, String description, String portrait, String link) 
+    public Fauna(Position pos, String name, String description, String portrait, String link, Map<Terrain, Double> habitats)
     {
-        super(pos, name, description, portrait);
+        super(pos, name, description, portrait, habitats);
         this.link = link;
     } 
     

@@ -23,16 +23,23 @@ public class OccupantsRandomiserTest {
 
     @Before
     public void setUp() {
-
         allOccupantInstances = new ArrayList<>();
-        Occupant[] kiwis = OccupantsDuplicator.duplicatMulti(
-                new Kiwi(null, "Kiwi", "Kiwi desc"), 8);
-        Occupant[] predators = OccupantsDuplicator.duplicatMulti(
-                new Predator(null, "Cat", "Cat desc"), 8);
-        Occupant[] faunae = OccupantsDuplicator.duplicatMulti(
-                new Fauna(null, "Tui", "Tui desc"), 8);
-        Occupant[] hazards = OccupantsDuplicator.duplicatMulti(
-                new Hazard(null, "Fall", "Fall desc", 0.5), 8);
+        Map<Terrain, Double> habitats = new HashMap<>();
+        habitats.put(Terrain.WETLAND, 1.0);
+        habitats.put(Terrain.WATER, 0.0);
+        habitats.put(Terrain.FOREST, 0.0);
+        habitats.put(Terrain.SCRUB, 0.0);
+        habitats.put(Terrain.SAND, 0.0);
+
+
+        Occupant[] kiwis = OccupantsDuplicator.duplicateMulti(
+                new Kiwi(null, "Kiwi", "Kiwi desc", "", "", habitats), 8);
+        Occupant[] predators = OccupantsDuplicator.duplicateMulti(
+                new Predator(null, "Cat", "Cat desc", "", "", habitats), 8);
+        Occupant[] faunae = OccupantsDuplicator.duplicateMulti(
+                new Fauna(null, "Tui", "Tui desc", "", "", habitats), 8);
+        Occupant[] hazards = OccupantsDuplicator.duplicateMulti(
+                new Hazard(null, "Fall", "Fall desc", "", 0.5, habitats), 8);
         allOccupantInstances.addAll(Arrays.asList(kiwis));
         allOccupantInstances.addAll(Arrays.asList(predators));
         allOccupantInstances.addAll(Arrays.asList(faunae));
@@ -257,6 +264,26 @@ public class OccupantsRandomiserTest {
             if(hasDouble) break;
         }
         assertFalse(hasDouble);
+    }
+
+    @Test
+    public void testDistributeOccupantsRandomly_testOccupantsOnlyEmergeOnAppropriateTerrain() {
+        or.setTerrainMap((row, column) -> {
+            if(row < 2)
+                return Terrain.WETLAND;
+            else return Terrain.SCRUB;
+        });
+
+        // all the occupants should be distributed only in the first two rows of the map
+        Set<Occupant>[][] map = or.distributeOccupantsRandomly();
+        for (int i = 0; i < map.length; i++) {
+            for (int j = 0; j < map.length; j++) {
+                if(i < 2)
+                    assertFalse(map[i][j].isEmpty());
+                else
+                    assertTrue(map[i][j].isEmpty());
+            }
+        }
     }
 
 

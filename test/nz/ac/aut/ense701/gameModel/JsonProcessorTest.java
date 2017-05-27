@@ -293,7 +293,7 @@ public class JsonProcessorTest extends junit.framework.TestCase {
 
     @Test
     public void testGetAllOccupantTemplates() {
-        Set<Occupant> set = dataManager.getAllOccupantTemplates();
+        Set<Occupant> set = dataManager.getAllOccupantPrototypes();
         assertEquals("The size of the set of all occupant templates should be 1.", 1,
                 set.size());
         for (Occupant o : set) {
@@ -309,10 +309,10 @@ public class JsonProcessorTest extends junit.framework.TestCase {
     public void testGetAllOccupantTemplatesDeepCloneValid() {
         // changes applied to the occupant set should not
         // affect the original object in JsonProcessor
-        dataManager.getAllOccupantTemplates().add(
+        dataManager.getAllOccupantPrototypes().add(
                 new Fauna(null, "Fish", "A test fish"));
 
-        Set<Occupant> set = dataManager.getAllOccupantTemplates();
+        Set<Occupant> set = dataManager.getAllOccupantPrototypes();
         assertEquals("The size of the set of all occupant templates should still "
                 + "be 1.", 1, set.size());
 
@@ -324,7 +324,7 @@ public class JsonProcessorTest extends junit.framework.TestCase {
             tool.setBroken();
         }
 
-        set = dataManager.getAllOccupantTemplates();
+        set = dataManager.getAllOccupantPrototypes();
         for (Occupant o : set) {
             assertTrue("Should be a Tool", o instanceof Tool);
             Tool tool = (Tool) o;

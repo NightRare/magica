@@ -14,6 +14,7 @@ public class FeatureToggle {
 
     private boolean isUsingIDataManager;
     private boolean mapVisible;
+    private boolean occupantsOnCertainTerrains;
 
     /**
      * <p>Default toggles:</p>
@@ -24,6 +25,7 @@ public class FeatureToggle {
     public FeatureToggle() {
         isUsingIDataManager = true;
         mapVisible = false;
+        occupantsOnCertainTerrains = true;
     }
 
     public void disableIDataManager() {
@@ -34,6 +36,9 @@ public class FeatureToggle {
         mapVisible = true;
     }
 
+    public void disableOccupantsOnCertainTerrains() {
+        this.occupantsOnCertainTerrains = false;
+    }
 
     public boolean isUsingIDataManager() {
         return isUsingIDataManager;
@@ -42,4 +47,9 @@ public class FeatureToggle {
     public boolean isMapVisible() {
         return mapVisible;
     }
+
+    public boolean occupantsOnCertainTerrains() {
+        return occupantsOnCertainTerrains;
+    }
+
 }

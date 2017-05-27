@@ -6,6 +6,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.*;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static org.junit.Assert.*;
 
 /**
@@ -27,12 +30,19 @@ public class OccupantsDuplicatorTest {
     public void setUp() {
         MockitoAnnotations.initMocks(this);
 
-        hazard = new Hazard(mockPosition, "H", "h", "hPortrait", 0.5);
-        food = new Food(mockPosition, "F", "f", "fPortrait", 1.0, 1.0, 20.0);
-        tool = new Tool(mockPosition, "T", "t", "tPortrait", 2.0, 2.0);
-        fauna = new Fauna(mockPosition, "Fa", "fa", "faPortrait", "faLink");
-        predator = new Predator(mockPosition, "P", "p", "pPortrait", "pLink");
-        kiwi = new Kiwi(mockPosition, "K", "k", "kPortrait", "kLink");
+        Map<Terrain, Double> habitats = new HashMap<>();
+        habitats.put(Terrain.FOREST, 0.3);
+        habitats.put(Terrain.SAND, 0.2);
+        habitats.put(Terrain.SCRUB, 0.5);
+        habitats.put(Terrain.WATER, 0.0);
+        habitats.put(Terrain.WETLAND, 0.0);
+
+        hazard = new Hazard(mockPosition, "H", "h", "hPortrait", 0.5, habitats);
+        food = new Food(mockPosition, "F", "f", "fPortrait", 1.0, 1.0, 20.0, habitats);
+        tool = new Tool(mockPosition, "T", "t", "tPortrait", 2.0, 2.0, habitats);
+        fauna = new Fauna(mockPosition, "Fa", "fa", "faPortrait", "faLink", habitats);
+        predator = new Predator(mockPosition, "P", "p", "pPortrait", "pLink", habitats);
+        kiwi = new Kiwi(mockPosition, "K", "k", "kPortrait", "kLink", habitats);
     }
 
     @After
@@ -97,7 +107,7 @@ public class OccupantsDuplicatorTest {
     @Test
     public void testDuplicateMulti_nonPositiveAmount() {
         try {
-            OccupantsDuplicator.duplicatMulti(hazard, 0);
+            OccupantsDuplicator.duplicateMulti(hazard, 0);
 
             fail();
         } catch (IllegalArgumentException e) {
@@ -107,7 +117,7 @@ public class OccupantsDuplicatorTest {
 
     @Test
     public void testDuplicateMulti_food() {
-        Occupant[] duplicates = OccupantsDuplicator.duplicatMulti(food, 5);
+        Occupant[] duplicates = OccupantsDuplicator.duplicateMulti(food, 5);
 
         for(Occupant o : duplicates) {
             assertEquals(duplicates.length, 5);
@@ -118,7 +128,7 @@ public class OccupantsDuplicatorTest {
 
     @Test
     public void testDuplicateMulti_tool() {
-        Occupant[] duplicates = OccupantsDuplicator.duplicatMulti(tool, 5);
+        Occupant[] duplicates = OccupantsDuplicator.duplicateMulti(tool, 5);
 
         for(Occupant o : duplicates) {
             assertEquals(duplicates.length, 5);
@@ -129,7 +139,7 @@ public class OccupantsDuplicatorTest {
 
     @Test
     public void testDuplicateMulti_fauna() {
-        Occupant[] duplicates = OccupantsDuplicator.duplicatMulti(fauna, 5);
+        Occupant[] duplicates = OccupantsDuplicator.duplicateMulti(fauna, 5);
 
         for(Occupant o : duplicates) {
             assertEquals(duplicates.length, 5);
@@ -140,7 +150,7 @@ public class OccupantsDuplicatorTest {
 
     @Test
     public void testDuplicateMulti_predator() {
-        Occupant[] duplicates = OccupantsDuplicator.duplicatMulti(predator, 5);
+        Occupant[] duplicates = OccupantsDuplicator.duplicateMulti(predator, 5);
 
         for(Occupant o : duplicates) {
             assertEquals(duplicates.length, 5);
@@ -151,7 +161,7 @@ public class OccupantsDuplicatorTest {
 
     @Test
     public void testDuplicateMulti_kiwi() {
-        Occupant[] duplicates = OccupantsDuplicator.duplicatMulti(kiwi, 5);
+        Occupant[] duplicates = OccupantsDuplicator.duplicateMulti(kiwi, 5);
 
         for(Occupant o : duplicates) {
             assertEquals(duplicates.length, 5);
@@ -162,7 +172,7 @@ public class OccupantsDuplicatorTest {
 
     @Test
     public void testDuplicateMulti_hazard() {
-        Occupant[] duplicates = OccupantsDuplicator.duplicatMulti(hazard, 5);
+        Occupant[] duplicates = OccupantsDuplicator.duplicateMulti(hazard, 5);
 
         for(Occupant o : duplicates) {
             assertEquals(duplicates.length, 5);
@@ -178,6 +188,10 @@ public class OccupantsDuplicatorTest {
         assertEquals(expected.getDescription(), actual.getDescription());
         assertEquals(expected.getPortrait(), actual.getPortrait());
         assertEquals(expected.getPosition(), actual.getPosition());
+
+        for(Terrain t : Terrain.values()) {
+            assertTrue(expected.getHabitatProbability(t) == actual.getHabitatProbability(t));
+        }
 
         if(expected instanceof Hazard) {
             assertTrue(((Hazard) expected).getImpact() == ((Hazard) actual).getImpact());

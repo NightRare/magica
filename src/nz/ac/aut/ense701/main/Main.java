@@ -1,11 +1,12 @@
 package nz.ac.aut.ense701.main;
 
-import java.io.IOException;
-import java.util.Locale;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import nz.ac.aut.ense701.gameModel.*;
+import nz.ac.aut.ense701.gameModel.FeatureToggle;
+import nz.ac.aut.ense701.gameModel.Game;
+import nz.ac.aut.ense701.gameModel.IDataManager;
+import nz.ac.aut.ense701.gameModel.JsonProcessor;
 import nz.ac.aut.ense701.gui.GameLoop;
+
+import java.util.Locale;
 
 /**
  * Kiwi Count Project
