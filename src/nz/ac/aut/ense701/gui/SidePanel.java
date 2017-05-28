@@ -28,7 +28,7 @@ public class SidePanel {
     private final Game game;
 
     private BufferedImage inventoryEmpty, inventorySnack,
-            inventoryScrewdriver, inventoryApple, inventoryTrap,
+            inventoryScrewdriver, inventoryApple, inventoryTrap,inventoryRatTrap,inventoryCatTrap,inventoryA24Trap,
             tag,trap,collect;
 
     private final AssetManager assetManager;
@@ -423,6 +423,9 @@ public class SidePanel {
         inventoryScrewdriver = assetManager.getInventoryToolbox();
         inventoryApple = assetManager.getInventoryApple();
         inventoryTrap = assetManager.getInventoryTrap();
+        inventoryRatTrap = assetManager.getInventoryRatTrap();
+        inventoryCatTrap = assetManager.getInventoryCatTrap();
+        inventoryA24Trap = assetManager.getInventoryA24Trap();
         tag = assetManager.getActionTag();
         collect = assetManager.getActionCollect();
         trap = assetManager.getActionTrap();
@@ -465,6 +468,9 @@ public class SidePanel {
                 case "sandwich": imgArray[i] = inventorySnack;break;
                 case "muesli bar": imgArray[i] = inventorySnack;break;
                 case "apple": imgArray[i] = inventoryApple;break;
+                case "rat trap": imgArray[i] = inventoryRatTrap;break;
+                case "cat trap": imgArray[i] = inventoryCatTrap;break;
+                case "a24 trap": imgArray[i] = inventoryA24Trap;break;
             }
         }
         return imgArray;

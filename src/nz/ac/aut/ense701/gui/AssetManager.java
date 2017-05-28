@@ -22,7 +22,7 @@ public class AssetManager {
     private BufferedImage animal, food, tool, hazard; //inventory items
     private BufferedImage tag, trap, collect; //action boxes
     private BufferedImage playerFace_happy,playerFace_neutral, playerFace_hungry, playerFace_tired,questIcon,
-            inventoryEmpty,inventorySnack, inventoryToolbox,inventoryApple,inventoryTrap;
+            inventoryEmpty,inventorySnack, inventoryToolbox,inventoryApple,inventoryTrap, inventoryRatTrap, inventoryCatTrap, inventoryA24Trap;
     private BufferedImage taggedBubble, trappedBubble, yumBubble;
     private HashMap<String, BufferedImage> occupantsPortraits;
     private IDataManager dataManager;
@@ -71,6 +71,9 @@ public class AssetManager {
         inventoryToolbox = scaleAssist.getScaledImage((loader.loadImage("images/inventory_icons/inventory_screwdriver.png")), scaleAssist.getScale());
         inventoryApple = scaleAssist.getScaledImage((loader.loadImage("images/inventory_icons/inventory_apple.png")), scaleAssist.getScale());
         inventoryTrap = scaleAssist.getScaledImage((loader.loadImage("images/inventory_icons/inventory_trap.png")), scaleAssist.getScale());
+        inventoryRatTrap = scaleAssist.getScaledImage((loader.loadImage("images/inventory_icons/inventory_ratTrap.png")), scaleAssist.getScale()); 
+        inventoryCatTrap = scaleAssist.getScaledImage((loader.loadImage("images/inventory_icons/inventory_catTrap.png")), scaleAssist.getScale()); 
+        inventoryA24Trap = scaleAssist.getScaledImage((loader.loadImage("images/inventory_icons/inventory_a24Trap.png")), scaleAssist.getScale()); 
         
         tag = scaleAssist.getScaledImage((loader.loadImage("images/action/tag.png")), scaleAssist.getScale());
         trap = scaleAssist.getScaledImage((loader.loadImage("images/action/trap.png")), scaleAssist.getScale());
@@ -242,5 +245,17 @@ public class AssetManager {
     
     public BufferedImage getYumBubble() {
         return yumBubble;
+    }
+    
+    public BufferedImage getInventoryRatTrap() { 
+        return inventoryRatTrap; 
+    }
+    
+    public BufferedImage getInventoryCatTrap() { 
+        return inventoryCatTrap; 
+    }
+    
+    public BufferedImage getInventoryA24Trap() { 
+        return inventoryA24Trap; 
     }
 }

@@ -370,6 +370,19 @@ public class Game
                 {
                     result = player.getTrap().isBroken();
                 }
+                //Mouse trap can only be used if there is a predator to catch 
+                else if (tool.isRatTrap()) 
+                { //Will be subject for change 
+                     result = island.hasNonKiwiFauna(player.getPosition()); 
+                }
+                else if (tool.isCatTrap()) 
+                { //Will be subject for change 
+                     result = island.hasNonKiwiFauna(player.getPosition()); 
+                }
+                else if (tool.isA24Trap()) 
+                { //Will be subject for change 
+                     result = island.hasNonKiwiFauna(player.getPosition()); 
+                }
                 else
                 {
                     result = false;
@@ -506,6 +519,15 @@ public class Game
             if (tool.isTrap()&& !tool.isBroken())
             {
                  success = useTrap(); 
+            }
+            else if(tool.isRatTrap()&& !tool.isBroken()){ 
+                success = useTrap();  
+            }
+            else if(tool.isCatTrap()&& !tool.isBroken()){ 
+                success = useTrap();  
+            }
+            else if(tool.isA24Trap()&& !tool.isBroken()){ 
+                success = useTrap();  
             }
             else if(tool.isScrewdriver())// Use screwdriver (to fix trap)
             {
@@ -723,15 +745,99 @@ public class Game
         {
             Occupant occupant = island.getPredator(current);
             //Predator has been trapped so remove
-            island.removeOccupant(current, occupant); 
             
+             //By using the Rat Trap
+            if(predatorViaRatTrap(occupant.getName(),player.getTrap().getName())){
+            island.removeOccupant(current, occupant); 
             predatorsTrapped++;
             //notify player that the predator is trapped
-            notification.predatorTrapped();
+            notification.predatorTrapped(); 
+            }
+            
+            else if(predatorViaCatTrap(occupant.getName(),player.getTrap().getName())){
+             //By using the Cat Trap    
+            island.removeOccupant(current, occupant); 
+            predatorsTrapped++;
+            //notify player that the predator is trapped
+            notification.predatorTrapped(); 
+            }
+            
+            else if(predatorViaA24Trap(occupant.getName(),player.getTrap().getName())){
+             //By using the Cat Trap    
+            island.removeOccupant(current, occupant); 
+            predatorsTrapped++;
+            //notify player that the predator is trapped
+            notification.predatorTrapped(); 
+            } 
+            else if(predatorViaGeneralTrap(player.getTrap().getName())){
+            island.removeOccupant(current, occupant); 
+            predatorsTrapped++;
+            //notify player that the predator is trapped
+            notification.predatorTrapped();     
+            }
+            else AudioPlayer.getSound("error_sound").play();
         }
         
         return hadPredator;
     }
+    
+     /** 
+     * Checks if the player the right trap(Rat Trap) for the right predator(s) 
+     * if they do. 
+     * @param predator Rat or Kiore
+     * @param trapType Rat Trap
+     * @return boolean
+     */ 
+    public boolean predatorViaRatTrap(String predator, String trapType){ 
+        if(predator.equalsIgnoreCase("Rat") && trapType.equalsIgnoreCase("Rat Trap")){ 
+            return true; 
+        } else if(predator.equalsIgnoreCase("Kiore") && trapType.equalsIgnoreCase("Rat Trap")){
+            return true; 
+        }
+        else return false;
+    }
+    
+     /** 
+     * Checks if the player the right trap(Cat Trap) for the right predator(s) 
+     * if they do. 
+     * @param predator Cat
+     * @param trapType Cat Trap
+     * @return boolean
+     */ 
+    public boolean predatorViaCatTrap(String predator, String trapType){ 
+        if(predator.equalsIgnoreCase("Cat") && trapType.equalsIgnoreCase("Cat Trap")){
+            return true; 
+        }else return false; 
+    }
+    
+     /** 
+     * Checks if the player the right trap(Cat Trap) for the right predator(s) 
+     * if they do. 
+     * @param predator Rat or Stoat
+     * @param trapType
+     * @return boolean
+     */ 
+    public boolean predatorViaA24Trap(String predator, String trapType){ 
+        if(predator.equalsIgnoreCase("Rat") && trapType.equalsIgnoreCase("A24 Trap")){
+            return true; 
+        } else if(predator.equalsIgnoreCase("Stoat") && trapType.equalsIgnoreCase("A24 Trap")){
+            return true; 
+        }
+        else return false; 
+    }
+    
+      /** 
+     * Checks if the player the right trap(General Trap) for the right predator(s) 
+     * if they do. 
+     * @param trapType
+     * @return boolean
+     */ 
+    public boolean predatorViaGeneralTrap(String trapType){ 
+        if(trapType.equalsIgnoreCase("Trap")){
+            return true; 
+        }
+        else return false; 
+    } 
 
     /**
      * Checks if the player has met any fauna and play its sound
