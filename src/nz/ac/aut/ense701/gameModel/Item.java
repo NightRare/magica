@@ -1,6 +1,8 @@
 package nz.ac.aut.ense701.gameModel;
 
 
+import java.util.Map;
+
 /**
  * This class represents an item that can be found on the island.
  * 
@@ -31,9 +33,10 @@ public  abstract class Item extends Occupant
      * @param name the name of the item
      * @param description a longer description of the item
      */
-    public Item(Position pos, String name, String description, String portrait, double weight, double size) 
+    public Item(Position pos, String name, String description, String portrait, double weight, double size,
+                Map<Terrain, Double> habitats)
     {
-        super(pos, name, description, portrait);
+        super(pos, name, description, portrait, habitats);
         this.weight = weight;
         this.size = size;
     }

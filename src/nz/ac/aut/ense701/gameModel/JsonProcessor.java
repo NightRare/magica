@@ -17,7 +17,7 @@ import java.io.IOException;
 
 import nz.ac.aut.ense701.gameModel.jsonModels.*;
 
-import static nz.ac.aut.ense701.gameModel.utils.OccupantsDuplicator.duplicatMulti;
+import static nz.ac.aut.ense701.gameModel.utils.OccupantsDuplicator.duplicateMulti;
 import static nz.ac.aut.ense701.gameModel.utils.OccupantsDuplicator.duplicate;
 
 /**
@@ -104,12 +104,12 @@ public class JsonProcessor implements IDataManager {
      * @return
      */
     @Override
-    public Set<Occupant> getAllOccupantTemplates() {
-        Set<Occupant> templates = new HashSet();
+    public Set<Occupant> getAllOccupantPrototypes() {
+        Set<Occupant> prototypes = new HashSet();
         for (Occupant o : occupantsDictionary.values()) {
-            templates.add(duplicate(o));
+            prototypes.add(duplicate(o));
         }
-        return templates;
+        return prototypes;
     }
 
     /**
@@ -250,13 +250,13 @@ public class JsonProcessor implements IDataManager {
         // TODO add integrity check
         List<Occupant> allOccupantInstances = new ArrayList<>();
 
-        Map<String, Integer> oneType = null;
-        while ((oneType = getNextOccupantType(pool)) != null) {
-            oneType.forEach((s, i) -> {
-                Occupant[] typeInstances = duplicatMulti(occupantsDictionary.get(s), i);
+        Map<String, Integer> eachType = null;
+        while ((eachType = getNextOccupantType(pool)) != null) {
+            eachType.forEach((s, i) -> {
+                Occupant[] typeInstances = duplicateMulti(occupantsDictionary.get(s), i);
                 allOccupantInstances.addAll(Arrays.asList(typeInstances));
             });
-            oneType.clear();
+            eachType.clear();
         }
 
         return allOccupantInstances;
