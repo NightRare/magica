@@ -5,19 +5,20 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import javax.swing.JOptionPane;
 import nz.ac.aut.ense701.gameModel.Fauna;
+import nz.ac.aut.ense701.gameModel.Food;
 import nz.ac.aut.ense701.gameModel.Game;
 import nz.ac.aut.ense701.gameModel.GameState;
 import nz.ac.aut.ense701.gameModel.Item;
+import nz.ac.aut.ense701.gameModel.Kiwi;
 import nz.ac.aut.ense701.gameModel.Occupant;
-import nz.ac.aut.ense701.gameModel.Player;
 import nz.ac.aut.ense701.gameModel.Position;
+import nz.ac.aut.ense701.gameModel.Tool;
 
 /**
  *
@@ -41,7 +42,13 @@ public class SidePanel {
     //private GUI ui;
     
     //array indexes reference
-    private final int X_OFFSET, Y_OFFSET, IMG_WIDTH, IMG_HEIGHT, BOX_1, BOX_2, BOX_3;
+    private final int X_OFFSET = 0;
+    private final int Y_OFFSET = 1;
+    private final int BOX_1 = 0;
+    private final int BOX_2 = 1;
+    private final int BOX_3 = 2;
+    private final int INACTIVE_BUTTON = 0;
+    private final int ACTIVE_BUTTON = 1;
 
     //X offset, Y offset, WINDOW_WIDTH, and WINDOW_HEIGHT values of side panel images
     private final int[] PLAYER_ICON = {12, 12, 170, 155};
@@ -53,17 +60,6 @@ public class SidePanel {
     
     
     public SidePanel(Game g) {
-        
-        X_OFFSET = 0;
-        Y_OFFSET = 1;
-
-        IMG_WIDTH = 2;
-        IMG_HEIGHT = 3;
-
-        BOX_1 = 0;
-        BOX_2 = 1;
-        BOX_3 = 2;
-        
         this.game = g;
         this.assetManager = AssetManager.getAssetManager();
         
@@ -86,8 +82,7 @@ public class SidePanel {
         }
     }
     
-    
-    
+       
     public void render(Graphics2D g2d){
         scaleAssist = ScalingAssistant.getScalingAssistant();
         renderBoards(g2d);
@@ -201,10 +196,10 @@ public class SidePanel {
 
         //display Max Stamina
         g2d.setColor(Color.lightGray);
-
+        int STAMINA_HEIGHT_INDEX = 3;
         g2d.fill(new Rectangle2D.Double(
                 valueOf(STAMINA_BAR, X_OFFSET), valueOf(STAMINA_BAR, Y_OFFSET),
-                maxStaminawidth, valueOf(STAMINA_BAR, IMG_HEIGHT)));
+                maxStaminawidth, valueOf(STAMINA_BAR, STAMINA_HEIGHT_INDEX)));
 
         //displays Current Stamina
         if(currentStaminawidth >= maxStaminawidth*0.75){
@@ -220,7 +215,7 @@ public class SidePanel {
 
         g2d.fill(new Rectangle2D.Double(
                 valueOf(STAMINA_BAR, X_OFFSET), valueOf(STAMINA_BAR, Y_OFFSET),
-                currentStaminawidth, valueOf(STAMINA_BAR, IMG_HEIGHT)));
+                currentStaminawidth, valueOf(STAMINA_BAR, STAMINA_HEIGHT_INDEX)));
 
         //displays the text STAMINA
         g2d.setColor(Color.darkGray);
@@ -268,13 +263,13 @@ public class SidePanel {
         //show action text
         g2d.drawString("ACTION", textLeftMargin, textTopMargin);
         //action box tag
-        g2d.drawImage(actionImage()[BOX_1],
+        g2d.drawImage(getTagButton(),
                 valueOf(BOXES_X_OFFSET, BOX_1), valueOf(ACTION_BOXES, Y_OFFSET),null);
         //action box trap
-        g2d.drawImage(actionImage()[BOX_2],
+        g2d.drawImage(getTrapButton(),
                 valueOf(BOXES_X_OFFSET, BOX_2), valueOf(ACTION_BOXES, Y_OFFSET),null);
         //action box collect
-        g2d.drawImage(actionImage()[BOX_3],
+        g2d.drawImage(getCollectButton(),
                 valueOf(BOXES_X_OFFSET, BOX_3), valueOf(ACTION_BOXES, Y_OFFSET),null);
     }
     
@@ -423,9 +418,6 @@ public class SidePanel {
         inventoryScrewdriver = assetManager.getInventoryToolbox();
         inventoryApple = assetManager.getInventoryApple();
         inventoryTrap = assetManager.getInventoryTrap();
-        tag = assetManager.getActionTag();
-        collect = assetManager.getActionCollect();
-        trap = assetManager.getActionTrap();
     }
 
     private String numOfKiwi() {
@@ -446,8 +438,6 @@ public class SidePanel {
     
     private ArrayList<Item> inventoryList(){
         ArrayList list = new ArrayList();
-        
-        //HashSet backpack = game.getPlayerInventory();
         list.addAll(Arrays.asList(game.getPlayerInventory()));
         return list;
     }
@@ -469,11 +459,36 @@ public class SidePanel {
         }
         return imgArray;
     }
-
-    private BufferedImage[] actionImage(){
-        BufferedImage[] imgArray = new BufferedImage[3];
-        imgArray[0]=tag; imgArray[1]=trap; imgArray[2]=collect;
-        return imgArray;
+    
+    private BufferedImage getTagButton(){
+        BufferedImage tagIcon = assetManager.getActionTag()[INACTIVE_BUTTON];
+        for(Occupant o: getOccupants()){
+            if(o instanceof Kiwi){
+                tagIcon = assetManager.getActionTag()[ACTIVE_BUTTON];
+            }
+        }
+        return tagIcon;
+    }
+    
+    private BufferedImage getTrapButton(){
+        BufferedImage trapIcon = assetManager.getActionTrap()[INACTIVE_BUTTON];
+        for(Occupant o: getOccupants()){
+            if(game.getPlayer().hasTrap() && 
+                o instanceof Fauna && !(o instanceof Kiwi)){
+                    trapIcon = assetManager.getActionTrap()[ACTIVE_BUTTON];
+            }
+        }
+        return trapIcon;
+    }
+    
+    private BufferedImage getCollectButton(){
+        BufferedImage collectIcon = assetManager.getActionCollect()[INACTIVE_BUTTON];
+        for(Occupant o: getOccupants()){
+            if(o instanceof Tool || o instanceof Food){
+                collectIcon = assetManager.getActionCollect()[ACTIVE_BUTTON];
+            }
+        }
+        return collectIcon;
     }
     
     public Occupant[] getOccupants() {

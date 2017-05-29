@@ -20,7 +20,7 @@ public class AssetManager {
     
     private BufferedImage map, visible, water, scrub, wetland, forest, sand, player, dark, fog, night; 
     private BufferedImage animal, food, tool, hazard; //inventory items
-    private BufferedImage tag, trap, collect; //action boxes
+    private BufferedImage tag_active, tag_inactive, trap_active, trap_inactive, collect_active, collect_inactive; //action boxes
     private BufferedImage playerFace_happy,playerFace_neutral, playerFace_hungry, playerFace_tired,questIcon,
             inventoryEmpty,inventorySnack, inventoryToolbox,inventoryApple,inventoryTrap;
     private BufferedImage taggedBubble, trappedBubble, yumBubble;
@@ -72,9 +72,12 @@ public class AssetManager {
         inventoryApple = scaleAssist.getScaledImage((loader.loadImage("images/inventory_icons/inventory_apple.png")), scaleAssist.getScale());
         inventoryTrap = scaleAssist.getScaledImage((loader.loadImage("images/inventory_icons/inventory_trap.png")), scaleAssist.getScale());
         
-        tag = scaleAssist.getScaledImage((loader.loadImage("images/action/tag.png")), scaleAssist.getScale());
-        trap = scaleAssist.getScaledImage((loader.loadImage("images/action/trap.png")), scaleAssist.getScale());
-        collect = scaleAssist.getScaledImage((loader.loadImage("images/action/collect.png")), scaleAssist.getScale());
+        tag_active = scaleAssist.getScaledImage((loader.loadImage("images/action/tag_active.png")), scaleAssist.getScale());
+        tag_inactive = scaleAssist.getScaledImage((loader.loadImage("images/action/tag_inactive.png")), scaleAssist.getScale());
+        trap_active = scaleAssist.getScaledImage((loader.loadImage("images/action/trap_active.png")), scaleAssist.getScale());
+        trap_inactive = scaleAssist.getScaledImage((loader.loadImage("images/action/trap_inactive.png")), scaleAssist.getScale());
+        collect_active = scaleAssist.getScaledImage((loader.loadImage("images/action/collect_active.png")), scaleAssist.getScale());
+        collect_inactive = scaleAssist.getScaledImage((loader.loadImage("images/action/collect_inactive.png")), scaleAssist.getScale());
         
         taggedBubble = scaleAssist.getScaledImage((loader.loadImage("images/notification/tagged.png")), scaleAssist.getScale());
         trappedBubble = scaleAssist.getScaledImage((loader.loadImage("images/notification/trapped.png")), scaleAssist.getScale());
@@ -216,16 +219,25 @@ public class AssetManager {
         return inventoryTrap;
     }
     
-    public BufferedImage getActionTag() {
-        return tag;
+    public BufferedImage[] getActionTag() {
+        BufferedImage[] tag_icon = new BufferedImage[2];
+        tag_icon[0] = tag_inactive;
+        tag_icon[1] = tag_active;
+        return tag_icon;
+    }
+    
+    public BufferedImage[] getActionTrap() {
+        BufferedImage[] trap_icon = new BufferedImage[2];
+        trap_icon[0] = trap_inactive;
+        trap_icon[1] = trap_active;
+        return trap_icon;
     }
 
-    public BufferedImage getActionTrap() {
-        return trap;
-    }
-
-    public BufferedImage getActionCollect() {
-        return collect;
+    public BufferedImage[] getActionCollect() {
+        BufferedImage[] collect_icon = new BufferedImage[2];
+        collect_icon[0] = collect_inactive;
+        collect_icon[1] = collect_active;
+        return collect_icon;
     }
 
     public BufferedImage getNight() {

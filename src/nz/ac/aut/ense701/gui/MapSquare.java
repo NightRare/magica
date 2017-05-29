@@ -7,10 +7,16 @@ package nz.ac.aut.ense701.gui;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
+import nz.ac.aut.ense701.gameModel.Fauna;
+import nz.ac.aut.ense701.gameModel.Food;
 import nz.ac.aut.ense701.gameModel.Game;
 import nz.ac.aut.ense701.gameModel.GameState;
+import nz.ac.aut.ense701.gameModel.Hazard;
+import nz.ac.aut.ense701.gameModel.Occupant;
 import nz.ac.aut.ense701.gameModel.Player;
+import nz.ac.aut.ense701.gameModel.Predator;
 import nz.ac.aut.ense701.gameModel.Terrain;
+import nz.ac.aut.ense701.gameModel.Tool;
 
 /**
  * Replaces GridSquarePanel
@@ -24,10 +30,8 @@ public class MapSquare {
 
     private BufferedImage texture;
 
-    
-    private Color tileColour;
-    private String label;
-
+    //private String label;
+    private Occupant[] occupant;
     
     public BufferedImage visible, water, scrub, wetland, forest, sand, dark, fog = null;
     public BufferedImage animal, food, tool, hazard;
@@ -79,7 +83,9 @@ public class MapSquare {
         
         if (squareExplored || squareVisible) {
             //shows occupants
-            label = game.getOccupantStringRepresentation(row,column);
+            //label = game.getOccupantStringRepresentation(row,column);
+            
+            occupant = game.getOccupantOn(row, column);
             //shows the drawn map
             texture = visible;
             //a fog shows when the player hasn't explored certain squares
@@ -88,7 +94,7 @@ public class MapSquare {
             if(game.getState()==GameState.LOST){ texture = dark; } 
         } else {
             texture = dark;
-            label = "";
+            //label = "";
         }
     }
 
@@ -100,25 +106,27 @@ public class MapSquare {
         return column;
     }
 
-    public String getLabel() {
-        return label;
-    }
-
-//    public Color getColour() {
-//        return tileColour;
+//    public String getLabel() {
+//        return label;
 //    }
+
+    public Occupant[] getOccupants() {
+        return occupant;
+    }
     
      public BufferedImage getTexture(){
         return texture;
     }
     
-    public BufferedImage getOccupantIcon(String label){
+    public BufferedImage getOccupantIcon(Occupant[] occupantArray){
         BufferedImage img = null;
-        if (label.length() == 0) return img;
-        if(label.matches("[FKP]+")) img = animal;
-        if(label.matches("H")) img = hazard;
-        if(label.contains("T")) img = tool;
-        if(label.contains("E")) img = food;
+        if(occupantArray == null){ return img; }
+        for(Occupant o: occupantArray){
+            if(o instanceof Fauna){ img = animal; }
+            if(o instanceof Hazard){ img = hazard; }
+            if(o instanceof Tool){ img = tool; }
+            if(o instanceof Food){ img = food; }
+        }
         return img;
     }
     
