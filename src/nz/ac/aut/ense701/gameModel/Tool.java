@@ -88,6 +88,32 @@ public class Tool extends Item
       return name.equalsIgnoreCase("Screwdriver"); 
     }
     
+    /** 
+    * Check if this tool is a Rat trap 
+    * @return true if screwdriver 
+    */     
+    public boolean isRatTrap() { 
+       String name = this.getName(); 
+      return name.equalsIgnoreCase("Rat Trap");  
+    } 
+    
+    /** 
+    * Check if this tool is a Rat trap 
+    * @return true if screwdriver 
+    */     
+    public boolean isCatTrap() { 
+       String name = this.getName(); 
+      return name.equalsIgnoreCase("Cat Trap");  
+    }
+    
+    /** 
+    * Check if this tool is a Rat trap 
+    * @return true if screwdriver 
+    */     
+    public boolean isA24Trap() { 
+       String name = this.getName(); 
+      return name.equalsIgnoreCase("A24 Trap");  
+    } 
     
     @Override
     public String getStringRepresentation() 

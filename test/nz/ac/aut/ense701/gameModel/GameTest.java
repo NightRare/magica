@@ -509,6 +509,48 @@ public class GameTest extends junit.framework.TestCase
         game.countKiwi();
         assertEquals("Wrong count", game.getKiwiCount(), 1);
     }
+    
+    @Test
+    public void testPredatorViaRatTrap()
+    {
+        //Valid for Rat predator
+        assertTrue (" This trap for the rat predator is valid", game.predatorViaRatTrap("Rat","Rat Trap"));
+        //Valid for Kiore predator
+        assertTrue (" This trap for the kiore predator is valid", game.predatorViaRatTrap("Kiore","Rat Trap"));
+        assertFalse (" This trap for the cat predator is invalid", game.predatorViaRatTrap("Cat","Rat Trap"));
+        assertFalse (" This trap for the stoat predator is invalid", game.predatorViaRatTrap("Stoat","Rat Trap"));
+        assertFalse (" This trap for the possum predator is invalid", game.predatorViaRatTrap("Possum","Rat Trap"));
+    }
+    
+    @Test
+    public void testPredatorViaCatTrap()
+    {
+        //Valid for Cat predator
+        assertTrue (" This trap for the Cat predator is valid", game.predatorViaCatTrap("Cat","Cat Trap"));
+        assertFalse (" This trap for the kiore predator is invalid", game.predatorViaCatTrap("Kiore","Cat Trap"));
+        assertFalse (" This trap for the rat predator is invalid", game.predatorViaCatTrap("Rat","Cat Trap"));
+        assertFalse (" This trap for the stoat predator is invalid", game.predatorViaCatTrap("Stoat","Cat Trap"));
+        assertFalse (" This trap for the possum predator is invalid", game.predatorViaCatTrap("Possum","Cat Trap"));
+    }
+    
+    @Test
+    public void testPredatorViaA24Trap()
+    {
+        //Valid for Rat predator
+        assertTrue (" This trap for the Rat predator is valid", game.predatorViaA24Trap("Rat","A24 Trap"));
+        //Valid for Stoat predator
+        assertTrue (" This trap for the Stoat predator is valid", game.predatorViaA24Trap("Stoat","A24 Trap"));
+        assertFalse (" This trap for the kiore predator is invalid", game.predatorViaA24Trap("Kiore","A24 Trap"));
+        assertFalse (" This trap for the cat predator is invalid", game.predatorViaA24Trap("Cat","A24 Trap"));
+        assertFalse (" This trap for the possum predator is invalid", game.predatorViaA24Trap("Possum","A24 Trap"));
+    }
+    
+    @Test
+    public void testPredatorViaGeneralTrap()
+    {
+        //Valid for All predators as long as they have the Trap
+        assertTrue (" This trap is valid for the all predators", game.predatorViaGeneralTrap("Trap"));
+    }
 
 /**
  * Private helper methods

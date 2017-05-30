@@ -7,8 +7,11 @@
   },
 
   "tools":{
-    "Trap":3,
-    "Screwdriver":1
+    "Trap":1,
+    "Screwdriver":1,
+    "Rat Trap":1,
+    "Cat Trap":1,
+    "A24 Trap":2
   },
 
   "faunae":{

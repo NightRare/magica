@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
+import nz.ac.aut.ense701.audio.AudioPlayer;
 
 /**
  * Player represents the player in the KiwiIsland game.
@@ -210,7 +211,15 @@ public class Player
                 if (tool.isTrap())
                 {
                     found = true;
+                } else if(tool.isRatTrap()){ 
+                    found = true; 
                 }
+                  else if(tool.isCatTrap()){ 
+                    found = true; 
+                }
+                  else if(tool.isA24Trap()){ 
+                    found = true; 
+                } 
             }
         }
         return found;
@@ -232,7 +241,14 @@ public class Player
                 if (tool.isTrap())
                 {
                     trap = tool;
+                } else if(tool.isRatTrap()){ 
+                    trap = tool; 
+                } else if(tool.isCatTrap()){ 
+                    trap = tool; 
+                } else if(tool.isA24Trap()){ 
+                    trap = tool; 
                 }
+
             }
         }
         return trap;
@@ -312,15 +328,22 @@ public class Player
             //Will weight fit in backpack?
             boolean notTooHeavy = (addedWeight <= this.maxBackpackWeight);
             //Player can only carry one trap at a time.
+            
             //Is this an addtional trap?
             boolean additionalTrap = false;
+            boolean additionalTrap1 = false;
+            boolean additionalTrap2 = false;
+            boolean additionalTrap3 = false;
             if(item instanceof Tool)
             {
                 Tool tool = (Tool) item;
-                additionalTrap = (tool.isTrap() && this.hasTrap());
-            }       
+                additionalTrap = (tool.isTrap()&& this.hasTrap());
+                additionalTrap1 = (tool.isCatTrap()&& this.hasTrap());
+                additionalTrap2 = (tool.isRatTrap()&& this.hasTrap());
+                additionalTrap3 = (tool.isA24Trap()&& this.hasTrap());
+            }
                    
-            if ( enoughRoom && notTooHeavy && !additionalTrap)
+            if (enoughRoom && notTooHeavy && !additionalTrap && !additionalTrap1 && !additionalTrap2 && !additionalTrap3)
             {
                 success = backpack.add(item);
                 // when item is collected, it is no longer "on the island"
@@ -329,7 +352,7 @@ public class Player
                     // assign it the "not on island" position
                     item.setPosition(Position.NOT_ON_ISLAND);
                 }
-            }
+            } else AudioPlayer.getSound("error_sound").play();
         }
         return success;
     }
