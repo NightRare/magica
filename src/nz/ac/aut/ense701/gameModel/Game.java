@@ -920,38 +920,40 @@ public class Game
             int    occCol   = input.nextInt();
             Position occPos = new Position(island, occRow, occCol);
             Occupant occupant    = null;
+            Map<Terrain, Double> dummyHabitats = new HashMap<>();
+
 
             if ( occType.equals("T") )
             {
                 double weight = input.nextDouble();
                 double size   = input.nextDouble();
-                occupant = new Tool(occPos, occName, occDesc, "", weight, size);
+                occupant = new Tool(occPos, occName, occDesc, "", weight, size, dummyHabitats);
             }
             else if ( occType.equals("E") )
             {
                 double weight = input.nextDouble();
                 double size   = input.nextDouble();
                 double energy = input.nextDouble();
-                occupant = new Food(occPos, occName, occDesc, "", weight, size, energy);
+                occupant = new Food(occPos, occName, occDesc, "", weight, size, energy, dummyHabitats);
             }
             else if ( occType.equals("H") )
             {
                 double impact = input.nextDouble();
-                occupant = new Hazard(occPos, occName, occDesc, "", impact);
+                occupant = new Hazard(occPos, occName, occDesc, "", impact, dummyHabitats);
             }
             else if ( occType.equals("K") )
             {
-                occupant = new Kiwi(occPos, occName, occDesc, "", "");
+                occupant = new Kiwi(occPos, occName, occDesc, "", "", dummyHabitats);
                 totalKiwis++;
             }
             else if ( occType.equals("P") )
             {
-                occupant = new Predator(occPos, occName, occDesc, "", "");
+                occupant = new Predator(occPos, occName, occDesc, "", "", dummyHabitats);
                 totalPredators++;
             }
             else if ( occType.equals("F") )
             {
-                occupant = new Fauna(occPos, occName, occDesc, "", "");
+                occupant = new Fauna(occPos, occName, occDesc, "", "", dummyHabitats);
             }
             if ( occupant != null ) island.addOccupant(occPos, occupant);
         }
@@ -1016,8 +1018,6 @@ public class Game
     private OccupantsRandomiser setUpOccupantsRandomiser() {
         OccupantsRandomiser or = new OccupantsRandomiser(
                 island.getNumRows(), dataManager.getAllOccupantInstances());
-        // set up the occupantsRandomiser
-        or.setRecursionIndex(1);
         or.setDoubleOccupantsPercentage(0.1);
         or.setResideRull((existedOccupants, candidate) -> {
             for(Occupant ex : existedOccupants) {
@@ -1039,6 +1039,16 @@ public class Game
             }
             return true;
         });
+
+        if(fToggle.occupantsOnCertainTerrains()) {
+            or.setTerrainMap((row, column) -> island.getTerrain(new Position(island, row, column)));
+        } else {
+            or.setRecursionIndex(1);
+        }
+
+        // set up the occupantsRandomiser
+
+
         return or;
     }
     

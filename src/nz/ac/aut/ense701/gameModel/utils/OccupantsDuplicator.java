@@ -2,6 +2,8 @@ package nz.ac.aut.ense701.gameModel.utils;
 
 import nz.ac.aut.ense701.gameModel.*;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -14,54 +16,55 @@ public class OccupantsDuplicator {
     /**
      * Return a deep clone of the given Occupant.
      *
-     * @param template the template to be duplicated from
+     * @param prototypes the template to be duplicated from
      * @return the duplicate Occupant
      * @throws NullPointerException if template is {@code null}
      */
-    public static Occupant duplicate(Occupant template) {
-        Objects.requireNonNull(template);
+    public static Occupant duplicate(Occupant prototypes) {
+        Objects.requireNonNull(prototypes);
 
-        Position position = template.getPosition();
-        String name = template.getName();
-        String description = template.getDescription();
-        String portrait = template.getPortrait();
+        Position position = prototypes.getPosition();
+        String name = prototypes.getName();
+        String description = prototypes.getDescription();
+        String portrait = prototypes.getPortrait();
+        Map<Terrain, Double> habitats = duplicateHabitats(prototypes);
 
-        if (template instanceof Hazard) {
-            Hazard hazard = (Hazard) template;
-            return new Hazard(position, name, description, portrait, hazard.getImpact());
+        if (prototypes instanceof Hazard) {
+            Hazard hazard = (Hazard) prototypes;
+            return new Hazard(position, name, description, portrait, hazard.getImpact(), habitats);
         }
 
-        if (template instanceof Item) {
-            Item item = (Item) template;
+        if (prototypes instanceof Item) {
+            Item item = (Item) prototypes;
             double weight = item.getWeight();
             double size = item.getSize();
 
-            if (template instanceof Food) {
-                Food food = (Food) template;
-                return new Food(position, name, description, portrait, weight, size, food.getEnergy());
+            if (prototypes instanceof Food) {
+                Food food = (Food) prototypes;
+                return new Food(position, name, description, portrait, weight, size, food.getEnergy(), habitats);
             }
 
-            if (template instanceof Tool) {
-                return new Tool(position, name, description, portrait, weight, size);
+            if (prototypes instanceof Tool) {
+                return new Tool(position, name, description, portrait, weight, size, habitats);
             }
 
             throw new IllegalArgumentException("An Item (abstract class) object cannot "
                     + "be cloned.");
         }
 
-        if (template instanceof Fauna) {
+        if (prototypes instanceof Fauna) {
 
-            String link = ((Fauna) template).getLink();
+            String link = ((Fauna) prototypes).getLink();
 
-            if (template instanceof Kiwi) {
-                return new Kiwi(position, name, description, portrait, link);
+            if (prototypes instanceof Kiwi) {
+                return new Kiwi(position, name, description, portrait, link, habitats);
             }
 
-            if (template instanceof Predator) {
-                return new Predator(position, name, description, portrait, link);
+            if (prototypes instanceof Predator) {
+                return new Predator(position, name, description, portrait, link, habitats);
             }
 
-            return new Fauna(position, name, description, portrait, link);
+            return new Fauna(position, name, description, portrait, link, habitats);
         }
 
         throw new IllegalArgumentException("An Occupant (abstract class) object "
@@ -71,24 +74,32 @@ public class OccupantsDuplicator {
     /**
      * Return a list of deep clones of the given Occupant. The list does not include the template itself.
      *
-     * @param template the template to be duplicated from
+     * @param prototypes the template to be duplicated from
      * @param amount the amount of duplicates
      * @return the duplicate list of Occupants
      * @throws NullPointerException if template is {@code null}
      * @throws IllegalArgumentException if amount < 1
      */
-    public static Occupant[] duplicatMulti(Occupant template, int amount) {
-        Objects.requireNonNull(template);
+    public static Occupant[] duplicateMulti(Occupant prototypes, int amount) {
+        Objects.requireNonNull(prototypes);
         if (amount < 1)
             throw new IllegalArgumentException("The amount must be a positive integer.");
 
         Occupant[] duplicates = new Occupant[amount];
 
         for (int i = 0; i < duplicates.length; i++) {
-            duplicates[i] = duplicate(template);
+            duplicates[i] = duplicate(prototypes);
         }
 
         return duplicates;
+    }
+
+    private static Map<Terrain, Double> duplicateHabitats(Occupant prototypes) {
+        Map<Terrain, Double> dup = new HashMap<>();
+        for(Terrain t : Terrain.values()) {
+            dup.put(t, prototypes.getHabitatProbability(t));
+        }
+        return dup;
     }
 
 }

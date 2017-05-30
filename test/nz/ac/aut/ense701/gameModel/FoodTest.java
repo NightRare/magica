@@ -2,6 +2,8 @@ package nz.ac.aut.ense701.gameModel;
 
 import org.junit.Test;
 
+import java.util.HashMap;
+
 /**
  * The test class FoodTest.
  *
@@ -30,7 +32,8 @@ public class FoodTest extends junit.framework.TestCase
     {
         island = new Island(5,5);
         position = new Position(island, 4,4);
-        apple = new Food(position, "apple", "A juicy red apple", "", 1.0, 2.0, 1.5);
+        apple = new Food(position, "apple", "A juicy red apple", "", 1.0, 2.0,
+                1.5, new HashMap<>());
     }
 
     /**
@@ -78,7 +81,8 @@ public class FoodTest extends junit.framework.TestCase
     
     @Test
     public void testIsOkToCarryCannotCarry(){
-        Food tooBig = new Food(position, "Roast pig", "A roasted giant pig", "", 1.0, 0.0, 1.0);
+        Food tooBig = new Food(position, "Roast pig", "A roasted giant pig", "", 1.0,
+                0.0, 1.0, new HashMap<>());
         assertFalse("Shouldn't be carrable.", tooBig.isOkToCarry());
     }        
     

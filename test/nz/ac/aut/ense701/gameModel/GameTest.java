@@ -3,6 +3,8 @@ package nz.ac.aut.ense701.gameModel;
 import nz.ac.aut.ense701.gui.GameNotification;
 import org.junit.Test;
 
+import java.util.HashMap;
+
 /**
  * The test class GameTest.
  *
@@ -158,30 +160,30 @@ public class GameTest extends junit.framework.TestCase
     @Test
     public void testCanCollectCollectable(){
         //Items that are collectable and fit in backpack
-        Item valid = new Food(playerPosition,"Sandwich", "Yummy", "", 1.0, 1.0,1.0);
+        Item valid = new Food(playerPosition,"Sandwich", "Yummy", "", 1.0, 1.0,1.0, new HashMap<>());
         assertTrue("Should be able to collect", game.canCollect(valid));
     }
     
     @Test    
     public void testCanCollectNotCollectable(){
         //Items with size of '0' cannot be carried
-        Item notCollectable = new Food(playerPosition,"Sandwich", "Very Heavy Sandwich", "", 10.0, 0.0,1.0);
+        Item notCollectable = new Food(playerPosition,"Sandwich", "Very Heavy Sandwich", "", 10.0, 0.0,1.0, new HashMap<>());
         assertFalse("Should not be able to collect", game.canCollect(notCollectable));
     }
     
     @Test
     public void testCanUseFoodValid(){
         //Food can always be used
-        Item valid = new Food(playerPosition,"Sandwich", "Yummy", "", 1.0, 1.0,1.0);
+        Item valid = new Food(playerPosition,"Sandwich", "Yummy", "", 1.0, 1.0,1.0, new HashMap<>());
         assertTrue("Should be able to use", game.canUse(valid));
     }
     
     @Test
     public void testCanUseTrapOnPredatorValid(){
         //Trap can be used only if there is a non-Kiwi fauna here
-        Item valid = new Tool(playerPosition,"Trap", "A predator trap", "", 1.0, 1.0);
+        Item valid = new Tool(playerPosition,"Trap", "A predator trap", "", 1.0, 1.0, new HashMap<>());
         //Add predator
-        Predator rat = new Predator(playerPosition,"Rat", "A norway rat", "", "");
+        Predator rat = new Predator(playerPosition,"Rat", "A norway rat", "", "", new HashMap<>());
         island.addOccupant(playerPosition, rat);
         assertTrue("Should be able to use", game.canUse(valid));
     }
@@ -189,9 +191,9 @@ public class GameTest extends junit.framework.TestCase
     @Test
     public void testCanUseTrapOnNonKiwiFaunaValid(){
         //Trap can be used only if there is a non-Kiwi fauna here
-        Item valid = new Tool(playerPosition,"Trap", "A predator trap", "", 1.0, 1.0);
+        Item valid = new Tool(playerPosition,"Trap", "A predator trap", "", 1.0, 1.0, new HashMap<>());
         //Add non-Kiwi Fauna
-        Fauna fish = new Fauna(playerPosition, "Fish", "Just a fish", "", "");
+        Fauna fish = new Fauna(playerPosition, "Fish", "Just a fish", "", "", new HashMap<>());
         island.addOccupant(playerPosition, fish);
         assertTrue("Should be able to use", game.canUse(valid));
     }
@@ -199,7 +201,7 @@ public class GameTest extends junit.framework.TestCase
     @Test
     public void testCanUseTrapOnNonFauna(){
         //Trap can be used only if there is a non-Kiwi fauna here
-        Item tool = new Tool(playerPosition,"Trap", "A predator trap", "",1.0, 1.0);
+        Item tool = new Tool(playerPosition,"Trap", "A predator trap", "",1.0, 1.0, new HashMap<>());
 
         assertFalse("Should not be able to use", game.canUse(tool));
     }
@@ -207,8 +209,8 @@ public class GameTest extends junit.framework.TestCase
     @Test
     public void testCanUseTrapOnKiwi() {
         //Trap can be used only if there is a non-Kiwi fauna here
-        Item tool = new Tool(playerPosition,"Trap", "A predator trap", "",1.0, 1.0);
-        Kiwi kiwi = new Kiwi(playerPosition, "Kiwi", "A test kiwi.", "", "");
+        Item tool = new Tool(playerPosition,"Trap", "A predator trap", "",1.0, 1.0, new HashMap<>());
+        Kiwi kiwi = new Kiwi(playerPosition, "Kiwi", "A test kiwi.", "", "", new HashMap<>());
         island.addOccupant(playerPosition, kiwi);
         assertFalse("Should not be able to use", game.canUse(tool));
     }
@@ -216,8 +218,8 @@ public class GameTest extends junit.framework.TestCase
     @Test
     public void testCanUseTool(){
         //Screwdriver can be used if player has a broken trap
-        Item tool = new Tool(playerPosition,"Screwdriver", "A good tool to fix a trap", "",1.0, 1.0);
-        Tool trap = new Tool(playerPosition,"Trap", "A predator trap", "",1.0, 1.0);
+        Item tool = new Tool(playerPosition,"Screwdriver", "A good tool to fix a trap", "",1.0, 1.0, new HashMap<>());
+        Tool trap = new Tool(playerPosition,"Trap", "A predator trap", "",1.0, 1.0, new HashMap<>());
         trap.setBroken();
         player.collect(trap);
 
@@ -227,8 +229,8 @@ public class GameTest extends junit.framework.TestCase
     @Test
     public void testCanUseToolNoTrap(){
         //Screwdriver can be used if player has a broken trap
-        Item tool = new Tool(playerPosition,"Screwdriver", "A good tool to fix a trap", "",1.0, 1.0);
-        Tool trap = new Tool(playerPosition,"Trap", "A predator trap", "",1.0, 1.0);
+        Item tool = new Tool(playerPosition,"Screwdriver", "A good tool to fix a trap", "",1.0, 1.0, new HashMap<>());
+        Tool trap = new Tool(playerPosition,"Trap", "A predator trap", "",1.0, 1.0, new HashMap<>());
         trap.setBroken();
 
         assertFalse("Should not be able to use", game.canUse(tool));
@@ -237,7 +239,7 @@ public class GameTest extends junit.framework.TestCase
     @Test
     public void testCanUseToolTrapNotBroken(){
         //Screwdriver can be used if player has a broken trap
-        Item tool = new Tool(playerPosition,"Screwdriver", "A good tool to fix a trap", "",1.0, 1.0);
+        Item tool = new Tool(playerPosition,"Screwdriver", "A good tool to fix a trap", "",1.0, 1.0, new HashMap<>());
         Tool trap = new Tool(playerPosition,"Trap", "A predator trap",1.0, 1.0);
         player.collect(trap);
 

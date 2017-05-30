@@ -3,7 +3,6 @@ package nz.ac.aut.ense701.audio;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -35,7 +34,7 @@ public class SoundManager {
 
         Map<Occupant, Sound> soundMap = new HashMap<>();
 
-        Set<Occupant> faunasAndPredators = dataManager.getAllOccupantTemplates();
+        Set<Occupant> faunasAndPredators = dataManager.getAllOccupantPrototypes();
         faunasAndPredators.removeIf(occupant -> occupant instanceof Food || occupant instanceof Tool
                 || occupant instanceof Hazard);
 

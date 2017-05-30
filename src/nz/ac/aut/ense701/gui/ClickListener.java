@@ -153,6 +153,35 @@ public class ClickListener implements MouseListener {
     @Override
     public void mouseExited(MouseEvent e) {
     }
+    
+    /**
+     * Performs a collecting action based on the player's current position.
+     */
+    public void performCollecting() {
+        if(!game.hasAnyOccupant(game.getPlayer().getPosition())){
+            AudioPlayer.getSound("error_sound").play();
+        }
+        for(Occupant o: game.getOccupantsPlayerPosition()){
+            if(game.canCollect(o)){
+                game.collectItem(o);
+            }
+        }
+    }
+    
+    /**
+     * Performs a tagging action based on the player's current position.
+     */
+    public void performTagging() {
+        if(!game.hasAnyOccupant(game.getPlayer().getPosition())){
+            AudioPlayer.getSound("error_sound").play();
+        }
+            
+        for(Occupant o: game.getOccupantsPlayerPosition()){
+            if(game.canCount(o)){
+                game.countKiwi();
+            }
+        }
+    }
 
     private void infoBoardClicked(MouseEvent e) {
         ScalingAssistant sA = ScalingAssistant.getScalingAssistant();
@@ -195,8 +224,6 @@ public class ClickListener implements MouseListener {
             }
         }
     }
-    
-
     
     /**
      * Performs an "action" when a specific area in the game is clicked
@@ -245,15 +272,7 @@ public class ClickListener implements MouseListener {
         ScalingAssistant sA = ScalingAssistant.getScalingAssistant();
         //TAG if player is on a square where there is a Kiwi
         if((e.getX() > sA.scale(35)) && (e.getX() < sA.scale(35+65))){
-            if(!game.hasAnyOccupant(game.getPlayer().getPosition())){
-                AudioPlayer.getSound("error_sound").play();
-            }
-            
-            for(Occupant o: game.getOccupantsPlayerPosition()){
-                if(game.canCount(o)){
-                    game.countKiwi();
-                }
-            }
+            performTagging();
         }
         //TRAP if player is on a square where there is a predator
         if((e.getX() > sA.scale(35+65+15)) && (e.getX() < sA.scale(35+(65*2)+15))){
@@ -271,14 +290,7 @@ public class ClickListener implements MouseListener {
         }
         //COLLECT if player is on a square where there is tool / food
         if((e.getX() > sA.scale(35+((65+15)*2))) && (e.getX() < sA.scale(35+(65*3)+30))){
-            if(!game.hasAnyOccupant(game.getPlayer().getPosition())){
-                AudioPlayer.getSound("error_sound").play();
-            }
-            for(Occupant o: game.getOccupantsPlayerPosition()){
-                if(game.canCollect(o)){
-                    game.collectItem(o);
-                }
-            }
+            performCollecting();
         }
     }
     

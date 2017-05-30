@@ -1,5 +1,7 @@
 package nz.ac.aut.ense701.gameModel;
 
+import java.util.Map;
+
 /**
  * This class represents food that can be found on the island
  * and supplies energy when being consumed (used) by the player.
@@ -37,9 +39,10 @@ public class Food extends Item
      * @param energy stamina contribution of the food object
      *               when the player uses the object
      */
-    public Food(Position pos, String name, String description, String portrait, double weight, double size, double energy) 
+    public Food(Position pos, String name, String description, String portrait, double weight, double size,
+                double energy, Map<Terrain, Double> habitats)
     {
-        super(pos, name, description, portrait, weight, size);
+        super(pos, name, description, portrait, weight, size, habitats);
         this.energy = energy;
     }
 
