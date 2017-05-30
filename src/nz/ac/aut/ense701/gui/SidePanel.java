@@ -421,9 +421,6 @@ public class SidePanel {
         inventoryRatTrap = assetManager.getInventoryRatTrap();
         inventoryCatTrap = assetManager.getInventoryCatTrap();
         inventoryA24Trap = assetManager.getInventoryA24Trap();
-        tag = assetManager.getActionTag();
-        collect = assetManager.getActionCollect();
-        trap = assetManager.getActionTrap();
     }
 
     private String numOfKiwi() {
