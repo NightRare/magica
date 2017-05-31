@@ -94,7 +94,7 @@ public class GridSquare
         }
         return result;
     } 
-    
+        
     /**
      * Returns a string representation of the terrain.
      * 

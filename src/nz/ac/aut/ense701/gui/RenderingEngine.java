@@ -9,15 +9,10 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import nz.ac.aut.ense701.gameModel.Fauna;
 import nz.ac.aut.ense701.gameModel.Game;
 import nz.ac.aut.ense701.gameModel.GameState;
 import nz.ac.aut.ense701.gameModel.LightLevel;
-import nz.ac.aut.ense701.gameModel.Occupant;
 
 /**
  * RenderingEngine is responsible for all graphics rendering
@@ -85,9 +80,8 @@ public class RenderingEngine {
         g2d.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 30));
         //g2d.drawString(square.getLabel(), xToRenderAt, yLowered);
         //drawing the occupants
-        ScalingAssistant scaleAssist = ScalingAssistant.getScalingAssistant();
 
-        g2d.drawImage(square.getOccupantIcon(square.getLabel()),
+        g2d.drawImage(square.getOccupantIcon(square.getOccupants()),
                 xToRenderAt, yToRenderAt,
                 scaleAssist.scale(50), scaleAssist.scale(50), null);
     }
