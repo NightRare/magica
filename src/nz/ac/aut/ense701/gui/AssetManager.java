@@ -22,7 +22,7 @@ public class AssetManager {
     private BufferedImage animal, food, tool, hazard; //inventory items
     private BufferedImage tag_active, tag_inactive, trap_active, trap_inactive, collect_active, collect_inactive; //action boxes
     private BufferedImage playerFace_happy,playerFace_neutral, playerFace_hungry, playerFace_tired,questIcon,
-            inventoryEmpty,inventorySnack, inventoryToolbox,inventoryApple,inventoryTrap, inventoryRatTrap, inventoryCatTrap, inventoryA24Trap;
+            inventoryEmpty,inventorySnack, inventoryToolbox,inventoryApple,inventoryTrap, inventoryForestWetlandTrap, inventoryWaterScrubTrap, inventoryA24LandTrap;
     private BufferedImage taggedBubble, trappedBubble, yumBubble;
     private HashMap<String, BufferedImage> occupantsPortraits;
     private IDataManager dataManager;
@@ -71,9 +71,9 @@ public class AssetManager {
         inventoryToolbox = scaleAssist.getScaledImage((loader.loadImage("images/inventory_icons/inventory_screwdriver.png")), scaleAssist.getScale());
         inventoryApple = scaleAssist.getScaledImage((loader.loadImage("images/inventory_icons/inventory_apple.png")), scaleAssist.getScale());
         inventoryTrap = scaleAssist.getScaledImage((loader.loadImage("images/inventory_icons/inventory_trap.png")), scaleAssist.getScale());
-        inventoryRatTrap = scaleAssist.getScaledImage((loader.loadImage("images/inventory_icons/inventory_ratTrap.png")), scaleAssist.getScale()); 
-        inventoryCatTrap = scaleAssist.getScaledImage((loader.loadImage("images/inventory_icons/inventory_catTrap.png")), scaleAssist.getScale()); 
-        inventoryA24Trap = scaleAssist.getScaledImage((loader.loadImage("images/inventory_icons/inventory_a24Trap.png")), scaleAssist.getScale()); 
+        inventoryForestWetlandTrap = scaleAssist.getScaledImage((loader.loadImage("images/inventory_icons/inventory_forestWetlandTrap.png")), scaleAssist.getScale()); 
+        inventoryWaterScrubTrap = scaleAssist.getScaledImage((loader.loadImage("images/inventory_icons/inventory_waterScrubTrap.png")), scaleAssist.getScale()); 
+        inventoryA24LandTrap = scaleAssist.getScaledImage((loader.loadImage("images/inventory_icons/inventory_a24LandTrap.png")), scaleAssist.getScale()); 
         
         tag_active = scaleAssist.getScaledImage((loader.loadImage("images/action/tag_active.png")), scaleAssist.getScale());
         tag_inactive = scaleAssist.getScaledImage((loader.loadImage("images/action/tag_inactive.png")), scaleAssist.getScale());
@@ -259,15 +259,15 @@ public class AssetManager {
         return yumBubble;
     }
     
-    public BufferedImage getInventoryRatTrap() { 
-        return inventoryRatTrap; 
+    public BufferedImage getInventoryForestWetlandTrap() { 
+        return inventoryForestWetlandTrap; 
     }
     
-    public BufferedImage getInventoryCatTrap() { 
-        return inventoryCatTrap; 
+    public BufferedImage getInventoryWaterScrubTrap() { 
+        return inventoryWaterScrubTrap; 
     }
     
-    public BufferedImage getInventoryA24Trap() { 
-        return inventoryA24Trap; 
+    public BufferedImage getInventoryA24LandTrap() { 
+        return inventoryA24LandTrap; 
     }
 }

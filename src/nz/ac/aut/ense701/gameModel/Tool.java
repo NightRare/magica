@@ -89,30 +89,30 @@ public class Tool extends Item
     }
     
     /** 
-    * Check if this tool is a Rat trap 
+    * Check if this tool is a forest and wetland trap 
     * @return true if screwdriver 
     */     
-    public boolean isRatTrap() { 
+    public boolean isForestWetlandTrap() { 
        String name = this.getName(); 
-      return name.equalsIgnoreCase("Rat Trap");  
+      return name.equalsIgnoreCase("Forest & Wetland Trap");  
     } 
     
     /** 
-    * Check if this tool is a Rat trap 
+    * Check if this tool is a water and scrub trap 
     * @return true if screwdriver 
     */     
-    public boolean isCatTrap() { 
+    public boolean isWaterScrubTrap() { 
        String name = this.getName(); 
-      return name.equalsIgnoreCase("Cat Trap");  
+      return name.equalsIgnoreCase("Water & Scrub Trap");  
     }
     
     /** 
-    * Check if this tool is a Rat trap 
+    * Check if this tool is a land trap 
     * @return true if screwdriver 
     */     
-    public boolean isA24Trap() { 
+    public boolean isA24LandTrap() { 
        String name = this.getName(); 
-      return name.equalsIgnoreCase("A24 Trap");  
+      return name.equalsIgnoreCase("A24 Land Trap");  
     } 
     
     @Override
