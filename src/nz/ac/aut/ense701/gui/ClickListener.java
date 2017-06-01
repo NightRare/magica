@@ -10,21 +10,12 @@ import java.awt.Desktop;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.IOException;
-import static java.lang.StrictMath.abs;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import nz.ac.aut.ense701.gameModel.*;
-import org.newdawn.slick.openal.Audio;
-
-import static java.lang.StrictMath.abs;
-import static java.lang.StrictMath.abs;
-import static java.lang.StrictMath.abs;
-import static java.lang.StrictMath.abs;
-import static java.lang.StrictMath.abs;
-import static java.lang.StrictMath.abs;
 import static java.lang.StrictMath.abs;
 
 /**
