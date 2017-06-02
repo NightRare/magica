@@ -470,7 +470,9 @@ public class SidePanel {
         BufferedImage tagIcon = assetManager.getActionTag()[INACTIVE_BUTTON];
         for(Occupant o: getOccupants()){
             if(o instanceof Kiwi){
-                tagIcon = assetManager.getActionTag()[ACTIVE_BUTTON];
+                if(!((Kiwi) o).counted()){
+                    tagIcon = assetManager.getActionTag()[ACTIVE_BUTTON];
+                }
             }
         }
         return tagIcon;
