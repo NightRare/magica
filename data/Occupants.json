@@ -4,7 +4,7 @@
       "name": "Sandwich",
       "description": "A nice and healthy sandwich",
       "weight": 2.0,
-      "size": 1.0,
+      "size": 0.5,
       "energy": 50.0,
       "portrait": "images/occupants/food/sandwich.jpg",
       "habitats": {
@@ -19,7 +19,7 @@
       "name": "Muesli Bar",
       "description": "A juicy and nutricious muesli bar",
       "weight": 1.0,
-      "size": 1.0,
+      "size": 0.5,
       "energy": 50.0,
       "portrait": "images/occupants/food/muesli_bar.jpg",
       "habitats": {
@@ -34,7 +34,7 @@
       "name": "Apple",
       "description": "A juicy apple",
       "weight": 2.0,
-      "size": 3.0,
+      "size": 0.5,
       "energy": 50.0,
       "portrait": "images/occupants/food/apple.jpg",
       "habitats": {
@@ -49,7 +49,7 @@
       "name": "Orange Juice",
       "description": "A bottle of juice",
       "weight": 2.0,
-      "size": 3.0,
+      "size": 0.5,
       "energy": 50.0,
       "portrait": "images/occupants/food/orange_juice.jpg",
       "habitats": {
@@ -66,7 +66,7 @@
       "name": "Trap",
       "description": "A trap for all types of predators in the field",
       "weight": 1.0,
-      "size": 1.0,
+      "size": 0.5,
       "portrait": "images/occupants/tool/trap.jpg",
       "habitats": {
         "SAND":0.25,
@@ -80,7 +80,7 @@
       "name": "Screwdriver",
       "description": "A screwdriver that is useful for fixing traps",
       "weight": 0.5,
-      "size": 0.75,
+      "size": 0.5,
       "portrait": "images/occupants/tool/screwdriver.jpg",
       "habitats": {
         "SAND":0.25,
@@ -133,8 +133,6 @@
       }
     }
   ],
-  
-  
   "faunae": [
     {
       "name": "Oystercatcher",
