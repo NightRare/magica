@@ -216,7 +216,7 @@ public class Game
      */
     public Occupant[] getOccupantsPlayerPosition()
     {
-        return island.getOccupants(player.getPosition());
+        return getOccupantsOn(player.getPosition());
     }
     
     /**
@@ -230,7 +230,28 @@ public class Game
     }
     
     public Occupant[] getOccupantOn(int row, int column){
-        return island.getOccupants(new Position(island, row, column));
+        
+        Occupant[] includingKiwi = island.getOccupants(new Position(island, row, column));
+        
+        ArrayList<Occupant> noKiwi = new ArrayList<>();
+        for (int o = 0; o < includingKiwi.length; o++) {
+            if (!includingKiwi[o].getStringRepresentation().equals("K")) {
+                noKiwi.add(includingKiwi[o]);
+            }
+        }
+        if (lightLevel() == LightLevel.DAY) { 
+            Occupant[] noKiwiArray = new Occupant[noKiwi.size()];
+            for (int i = 0; i < noKiwi.size(); i++) {
+                noKiwiArray[i] = noKiwi.get(i);
+            }
+            return noKiwiArray;
+        } else {
+            return includingKiwi;
+        }
+    }
+    
+    public Occupant[] getOccupantsOn(Position pos) {
+        return getOccupantOn(pos.getRow(), pos.getColumn());
     }
     
     /**
@@ -552,7 +573,7 @@ public class Game
     public void countKiwi() 
     {
         //check if there are any kiwis here
-        for (Occupant occupant : island.getOccupants(player.getPosition())) {
+        for (Occupant occupant : getOccupantsOn(player.getPosition())) {
             if (occupant instanceof Kiwi) {
                 Kiwi kiwi = (Kiwi) occupant;
                 if (!kiwi.counted()) {
@@ -712,7 +733,7 @@ public class Game
      */
     private boolean useTrap() {
         Position current = player.getPosition();
-        Occupant[] occupants = island.getOccupants(current);
+        Occupant[] occupants = getOccupantsOn(current);
         
         for(Occupant o : occupants) {
             if(!(o instanceof Fauna) || (o instanceof Kiwi)) {
@@ -848,7 +869,7 @@ public class Game
      * if they do.
      */
     private void playFaunaSoundOrNot() {
-        Occupant[] occupantsEncountered = island.getOccupants(player.getPosition());
+        Occupant[] occupantsEncountered = getOccupantsOn(player.getPosition());
         for (Occupant o : occupantsEncountered) {
             for (Occupant faunaWithSound : soundMap.keySet()) {
                 if (faunaWithSound.getName().equals(o.getName())) {
@@ -865,7 +886,7 @@ public class Game
     private void checkForHazard()
     {
         //check if there are hazards
-        for ( Occupant occupant : island.getOccupants(player.getPosition())  )
+        for ( Occupant occupant : getOccupantsOn(player.getPosition())  )
         {
             if ( occupant instanceof Hazard )
             {

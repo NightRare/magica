@@ -499,7 +499,8 @@ public class SidePanel {
     
     public Occupant[] getOccupants() {
         Position position = game.getPlayer().getPosition();
-        return game.getIsland().getOccupants(position);
+        
+       return game.getOccupantOn(position.getRow(), position.getColumn());
     }
     
     public void setInfoOccupant(Occupant occupantToDisplay) {

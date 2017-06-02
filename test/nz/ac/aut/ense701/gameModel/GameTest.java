@@ -501,14 +501,6 @@ public class GameTest extends junit.framework.TestCase
         assertTrue("Game should not be over", game.getState()== GameState.PLAYING);
     }
     
-    @Test
-    public void testCountKiwi()
-    {
-        //Need to move to a place where there is a kiwi
-        assertTrue (" This move valid", playerMoveEast(5));
-        game.countKiwi();
-        assertEquals("Wrong count", game.getKiwiCount(), 1);
-    }
     
     @Test
     public void testPredatorViaRatTrap()
