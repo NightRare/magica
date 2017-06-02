@@ -18,7 +18,8 @@ import nz.ac.aut.ense701.gameModel.Occupant;
  */
 public class AssetManager {
     
-    private BufferedImage map, visible, water, scrub, wetland, forest, sand, player, dark, fog, night; 
+    private BufferedImage player, playerAlt; // player sprites
+    private BufferedImage map, visible, water, scrub, wetland, forest, sand, dark, fog, night; 
     private BufferedImage animal, food, tool, hazard; //inventory items
     private BufferedImage tag_active, tag_inactive, trap_active, trap_inactive, collect_active, collect_inactive; //action boxes
     private BufferedImage playerFace_happy,playerFace_neutral, playerFace_hungry, playerFace_tired,questIcon,
@@ -48,19 +49,20 @@ public class AssetManager {
     }
     
     public void loadTextures() {
-        ScalingAssistant scaleAssist = ScalingAssistant.getScalingAssistant();
-        map = scaleAssist.getScaledImage((loader.loadImage("images/map_objects/whole_map.png")), scaleAssist.getScale());
-        visible = scaleAssist.getScaledImage((loader.loadImage("images/map_objects/visible.png")), scaleAssist.getScale());
-        dark = scaleAssist.getScaledImage((loader.loadImage("images/map_objects/dark.png")), scaleAssist.getScale());
-        fog = scaleAssist.getScaledImage((loader.loadImage("images/map_objects/fog.png")), scaleAssist.getScale());
-        player = scaleAssist.getScaledImage((loader.loadImage("images/map_icons/player_1.png")), scaleAssist.getScale());
-        night = scaleAssist.getScaledImage((loader.loadImage("images/night.png")), scaleAssist.getScale());
+        ScalingAssistant sA = ScalingAssistant.getScalingAssistant();
         
-        animal = scaleAssist.getScaledImage((loader.loadImage("images/map_icons/animal.png")), scaleAssist.getScale());
-        food = scaleAssist.getScaledImage((loader.loadImage("images/map_icons/food.png")), scaleAssist.getScale());
-        tool = scaleAssist.getScaledImage((loader.loadImage("images/map_icons/tool.png")), scaleAssist.getScale());
-        hazard = scaleAssist.getScaledImage((loader.loadImage("images/map_icons/hazard.png")), scaleAssist.getScale());
+        map = load("images/map_objects/whole_map.png", sA);
+        visible = load("images/map_objects/visible.png", sA);
+        dark = load("images/map_objects/dark.png", sA);
+        fog = load("images/map_objects/fog.png", sA);
+        night = load("images/night.png", sA);
+        player = load("images/map_icons/player_1.png", sA);
+        playerAlt = load("images/map_icons/player_2.png", sA);
         
+        animal = load("images/map_icons/animal.png", sA);
+        food = load("images/map_icons/food.png", sA);
+        tool = load("images/map_icons/tool.png", sA);
+        hazard = load("images/map_icons/hazard.png", sA);
         playerFace_happy = scaleAssist.getScaledImage((loader.loadImage("images/side_panel/happy.png")), scaleAssist.getScale());
         playerFace_neutral = scaleAssist.getScaledImage((loader.loadImage("images/side_panel/neutral.png")), scaleAssist.getScale());
         playerFace_hungry = scaleAssist.getScaledImage((loader.loadImage("images/side_panel/hungry.png")), scaleAssist.getScale());
@@ -82,9 +84,18 @@ public class AssetManager {
         collect_active = scaleAssist.getScaledImage((loader.loadImage("images/action/collect_active.png")), scaleAssist.getScale());
         collect_inactive = scaleAssist.getScaledImage((loader.loadImage("images/action/collect_inactive.png")), scaleAssist.getScale());
         
-        taggedBubble = scaleAssist.getScaledImage((loader.loadImage("images/notification/tagged.png")), scaleAssist.getScale());
-        trappedBubble = scaleAssist.getScaledImage((loader.loadImage("images/notification/trapped.png")), scaleAssist.getScale());
-        yumBubble = scaleAssist.getScaledImage((loader.loadImage("images/notification/yum.png")), scaleAssist.getScale());
+        tag = load("images/action/tag.png", sA);
+        trap = load("images/action/trap.png", sA);
+        collect = load("images/action/collect.png", sA);
+        
+        taggedBubble = load("images/notification/tagged.png", sA);
+        trappedBubble = load("images/notification/trapped.png", sA);
+        yumBubble = load("images/notification/yum.png", sA);
+    }
+    
+    // returns a correctly scaled buffered image from file path
+    private BufferedImage load(String imagePath, ScalingAssistant scaleAssist) {
+        return scaleAssist.getScaledImage(loader.loadImage(imagePath), scaleAssist.getScale());
     }
     
     
@@ -270,4 +281,10 @@ public class AssetManager {
     public BufferedImage getInventoryA24Trap() { 
         return inventoryA24Trap; 
     }
+
+    public BufferedImage getPlayerAlt() {
+        return playerAlt;
+    }
+    
+    
 }
