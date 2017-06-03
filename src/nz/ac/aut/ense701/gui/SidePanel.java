@@ -470,7 +470,9 @@ public class SidePanel {
         BufferedImage tagIcon = assetManager.getActionTag()[INACTIVE_BUTTON];
         for(Occupant o: getOccupants()){
             if(o instanceof Kiwi){
-                tagIcon = assetManager.getActionTag()[ACTIVE_BUTTON];
+                if(!((Kiwi) o).counted()){
+                    tagIcon = assetManager.getActionTag()[ACTIVE_BUTTON];
+                }
             }
         }
         return tagIcon;
@@ -499,7 +501,8 @@ public class SidePanel {
     
     public Occupant[] getOccupants() {
         Position position = game.getPlayer().getPosition();
-        return game.getIsland().getOccupants(position);
+        
+       return game.getOccupantOn(position.getRow(), position.getColumn());
     }
     
     public void setInfoOccupant(Occupant occupantToDisplay) {

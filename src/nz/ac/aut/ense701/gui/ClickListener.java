@@ -10,21 +10,12 @@ import java.awt.Desktop;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.IOException;
-import static java.lang.StrictMath.abs;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import nz.ac.aut.ense701.gameModel.*;
-import org.newdawn.slick.openal.Audio;
-
-import static java.lang.StrictMath.abs;
-import static java.lang.StrictMath.abs;
-import static java.lang.StrictMath.abs;
-import static java.lang.StrictMath.abs;
-import static java.lang.StrictMath.abs;
-import static java.lang.StrictMath.abs;
 import static java.lang.StrictMath.abs;
 
 /**
@@ -183,6 +174,22 @@ public class ClickListener implements MouseListener {
         }
     }
 
+    /**
+     * Performs a trapping action based on the player's current position.
+     */
+    public void performTrapping() {
+        if(!game.hasAnyOccupant(game.getPlayer().getPosition())){
+            AudioPlayer.getSound("error_sound").play();
+        }
+        for(Occupant o: game.getOccupantsPlayerPosition()){
+            if(game.getPlayer().hasTrap()){
+                game.useItem(game.getPlayer().getTrap());
+                if(!o.getStringRepresentation().contains("P") && !o.getStringRepresentation().contains("F"))
+                    AudioPlayer.getSound("error_sound").play();
+            } else AudioPlayer.getSound("error_sound").play();
+        }
+    }
+
     private void infoBoardClicked(MouseEvent e) {
         ScalingAssistant sA = ScalingAssistant.getScalingAssistant();
         SidePanel sidePanel = loop.getSidePanel();
@@ -276,17 +283,7 @@ public class ClickListener implements MouseListener {
         }
         //TRAP if player is on a square where there is a predator
         if((e.getX() > sA.scale(35+65+15)) && (e.getX() < sA.scale(35+(65*2)+15))){
-            if(!game.hasAnyOccupant(game.getPlayer().getPosition())){
-                AudioPlayer.getSound("error_sound").play();
-            }
-            for(Occupant o: game.getOccupantsPlayerPosition()){
-                    if(game.getPlayer().hasTrap()){
-                        game.useItem(game.getPlayer().getTrap());
-                            if(!o.getStringRepresentation().contains("P") && !o.getStringRepresentation().contains("F"))
-                                AudioPlayer.getSound("error_sound").play();
-                    } else AudioPlayer.getSound("error_sound").play();
-                     
-           }
+            performTrapping();
         }
         //COLLECT if player is on a square where there is tool / food
         if((e.getX() > sA.scale(35+((65+15)*2))) && (e.getX() < sA.scale(35+(65*3)+30))){
