@@ -789,6 +789,7 @@ public class Game
             predatorsTrapped++;
             //notify player that the predator is trapped
             notification.predatorTrapped(); 
+            
             }
             
             else if(predatorViaA24LandTrap(island.getTerrain(current).name(),player.getTrap().getName())){
@@ -809,6 +810,27 @@ public class Game
         }
         
         return hadPredator;
+    }
+    
+    public boolean isUsable_ForestWetlandTrap(){     
+        return (island.getTerrain(player.getPosition())==Terrain.FOREST ||
+                island.getTerrain(player.getPosition())==Terrain.WETLAND)
+                && (player.specialTrap().equals("ForestWetland"));
+    }
+    
+    public boolean isUsable_WaterScrubTrap(){
+        return (island.getTerrain(player.getPosition())==Terrain.WATER ||
+                island.getTerrain(player.getPosition())==Terrain.SCRUB)
+                && (player.specialTrap().equals("WaterScrub"));
+    }
+       
+    public boolean isUsable_A24LandTrap(){
+        return (island.getTerrain(player.getPosition())!=Terrain.WATER)
+                && (player.specialTrap().equals("A24Land"));
+    }
+    
+    public boolean isUsable_GeneralTrap(){
+        return player.specialTrap().equals("General");
     }
     
      /** 

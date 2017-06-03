@@ -481,9 +481,11 @@ public class SidePanel {
     private BufferedImage getTrapButton(){
         BufferedImage trapIcon = assetManager.getActionTrap()[INACTIVE_BUTTON];
         for(Occupant o: getOccupants()){
-            if(game.getPlayer().hasTrap() && 
-                o instanceof Fauna && !(o instanceof Kiwi)){
+            if((game.isUsable_A24LandTrap() || game.isUsable_ForestWetlandTrap() 
+                || game.isUsable_WaterScrubTrap() || game.isUsable_GeneralTrap())
+                && (o instanceof Fauna && !(o instanceof Kiwi))){
                     trapIcon = assetManager.getActionTrap()[ACTIVE_BUTTON];
+                
             }
         }
         return trapIcon;
