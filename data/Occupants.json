@@ -4,7 +4,7 @@
       "name": "Sandwich",
       "description": "A nice and healthy sandwich",
       "weight": 2.0,
-      "size": 1.0,
+      "size": 0.5,
       "energy": 50.0,
       "portrait": "images/occupants/food/sandwich.jpg",
       "habitats": {
@@ -19,7 +19,7 @@
       "name": "Muesli Bar",
       "description": "A juicy and nutricious muesli bar",
       "weight": 1.0,
-      "size": 1.0,
+      "size": 0.5,
       "energy": 50.0,
       "portrait": "images/occupants/food/muesli_bar.jpg",
       "habitats": {
@@ -34,7 +34,7 @@
       "name": "Apple",
       "description": "A juicy apple",
       "weight": 2.0,
-      "size": 3.0,
+      "size": 0.5,
       "energy": 50.0,
       "portrait": "images/occupants/food/apple.jpg",
       "habitats": {
@@ -49,7 +49,7 @@
       "name": "Orange Juice",
       "description": "A bottle of juice",
       "weight": 2.0,
-      "size": 3.0,
+      "size": 0.5,
       "energy": 50.0,
       "portrait": "images/occupants/food/orange_juice.jpg",
       "habitats": {
@@ -66,7 +66,7 @@
       "name": "Trap",
       "description": "A trap for all types of predators in the field",
       "weight": 1.0,
-      "size": 1.0,
+      "size": 0.5,
       "portrait": "images/occupants/tool/trap.jpg",
       "habitats": {
         "SAND":0.25,
@@ -80,7 +80,7 @@
       "name": "Screwdriver",
       "description": "A screwdriver that is useful for fixing traps",
       "weight": 0.5,
-      "size": 0.75,
+      "size": 0.5,
       "portrait": "images/occupants/tool/screwdriver.jpg",
       "habitats": {
         "SAND":0.25,
@@ -133,8 +133,6 @@
       }
     }
   ],
-  
-  
   "faunae": [
     {
       "name": "Oystercatcher",
@@ -404,7 +402,7 @@
   "hazards": [
     {
       "name": "Cliff",
-      "description": "A fall down a steep rocky cliff",
+      "description": "A fall down a steep rocky cliff.",
       "impact": 1.0,
       "portrait": "images/occupants/hazard/cliff.jpg",
       "habitats": {
@@ -417,7 +415,7 @@
     },
     {
       "name": "Pond",
-      "description": "A fall into a deep pond",
+      "description": "A fall into a deep pond.",
       "impact": 1.0,
       "portrait": "images/occupants/hazard/pond.jpg",
       "habitats": {
@@ -430,7 +428,7 @@
     },
     {
       "name": "Rock",
-      "description": "A large falling rock",
+      "description": "A large falling rock.",
       "impact": 1.0,
       "portrait": "images/occupants/hazard/rock.jpg",
       "habitats": {
@@ -443,7 +441,7 @@
     },
     {
       "name": "Sunburn",
-      "description": "Too much sun has given you bad sunburn and",
+      "description": "Too much sun has given you bad sunburn.",
       "impact": 0.3,
       "portrait": "images/occupants/hazard/sunburn.jpg",
       "habitats": {
@@ -456,7 +454,7 @@
     },
     {
       "name": "Fall",
-      "description": "Tripping on roots hurt your ankle and",
+      "description": "Tripping on roots hurt your ankle.",
       "impact": 0.5,
       "portrait": "images/occupants/hazard/fall.jpg",
       "habitats": {
@@ -469,7 +467,7 @@
     },
     {
       "name": "Small cliff",
-      "description": "A fall down a small cliff",
+      "description": "A fall down a small cliff.",
       "impact": 0.3,
       "portrait": "images/occupants/hazard/small_cliff.jpg",
       "habitats": {
@@ -482,7 +480,7 @@
     },
     {
       "name": "Broken trap",
-      "description": "Your predator trap has broken",
+      "description": "Your predator trap has broken.",
       "impact": 0.0,
       "portrait": "images/occupants/hazard/broken_trap.jpg",
       "habitats": {

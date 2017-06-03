@@ -1,7 +1,5 @@
 package nz.ac.aut.ense701.gui;
 
-import java.awt.Component;
-import java.awt.GridLayout;
 import javax.swing.JOptionPane;
 import nz.ac.aut.ense701.gameModel.Game;
 import nz.ac.aut.ense701.gameModel.GameEventListener;

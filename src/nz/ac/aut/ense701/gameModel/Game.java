@@ -674,7 +674,7 @@ public class Game
             if(predatorsTrapped >= totalPredators * MIN_REQUIRED_CATCH)
             {
                 state = GameState.WON;
-                message = "You win! You have counted all the kiwi and trapped at least 80% of the predators.";
+                message = "You win! You have tagged all the kiwi and trapped at least 80% of the predators.";
                 this.setWinMessage(message);
             }
         }

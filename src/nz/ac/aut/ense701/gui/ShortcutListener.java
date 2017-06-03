@@ -47,6 +47,11 @@ public class ShortcutListener implements KeyListener{
                 mouseActions.performTagging();
                 break;
             }
+            case KeyEvent.VK_R:
+            {
+                mouseActions.performTrapping();
+                break;
+            }
         }        
     }
 
