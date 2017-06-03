@@ -1090,6 +1090,10 @@ public class Game
             if ( occupant != null ) island.addOccupant(occPos, occupant);
         }
     }    
+    
+    public void setToFirstNightForTestingPurposes() {
+        this.time.turn = 12;
+    }
 
     /**
      * An overloading method to setup occupants by using IDataManager instead of 
