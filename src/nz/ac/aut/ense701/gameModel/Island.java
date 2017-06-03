@@ -115,7 +115,9 @@ public class Island
     }
     
      /**
-     * Gets the occupants of position as an array.
+     * Gets the occupants of position as an array. Only use this method from the 
+     * getOccupantsOn(Position position) method in Game, so that Kiwi will only be
+     * found at night!
      * @param position to use
      * @return the occupants of this position
      */

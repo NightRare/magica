@@ -211,13 +211,13 @@ public class Player
                 if (tool.isTrap())
                 {
                     found = true;
-                } else if(tool.isRatTrap()){ 
+                } else if(tool.isForestWetlandTrap()){ 
                     found = true; 
                 }
-                  else if(tool.isCatTrap()){ 
+                  else if(tool.isWaterScrubTrap()){ 
                     found = true; 
                 }
-                  else if(tool.isA24Trap()){ 
+                  else if(tool.isA24LandTrap()){ 
                     found = true; 
                 } 
             }
@@ -241,11 +241,11 @@ public class Player
                 if (tool.isTrap())
                 {
                     trap = tool;
-                } else if(tool.isRatTrap()){ 
+                } else if(tool.isForestWetlandTrap()){ 
                     trap = tool; 
-                } else if(tool.isCatTrap()){ 
+                } else if(tool.isWaterScrubTrap()){ 
                     trap = tool; 
-                } else if(tool.isA24Trap()){ 
+                } else if(tool.isA24LandTrap()){ 
                     trap = tool; 
                 }
 
@@ -338,9 +338,9 @@ public class Player
             {
                 Tool tool = (Tool) item;
                 additionalTrap = (tool.isTrap()&& this.hasTrap());
-                additionalTrap1 = (tool.isCatTrap()&& this.hasTrap());
-                additionalTrap2 = (tool.isRatTrap()&& this.hasTrap());
-                additionalTrap3 = (tool.isA24Trap()&& this.hasTrap());
+                additionalTrap1 = (tool.isWaterScrubTrap()&& this.hasTrap());
+                additionalTrap2 = (tool.isForestWetlandTrap()&& this.hasTrap());
+                additionalTrap3 = (tool.isA24LandTrap()&& this.hasTrap());
             }
                    
             if (enoughRoom && notTooHeavy && !additionalTrap && !additionalTrap1 && !additionalTrap2 && !additionalTrap3)

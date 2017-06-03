@@ -5,7 +5,6 @@
  */
 package nz.ac.aut.ense701.gui;
 
-import java.awt.Color;
 import java.awt.image.BufferedImage;
 import nz.ac.aut.ense701.gameModel.Fauna;
 import nz.ac.aut.ense701.gameModel.Food;
@@ -13,8 +12,6 @@ import nz.ac.aut.ense701.gameModel.Game;
 import nz.ac.aut.ense701.gameModel.GameState;
 import nz.ac.aut.ense701.gameModel.Hazard;
 import nz.ac.aut.ense701.gameModel.Occupant;
-import nz.ac.aut.ense701.gameModel.Player;
-import nz.ac.aut.ense701.gameModel.Predator;
 import nz.ac.aut.ense701.gameModel.Terrain;
 import nz.ac.aut.ense701.gameModel.Tool;
 

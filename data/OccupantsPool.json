@@ -9,9 +9,9 @@
   "tools":{
     "Trap":1,
     "Screwdriver":1,
-    "Rat Trap":1,
-    "Cat Trap":1,
-    "A24 Trap":2
+    "Forest & Wetland Trap":1,
+    "Water & Scrub Trap":1,
+    "A24 Land Trap":2
   },
 
   "faunae":{

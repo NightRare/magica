@@ -216,7 +216,7 @@ public class Game
      */
     public Occupant[] getOccupantsPlayerPosition()
     {
-        return island.getOccupants(player.getPosition());
+        return getOccupantsOn(player.getPosition());
     }
     
     /**
@@ -230,7 +230,28 @@ public class Game
     }
     
     public Occupant[] getOccupantOn(int row, int column){
-        return island.getOccupants(new Position(island, row, column));
+        
+        Occupant[] includingKiwi = island.getOccupants(new Position(island, row, column));
+        
+        ArrayList<Occupant> noKiwi = new ArrayList<>();
+        for (int o = 0; o < includingKiwi.length; o++) {
+            if (!includingKiwi[o].getStringRepresentation().equals("K")) {
+                noKiwi.add(includingKiwi[o]);
+            }
+        }
+        if (lightLevel() == LightLevel.DAY) { 
+            Occupant[] noKiwiArray = new Occupant[noKiwi.size()];
+            for (int i = 0; i < noKiwi.size(); i++) {
+                noKiwiArray[i] = noKiwi.get(i);
+            }
+            return noKiwiArray;
+        } else {
+            return includingKiwi;
+        }
+    }
+    
+    public Occupant[] getOccupantsOn(Position pos) {
+        return getOccupantOn(pos.getRow(), pos.getColumn());
     }
     
     /**
@@ -375,15 +396,15 @@ public class Game
                     result = player.getTrap().isBroken();
                 }
                 //Mouse trap can only be used if there is a predator to catch 
-                else if (tool.isRatTrap()) 
+                else if (tool.isForestWetlandTrap()) 
                 { //Will be subject for change 
                      result = island.hasNonKiwiFauna(player.getPosition()); 
                 }
-                else if (tool.isCatTrap()) 
+                else if (tool.isWaterScrubTrap()) 
                 { //Will be subject for change 
                      result = island.hasNonKiwiFauna(player.getPosition()); 
                 }
-                else if (tool.isA24Trap()) 
+                else if (tool.isA24LandTrap()) 
                 { //Will be subject for change 
                      result = island.hasNonKiwiFauna(player.getPosition()); 
                 }
@@ -524,13 +545,13 @@ public class Game
             {
                  success = useTrap(); 
             }
-            else if(tool.isRatTrap()&& !tool.isBroken()){ 
+            else if(tool.isForestWetlandTrap()&& !tool.isBroken()){ 
                 success = useTrap();  
             }
-            else if(tool.isCatTrap()&& !tool.isBroken()){ 
+            else if(tool.isWaterScrubTrap()&& !tool.isBroken()){ 
                 success = useTrap();  
             }
-            else if(tool.isA24Trap()&& !tool.isBroken()){ 
+            else if(tool.isA24LandTrap()&& !tool.isBroken()){ 
                 success = useTrap();  
             }
             else if(tool.isScrewdriver())// Use screwdriver (to fix trap)
@@ -552,7 +573,7 @@ public class Game
     public void countKiwi() 
     {
         //check if there are any kiwis here
-        for (Occupant occupant : island.getOccupants(player.getPosition())) {
+        for (Occupant occupant : getOccupantsOn(player.getPosition())) {
             if (occupant instanceof Kiwi) {
                 Kiwi kiwi = (Kiwi) occupant;
                 if (!kiwi.counted()) {
@@ -653,7 +674,7 @@ public class Game
             if(predatorsTrapped >= totalPredators * MIN_REQUIRED_CATCH)
             {
                 state = GameState.WON;
-                message = "You win! You have counted all the kiwi and trapped at least 80% of the predators.";
+                message = "You win! You have tagged all the kiwi and trapped at least 80% of the predators.";
                 this.setWinMessage(message);
             }
         }
@@ -712,7 +733,7 @@ public class Game
      */
     private boolean useTrap() {
         Position current = player.getPosition();
-        Occupant[] occupants = island.getOccupants(current);
+        Occupant[] occupants = getOccupantsOn(current);
         
         for(Occupant o : occupants) {
             if(!(o instanceof Fauna) || (o instanceof Kiwi)) {
@@ -749,25 +770,30 @@ public class Game
         {
             Occupant occupant = island.getPredator(current);
             //Predator has been trapped so remove
+            //System.out.println(island.getTerrain(current).name()+" type of terrain");
+            //System.out.println(player.getTrap().getName() +" type of trap");
             
-             //By using the Rat Trap
-            if(predatorViaRatTrap(occupant.getName(),player.getTrap().getName())){
+             //By using the Trap
+            if(predatorViaForestWetlandTrap(island.getTerrain(current).name(),player.getTrap().getName())){
+             //System.out.println("Forest & Wetland Trap executed!");
             island.removeOccupant(current, occupant); 
             predatorsTrapped++;
             //notify player that the predator is trapped
             notification.predatorTrapped(); 
             }
             
-            else if(predatorViaCatTrap(occupant.getName(),player.getTrap().getName())){
-             //By using the Cat Trap    
+            else if(predatorViaWaterScrubTrap(island.getTerrain(current).name(),player.getTrap().getName())){
+            //System.out.println("Water & Scrub trap executed!");
+             //By using the Trap    
             island.removeOccupant(current, occupant); 
             predatorsTrapped++;
             //notify player that the predator is trapped
             notification.predatorTrapped(); 
             }
             
-            else if(predatorViaA24Trap(occupant.getName(),player.getTrap().getName())){
-             //By using the Cat Trap    
+            else if(predatorViaA24LandTrap(island.getTerrain(current).name(),player.getTrap().getName())){
+            //System.out.println("A24 Land trap executed!");
+             //By using the Trap    
             island.removeOccupant(current, occupant); 
             predatorsTrapped++;
             //notify player that the predator is trapped
@@ -788,14 +814,14 @@ public class Game
      /** 
      * Checks if the player the right trap(Rat Trap) for the right predator(s) 
      * if they do. 
-     * @param predator Rat or Kiore
-     * @param trapType Rat Trap
+     * @param terrain 
+     * @param trapType 
      * @return boolean
      */ 
-    public boolean predatorViaRatTrap(String predator, String trapType){ 
-        if(predator.equalsIgnoreCase("Rat") && trapType.equalsIgnoreCase("Rat Trap")){ 
+    public boolean predatorViaForestWetlandTrap(String terrain, String trapType){ 
+        if(terrain.equalsIgnoreCase("FOREST") && trapType.equalsIgnoreCase("Forest & Wetland Trap")){ 
             return true; 
-        } else if(predator.equalsIgnoreCase("Kiore") && trapType.equalsIgnoreCase("Rat Trap")){
+        } else if(terrain.equalsIgnoreCase("WETLAND") && trapType.equalsIgnoreCase("Forest & Wetland Trap")){
             return true; 
         }
         else return false;
@@ -804,29 +830,29 @@ public class Game
      /** 
      * Checks if the player the right trap(Cat Trap) for the right predator(s) 
      * if they do. 
-     * @param predator Cat
-     * @param trapType Cat Trap
+     * @param terrain 
+     * @param trapType 
      * @return boolean
      */ 
-    public boolean predatorViaCatTrap(String predator, String trapType){ 
-        if(predator.equalsIgnoreCase("Cat") && trapType.equalsIgnoreCase("Cat Trap")){
+    public boolean predatorViaWaterScrubTrap(String terrain, String trapType){ 
+        if(terrain.equalsIgnoreCase("WATER") && trapType.equalsIgnoreCase("Water & Scrub Trap")){
             return true; 
-        }else return false; 
+        }else if(terrain.equalsIgnoreCase("SCRUB") && trapType.equalsIgnoreCase("Water & Scrub Trap")){
+            return true;
+        }
+        else return false; 
     }
     
      /** 
      * Checks if the player the right trap(Cat Trap) for the right predator(s) 
      * if they do. 
-     * @param predator Rat or Stoat
+     * @param terrain
      * @param trapType
      * @return boolean
      */ 
-    public boolean predatorViaA24Trap(String predator, String trapType){ 
-        if(predator.equalsIgnoreCase("Rat") && trapType.equalsIgnoreCase("A24 Trap")){
+    public boolean predatorViaA24LandTrap(String terrain, String trapType){
+        if(!terrain.equalsIgnoreCase("WATER") && trapType.equalsIgnoreCase("A24 Land Trap"))
             return true; 
-        } else if(predator.equalsIgnoreCase("Stoat") && trapType.equalsIgnoreCase("A24 Trap")){
-            return true; 
-        }
         else return false; 
     }
     
@@ -848,7 +874,7 @@ public class Game
      * if they do.
      */
     private void playFaunaSoundOrNot() {
-        Occupant[] occupantsEncountered = island.getOccupants(player.getPosition());
+        Occupant[] occupantsEncountered = getOccupantsOn(player.getPosition());
         for (Occupant o : occupantsEncountered) {
             for (Occupant faunaWithSound : soundMap.keySet()) {
                 if (faunaWithSound.getName().equals(o.getName())) {
@@ -865,7 +891,7 @@ public class Game
     private void checkForHazard()
     {
         //check if there are hazards
-        for ( Occupant occupant : island.getOccupants(player.getPosition())  )
+        for ( Occupant occupant : getOccupantsOn(player.getPosition())  )
         {
             if ( occupant instanceof Hazard )
             {

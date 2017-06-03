@@ -501,48 +501,43 @@ public class GameTest extends junit.framework.TestCase
         assertTrue("Game should not be over", game.getState()== GameState.PLAYING);
     }
     
+    
     @Test
-    public void testCountKiwi()
+    public void testPredatorViaForestWetlandTrap()
     {
-        //Need to move to a place where there is a kiwi
-        assertTrue (" This move valid", playerMoveEast(5));
-        game.countKiwi();
-        assertEquals("Wrong count", game.getKiwiCount(), 1);
+        //Valid for Forest terrain predators
+        assertTrue (" This trap for the rat predator is valid", game.predatorViaForestWetlandTrap("FOREST","Forest & Wetland Trap"));
+        //Valid for Wetland terrain predators
+        assertTrue (" This trap for the kiore predator is valid", game.predatorViaForestWetlandTrap("WETLAND","Forest & Wetland Trap"));
+        
+        assertFalse (" This trap for sand terrain is invalid", game.predatorViaForestWetlandTrap("SAND","Forest & Wetland Trap"));
+        assertFalse (" This trap for water terrain is invalid", game.predatorViaForestWetlandTrap("WATER","Forest & Wetland Trap"));
+        assertFalse (" This trap for scrub terrain is invalid", game.predatorViaForestWetlandTrap("SCRUB","Forest & Wetland Trap"));
     }
     
     @Test
-    public void testPredatorViaRatTrap()
+    public void testPredatorViaWaterScrubTrap()
     {
-        //Valid for Rat predator
-        assertTrue (" This trap for the rat predator is valid", game.predatorViaRatTrap("Rat","Rat Trap"));
-        //Valid for Kiore predator
-        assertTrue (" This trap for the kiore predator is valid", game.predatorViaRatTrap("Kiore","Rat Trap"));
-        assertFalse (" This trap for the cat predator is invalid", game.predatorViaRatTrap("Cat","Rat Trap"));
-        assertFalse (" This trap for the stoat predator is invalid", game.predatorViaRatTrap("Stoat","Rat Trap"));
-        assertFalse (" This trap for the possum predator is invalid", game.predatorViaRatTrap("Possum","Rat Trap"));
+        //Valid for water terrain predators
+        assertTrue (" This trap for water terrain is valid", game.predatorViaWaterScrubTrap("WATER","Water & Scrub Trap"));
+        //Valid for scrub terrain predators
+        assertTrue (" This trap for scrub terrain is valid", game.predatorViaWaterScrubTrap("SCRUB","Water & Scrub Trap"));
+        
+        assertFalse (" This trap for wetland terrain is invalid", game.predatorViaWaterScrubTrap("WETLAND","Water & Scrub Trap"));
+        assertFalse (" This trap for sand terrain is invalid", game.predatorViaWaterScrubTrap("SAND","Water & Scrub Trap"));
+        assertFalse (" This trap for forest terrain is invalid", game.predatorViaWaterScrubTrap("FOREST","Water & Scrub Trap"));
     }
     
     @Test
-    public void testPredatorViaCatTrap()
+    public void testPredatorViaA24LandTrap()
     {
-        //Valid for Cat predator
-        assertTrue (" This trap for the Cat predator is valid", game.predatorViaCatTrap("Cat","Cat Trap"));
-        assertFalse (" This trap for the kiore predator is invalid", game.predatorViaCatTrap("Kiore","Cat Trap"));
-        assertFalse (" This trap for the rat predator is invalid", game.predatorViaCatTrap("Rat","Cat Trap"));
-        assertFalse (" This trap for the stoat predator is invalid", game.predatorViaCatTrap("Stoat","Cat Trap"));
-        assertFalse (" This trap for the possum predator is invalid", game.predatorViaCatTrap("Possum","Cat Trap"));
-    }
-    
-    @Test
-    public void testPredatorViaA24Trap()
-    {
-        //Valid for Rat predator
-        assertTrue (" This trap for the Rat predator is valid", game.predatorViaA24Trap("Rat","A24 Trap"));
-        //Valid for Stoat predator
-        assertTrue (" This trap for the Stoat predator is valid", game.predatorViaA24Trap("Stoat","A24 Trap"));
-        assertFalse (" This trap for the kiore predator is invalid", game.predatorViaA24Trap("Kiore","A24 Trap"));
-        assertFalse (" This trap for the cat predator is invalid", game.predatorViaA24Trap("Cat","A24 Trap"));
-        assertFalse (" This trap for the possum predator is invalid", game.predatorViaA24Trap("Possum","A24 Trap"));
+        //Invalid for water terrain predator
+        assertFalse (" This trap for the Rat predator is invalid", game.predatorViaA24LandTrap("WATER","A24 Land Trap"));
+
+        assertTrue (" This trap for scrub terrain is valid", game.predatorViaA24LandTrap("SCRUB","A24 Land Trap"));
+        assertTrue (" This trap for forest terrain is valid", game.predatorViaA24LandTrap("FOREST","A24 Land Trap"));
+        assertTrue (" This trap for wetland terrain is valid", game.predatorViaA24LandTrap("WETLAND","A24 Land Trap"));
+        assertTrue (" This trap for sand terrain is valid", game.predatorViaA24LandTrap("SAND","A24 Land Trap"));
     }
     
     @Test
@@ -550,7 +545,7 @@ public class GameTest extends junit.framework.TestCase
     {
         //Valid for All predators as long as they have the Trap
         assertTrue (" This trap is valid for the all predators", game.predatorViaGeneralTrap("Trap"));
-    }
+    } 
 
 /**
  * Private helper methods

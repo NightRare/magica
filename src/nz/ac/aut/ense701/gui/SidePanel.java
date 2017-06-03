@@ -29,7 +29,7 @@ public class SidePanel {
     private final Game game;
 
     private BufferedImage inventoryEmpty, inventorySnack,
-            inventoryScrewdriver, inventoryApple, inventoryTrap,inventoryRatTrap,inventoryCatTrap,inventoryA24Trap,
+            inventoryScrewdriver, inventoryApple, inventoryTrap,inventoryForestTrap,inventoryWaterTrap,inventoryLandTrap,
             tag,trap,collect;
 
     private final AssetManager assetManager;
@@ -418,9 +418,9 @@ public class SidePanel {
         inventoryScrewdriver = assetManager.getInventoryToolbox();
         inventoryApple = assetManager.getInventoryApple();
         inventoryTrap = assetManager.getInventoryTrap();
-        inventoryRatTrap = assetManager.getInventoryRatTrap();
-        inventoryCatTrap = assetManager.getInventoryCatTrap();
-        inventoryA24Trap = assetManager.getInventoryA24Trap();
+        inventoryForestTrap = assetManager.getInventoryForestWetlandTrap();
+        inventoryWaterTrap = assetManager.getInventoryWaterScrubTrap();
+        inventoryLandTrap = assetManager.getInventoryA24LandTrap();
     }
 
     private String numOfKiwi() {
@@ -458,9 +458,9 @@ public class SidePanel {
                 case "sandwich": imgArray[i] = inventorySnack;break;
                 case "muesli bar": imgArray[i] = inventorySnack;break;
                 case "apple": imgArray[i] = inventoryApple;break;
-                case "rat trap": imgArray[i] = inventoryRatTrap;break;
-                case "cat trap": imgArray[i] = inventoryCatTrap;break;
-                case "a24 trap": imgArray[i] = inventoryA24Trap;break;
+                case "forest & wetland trap": imgArray[i] = inventoryForestTrap;break;
+                case "water & scrub trap": imgArray[i] = inventoryWaterTrap;break;
+                case "a24 land trap": imgArray[i] = inventoryLandTrap;break;
             }
         }
         return imgArray;
@@ -501,7 +501,8 @@ public class SidePanel {
     
     public Occupant[] getOccupants() {
         Position position = game.getPlayer().getPosition();
-        return game.getIsland().getOccupants(position);
+        
+       return game.getOccupantOn(position.getRow(), position.getColumn());
     }
     
     public void setInfoOccupant(Occupant occupantToDisplay) {
