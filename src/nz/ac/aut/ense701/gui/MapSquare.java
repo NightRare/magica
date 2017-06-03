@@ -91,7 +91,7 @@ public class MapSquare {
             if(game.getState()==GameState.LOST){ texture = dark; } 
         } else {
             texture = dark;
-            //label = "";
+            occupant = null;
         }
     }
 
