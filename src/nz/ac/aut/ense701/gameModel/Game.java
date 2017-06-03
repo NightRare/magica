@@ -1100,12 +1100,13 @@ public class Game
      * the old txt file.
      */
     private void setUpOccupants() {
+        boolean validMap;
         
         if(island.getNumRows() == island.getNumColumns()) {
-            boolean validMap = true;
-            Set<Occupant>[][] oMap = null;
-            
-            do{            
+
+            Set<Occupant>[][] oMap = null;            
+            do{
+                validMap = true;
                 oMap = setUpOccupantsRandomiser().distributeOccupantsRandomly();            
                 // if a hazard spawned on the original square of the player, redo
                 // TODO this is a temporary fix for "player start on hazard" issue, will refactor later
