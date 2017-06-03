@@ -23,7 +23,7 @@ public class AssetManager {
     private BufferedImage animal, food, tool, hazard; //inventory items
     private BufferedImage tag_active, tag_inactive, trap_active, trap_inactive, collect_active, collect_inactive; //action boxes
     private BufferedImage playerFace_happy,playerFace_neutral, playerFace_hungry, playerFace_tired,questIcon,
-            inventoryEmpty,inventorySnack, inventoryToolbox,inventoryApple,inventoryTrap, inventoryRatTrap, inventoryCatTrap, inventoryA24Trap;
+            inventoryEmpty,inventorySnack, inventoryToolbox,inventoryApple,inventoryTrap, inventoryForestWetlandTrap, inventoryWaterScrubTrap, inventoryA24LandTrap;
     private BufferedImage taggedBubble, trappedBubble, yumBubble;
     private HashMap<String, BufferedImage> occupantsPortraits;
     private IDataManager dataManager;
@@ -73,9 +73,9 @@ public class AssetManager {
         inventoryToolbox = load("images/inventory_icons/inventory_screwdriver.png", sA);
         inventoryApple = load("images/inventory_icons/inventory_apple.png", sA);
         inventoryTrap = load("images/inventory_icons/inventory_trap.png", sA);
-        inventoryRatTrap = load("images/inventory_icons/inventory_ratTrap.png", sA); 
-        inventoryCatTrap = load("images/inventory_icons/inventory_catTrap.png", sA); 
-        inventoryA24Trap = load("images/inventory_icons/inventory_a24Trap.png", sA); 
+        inventoryForestWetlandTrap = load("images/inventory_icons/inventory_forestWetlandTrap.png", sA); 
+        inventoryWaterScrubTrap = load("images/inventory_icons/inventory_waterScrubTrap.png", sA); 
+        inventoryA24LandTrap = load("images/inventory_icons/inventory_a24LandTrap.png", sA); 
         
         tag_active = load("images/action/tag_active.png", sA);
         tag_inactive = load("images/action/tag_inactive.png", sA);
@@ -266,16 +266,16 @@ public class AssetManager {
         return yumBubble;
     }
     
-    public BufferedImage getInventoryRatTrap() { 
-        return inventoryRatTrap; 
+    public BufferedImage getInventoryForestWetlandTrap() { 
+        return inventoryForestWetlandTrap; 
     }
     
-    public BufferedImage getInventoryCatTrap() { 
-        return inventoryCatTrap; 
+    public BufferedImage getInventoryWaterScrubTrap() { 
+        return inventoryWaterScrubTrap; 
     }
     
-    public BufferedImage getInventoryA24Trap() { 
-        return inventoryA24Trap; 
+    public BufferedImage getInventoryA24LandTrap() { 
+        return inventoryA24LandTrap; 
     }
 
     public BufferedImage getPlayerAlt() {

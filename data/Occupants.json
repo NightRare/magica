@@ -91,11 +91,11 @@
       }
     },
     {
-      "name": "Rat Trap",
-      "description": "A trap for Rat and Kiore predators",
+      "name": "Forest & Wetland Trap",
+      "description": "A trap for forest and wetland terrain predators",
       "weight": 0.5,
       "size": 0.75,
-      "portrait": "images/occupants/tool/ratTrap.jpg",
+      "portrait": "images/occupants/tool/forestWetlandTrap.jpg",
       "habitats": {
         "SAND":0.25,
         "FOREST":0.25,
@@ -105,11 +105,11 @@
       }
     },
     {
-      "name": "Cat Trap",
-      "description": "A trap for a Cat predator",
+      "name": "Water & Scrub Trap",
+      "description": "A trap for any predators in the water and scrub area",
       "weight": 0.5,
       "size": 0.75,
-      "portrait": "images/occupants/tool/catTrap.jpg",
+      "portrait": "images/occupants/tool/waterScrubTrap.jpg",
       "habitats": {
         "SAND":0.25,
         "FOREST":0.25,
@@ -119,11 +119,11 @@
       }
     },
     {
-      "name": "A24 Trap",
-      "description": "A poisonous trap for Rat and Stoat predators",
+      "name": "A24 Land Trap",
+      "description": "A poisonous trap that can be used in predators on any types of the terrain except water",
       "weight": 0.5,
       "size": 0.75,
-      "portrait": "images/occupants/tool/a24_ratAndStoatTrap.jpg",
+      "portrait": "images/occupants/tool/a24LandTrap.jpg",
       "habitats": {
         "SAND":0.25,
         "FOREST":0.25,
