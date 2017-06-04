@@ -884,7 +884,7 @@ public class Game
     }
     
      /** 
-     * Checks if the player the right trap(Rat Trap) for the right predator(s) 
+     * Checks if the player the right trap(ForestWetlandTrap) for the right predator(s) 
      * if they do. 
      * @param terrain 
      * @param trapType 
@@ -900,7 +900,7 @@ public class Game
     }
     
      /** 
-     * Checks if the player the right trap(Cat Trap) for the right predator(s) 
+     * Checks if the player the right trap(WaterScrubTrap) for the right predator(s) 
      * if they do. 
      * @param terrain 
      * @param trapType 
@@ -916,7 +916,7 @@ public class Game
     }
     
      /** 
-     * Checks if the player the right trap(Cat Trap) for the right predator(s) 
+     * Checks if the player the right trap(A24LandTrap) for the right predator(s) 
      * if they do. 
      * @param terrain
      * @param trapType

@@ -3,7 +3,9 @@ package nz.ac.aut.ense701.gameModel;
 import nz.ac.aut.ense701.gui.GameNotification;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * The test class GameTest.
@@ -527,46 +529,54 @@ public class GameTest extends junit.framework.TestCase
     @Test
     public void testPredatorViaForestWetlandTrap()
     {
+        ArrayList<Tool> tools = new ArrayList<>();
+        tools.add(new Tool(playerPosition, "Forest & Wetland Trap", "", 0.5, 0.5));
         //Valid for Forest terrain predators
-        assertTrue (" This trap for the rat predator is valid", game.predatorViaForestWetlandTrap("FOREST","Forest & Wetland Trap"));
+        assertTrue (" This trap for the forest wetland is valid", game.predatorViaForestWetlandTrap("FOREST",tools));
         //Valid for Wetland terrain predators
-        assertTrue (" This trap for the kiore predator is valid", game.predatorViaForestWetlandTrap("WETLAND","Forest & Wetland Trap"));
+        assertTrue (" This trap for the kiore predator is valid", game.predatorViaForestWetlandTrap("WETLAND",tools));
         
-        assertFalse (" This trap for sand terrain is invalid", game.predatorViaForestWetlandTrap("SAND","Forest & Wetland Trap"));
-        assertFalse (" This trap for water terrain is invalid", game.predatorViaForestWetlandTrap("WATER","Forest & Wetland Trap"));
-        assertFalse (" This trap for scrub terrain is invalid", game.predatorViaForestWetlandTrap("SCRUB","Forest & Wetland Trap"));
+        assertFalse (" This trap for sand terrain is invalid", game.predatorViaForestWetlandTrap("SAND",tools));
+        assertFalse (" This trap for water terrain is invalid", game.predatorViaForestWetlandTrap("WATER",tools));
+        assertFalse (" This trap for scrub terrain is invalid", game.predatorViaForestWetlandTrap("SCRUB",tools));
     }
     
     @Test
     public void testPredatorViaWaterScrubTrap()
     {
+        ArrayList<Tool> tools = new ArrayList<>();
+        tools.add(new Tool(playerPosition, "Water & Scrub Trap", "", 0.5, 0.5));
         //Valid for water terrain predators
-        assertTrue (" This trap for water terrain is valid", game.predatorViaWaterScrubTrap("WATER","Water & Scrub Trap"));
+        assertTrue (" This trap for water terrain is valid", game.predatorViaWaterScrubTrap("WATER",tools));
         //Valid for scrub terrain predators
-        assertTrue (" This trap for scrub terrain is valid", game.predatorViaWaterScrubTrap("SCRUB","Water & Scrub Trap"));
+        assertTrue (" This trap for scrub terrain is valid", game.predatorViaWaterScrubTrap("SCRUB",tools));
         
-        assertFalse (" This trap for wetland terrain is invalid", game.predatorViaWaterScrubTrap("WETLAND","Water & Scrub Trap"));
-        assertFalse (" This trap for sand terrain is invalid", game.predatorViaWaterScrubTrap("SAND","Water & Scrub Trap"));
-        assertFalse (" This trap for forest terrain is invalid", game.predatorViaWaterScrubTrap("FOREST","Water & Scrub Trap"));
+        assertFalse (" This trap for wetland terrain is invalid", game.predatorViaWaterScrubTrap("WETLAND",tools));
+        assertFalse (" This trap for sand terrain is invalid", game.predatorViaWaterScrubTrap("SAND",tools));
+        assertFalse (" This trap for forest terrain is invalid", game.predatorViaWaterScrubTrap("FOREST",tools));
     }
     
     @Test
     public void testPredatorViaA24LandTrap()
     {
+        ArrayList<Tool> tools = new ArrayList<>();
+        tools.add(new Tool(playerPosition, "A24 Land Trap", "", 0.5, 0.5));
         //Invalid for water terrain predator
-        assertFalse (" This trap for the Rat predator is invalid", game.predatorViaA24LandTrap("WATER","A24 Land Trap"));
+        assertFalse (" This trap for the Rat predator is invalid", game.predatorViaA24LandTrap("WATER",tools));
 
-        assertTrue (" This trap for scrub terrain is valid", game.predatorViaA24LandTrap("SCRUB","A24 Land Trap"));
-        assertTrue (" This trap for forest terrain is valid", game.predatorViaA24LandTrap("FOREST","A24 Land Trap"));
-        assertTrue (" This trap for wetland terrain is valid", game.predatorViaA24LandTrap("WETLAND","A24 Land Trap"));
-        assertTrue (" This trap for sand terrain is valid", game.predatorViaA24LandTrap("SAND","A24 Land Trap"));
+        assertTrue (" This trap for scrub terrain is valid", game.predatorViaA24LandTrap("SCRUB",tools));
+        assertTrue (" This trap for forest terrain is valid", game.predatorViaA24LandTrap("FOREST",tools));
+        assertTrue (" This trap for wetland terrain is valid", game.predatorViaA24LandTrap("WETLAND",tools));
+        assertTrue (" This trap for sand terrain is valid", game.predatorViaA24LandTrap("SAND",tools));
     }
     
     @Test
     public void testPredatorViaGeneralTrap()
     {
+        ArrayList<Tool> tools = new ArrayList<>();
+        tools.add(new Tool(playerPosition, "Trap", "", 0.5, 0.5));
         //Valid for All predators as long as they have the Trap
-        assertTrue (" This trap is valid for the all predators", game.predatorViaGeneralTrap("Trap"));
+        assertTrue (" This trap is valid for the all predators", game.predatorViaGeneralTrap(tools));
     } 
 
 /**
