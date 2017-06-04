@@ -30,7 +30,7 @@ If want to use another IDE, you need to:
 
 ## Declaration of the use of resources
 
-The sound files used in this project are converted from the following resources and are only used for this **non-commercial** project on **educational** purpose, which is a component of the assessments of our Software Engineering paper and will **not** be published for any commercial use. 
+The sound files (except for the background music) used in this project are converted from the following resources and are only used for this **non-commercial** project on **educational** purpose, which is a component of the assessments of our Software Engineering paper and will **not** be published for any commercial use. 
 
 Cat.ogg
 https://www.youtube.com/watch?v=GaxJ2kyQy8A
