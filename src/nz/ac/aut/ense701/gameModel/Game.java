@@ -745,7 +745,10 @@ public class Game
                 continue;
             }
             
-              if(predatorViaForestWetlandTrap(island.getTerrain(current).name(),player.getTrap().getName())){
+            // get the players traps array list
+            ArrayList<Tool> traps = player.getTraps();
+            
+              if(predatorViaForestWetlandTrap(island.getTerrain(current).name(), traps)){
                     // if it's a neutral fauna, trap it
                     if(island.removeOccupant(current, o)) {
                         player.reduceStamina(STAMINA_PUNISH_CAP_FAUNA);
@@ -754,7 +757,7 @@ public class Game
                                 + " the wrong fauna — costs you " + STAMINA_PUNISH_CAP_FAUNA
                                 + " stamina to take care of it.";
                     }
-              }  else if(predatorViaWaterScrubTrap(island.getTerrain(current).name(),player.getTrap().getName())){
+              }  else if(predatorViaWaterScrubTrap(island.getTerrain(current).name(), traps)){
                       // if it's a neutral fauna, trap it
                     if(island.removeOccupant(current, o)) {
                         player.reduceStamina(STAMINA_PUNISH_CAP_FAUNA);
@@ -763,7 +766,7 @@ public class Game
                                 + " the wrong fauna — costs you " + STAMINA_PUNISH_CAP_FAUNA
                                 + " stamina to take care of it.";
                     }
-              }   else if(predatorViaA24LandTrap(island.getTerrain(current).name(),player.getTrap().getName())){
+              }   else if(predatorViaA24LandTrap(island.getTerrain(current).name(), traps)){
                      // if it's a neutral fauna, trap it
                     if(island.removeOccupant(current, o)) {
                         player.reduceStamina(STAMINA_PUNISH_CAP_FAUNA);
@@ -773,7 +776,7 @@ public class Game
                                 + " stamina to take care of it.";
                     }
                   
-              }  else if(predatorViaGeneralTrap(player.getTrap().getName())){
+              }  else if(predatorViaGeneralTrap(traps)){
                       // if it's a neutral fauna, trap it
                     if(island.removeOccupant(current, o)) {
                         player.reduceStamina(STAMINA_PUNISH_CAP_FAUNA);
@@ -805,8 +808,13 @@ public class Game
             //System.out.println(island.getTerrain(current).name()+" type of terrain");
             //System.out.println(player.getTrap().getName() +" type of trap");
             
+            
+            // get the players traps array list
+            ArrayList<Tool> traps = player.getTraps();
+            
+            
              //By using the Trap
-            if(predatorViaForestWetlandTrap(island.getTerrain(current).name(),player.getTrap().getName())){
+            if(predatorViaForestWetlandTrap(island.getTerrain(current).name(), traps)){
             //System.out.println("Forest & Wetland Trap executed!");
             island.removeOccupant(current, occupant); 
             predatorsTrapped++;
@@ -814,7 +822,7 @@ public class Game
             notification.predatorTrapped(); 
             }
             
-            else if(predatorViaWaterScrubTrap(island.getTerrain(current).name(),player.getTrap().getName())){
+            else if(predatorViaWaterScrubTrap(island.getTerrain(current).name(), traps)){
             //System.out.println("Water & Scrub trap executed!");
              //By using the Trap    
             island.removeOccupant(current, occupant); 
@@ -824,7 +832,7 @@ public class Game
             
             }
             
-            else if(predatorViaA24LandTrap(island.getTerrain(current).name(),player.getTrap().getName())){
+            else if(predatorViaA24LandTrap(island.getTerrain(current).name(), traps)){
             //System.out.println("A24 Land trap executed!");
              //By using the Trap    
             island.removeOccupant(current, occupant); 
@@ -832,7 +840,7 @@ public class Game
             //notify player that the predator is trapped
             notification.predatorTrapped(); 
             } 
-            else if(predatorViaGeneralTrap(player.getTrap().getName())){
+            else if(predatorViaGeneralTrap(traps)){
             island.removeOccupant(current, occupant); 
             predatorsTrapped++;
             //notify player that the predator is trapped
@@ -844,25 +852,35 @@ public class Game
         return hadPredator;
     }
     
+    public boolean containsType(String type, ArrayList<Tool> tools) {
+        boolean match = false;
+        for (Tool tool: tools) {
+            if (tool.getName().equals(type)) {
+                match = true;
+            }
+        }
+        return match;
+    }
+    
     public boolean isUsable_ForestWetlandTrap(){     
         return (island.getTerrain(player.getPosition())==Terrain.FOREST ||
                 island.getTerrain(player.getPosition())==Terrain.WETLAND)
-                && (player.specialTrap().equals("ForestWetland"));
+                && (containsType("Forest & Wetland Trap", player.getTraps()));
     }
     
     public boolean isUsable_WaterScrubTrap(){
         return (island.getTerrain(player.getPosition())==Terrain.WATER ||
                 island.getTerrain(player.getPosition())==Terrain.SCRUB)
-                && (player.specialTrap().equals("WaterScrub"));
+                && (containsType("Water & Scrub Trap", player.getTraps()));
     }
        
     public boolean isUsable_A24LandTrap(){
         return (island.getTerrain(player.getPosition())!=Terrain.WATER)
-                && (player.specialTrap().equals("A24Land"));
+                && (containsType("A24 Land Trap", player.getTraps()));
     }
     
     public boolean isUsable_GeneralTrap(){
-        return player.specialTrap().equals("General");
+        return containsType("Trap", player.getTraps());
     }
     
      /** 
@@ -872,10 +890,10 @@ public class Game
      * @param trapType 
      * @return boolean
      */ 
-    public boolean predatorViaForestWetlandTrap(String terrain, String trapType){ 
-        if(terrain.equalsIgnoreCase("FOREST") && trapType.equalsIgnoreCase("Forest & Wetland Trap")){ 
+    public boolean predatorViaForestWetlandTrap(String terrain, ArrayList<Tool> tools){ 
+        if(terrain.equalsIgnoreCase("FOREST") && containsType("Forest & Wetland Trap", tools)){ 
             return true; 
-        } else if(terrain.equalsIgnoreCase("WETLAND") && trapType.equalsIgnoreCase("Forest & Wetland Trap")){
+        } else if(terrain.equalsIgnoreCase("WETLAND") && containsType("Forest & Wetland Trap", tools)){
             return true; 
         }
         else return false;
@@ -888,10 +906,10 @@ public class Game
      * @param trapType 
      * @return boolean
      */ 
-    public boolean predatorViaWaterScrubTrap(String terrain, String trapType){ 
-        if(terrain.equalsIgnoreCase("WATER") && trapType.equalsIgnoreCase("Water & Scrub Trap")){
+    public boolean predatorViaWaterScrubTrap(String terrain, ArrayList<Tool> tools){ 
+        if(terrain.equalsIgnoreCase("WATER") && containsType("Water & Scrub Trap", tools)){
             return true; 
-        }else if(terrain.equalsIgnoreCase("SCRUB") && trapType.equalsIgnoreCase("Water & Scrub Trap")){
+        }else if(terrain.equalsIgnoreCase("SCRUB") && containsType("Water & Scrub Trap", tools)){
             return true;
         }
         else return false; 
@@ -904,8 +922,8 @@ public class Game
      * @param trapType
      * @return boolean
      */ 
-    public boolean predatorViaA24LandTrap(String terrain, String trapType){
-        if(!terrain.equalsIgnoreCase("WATER") && trapType.equalsIgnoreCase("A24 Land Trap"))
+    public boolean predatorViaA24LandTrap(String terrain, ArrayList<Tool> tools){
+        if(!terrain.equalsIgnoreCase("WATER") && containsType("A24 Land Trap", tools))
             return true; 
         else return false; 
     }
@@ -916,8 +934,8 @@ public class Game
      * @param trapType
      * @return boolean
      */ 
-    public boolean predatorViaGeneralTrap(String trapType){ 
-        if(trapType.equalsIgnoreCase("Trap")){
+    public boolean predatorViaGeneralTrap(ArrayList<Tool> tools){ 
+        if(containsType("Trap", tools)){
             return true; 
         }
         else return false; 

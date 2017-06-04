@@ -1,5 +1,6 @@
 package nz.ac.aut.ense701.gameModel;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
@@ -275,6 +276,20 @@ public class Player
         return trap;
     }
     
+    public ArrayList<Tool> getTraps() {
+        ArrayList<Tool> traps = new ArrayList();
+        for (Item item: backpack) {
+            if (item instanceof Tool) {
+                Tool tool = (Tool) item;
+                if (tool.isTrap()) traps.add(tool);
+                else if (tool.isForestWetlandTrap()) traps.add(tool);
+                else if (tool.isWaterScrubTrap()) traps.add(tool);
+                else if (tool.isA24LandTrap()) traps.add(tool);
+            }
+        }
+        return traps;
+    }
+    
     /**
      * Returns a collection of all items in the player's backpack.
      * 
@@ -348,23 +363,8 @@ public class Player
             double  addedWeight = getCurrentBackpackWeight() + item.getWeight();
             //Will weight fit in backpack?
             boolean notTooHeavy = (addedWeight <= this.maxBackpackWeight);
-            //Player can only carry one trap at a time.
-            
-            //Is this an addtional trap?
-            boolean additionalTrap = false;
-            boolean additionalTrap1 = false;
-            boolean additionalTrap2 = false;
-            boolean additionalTrap3 = false;
-            if(item instanceof Tool)
-            {
-                Tool tool = (Tool) item;
-                additionalTrap = (tool.isTrap()&& this.hasTrap());
-                additionalTrap1 = (tool.isWaterScrubTrap()&& this.hasTrap());
-                additionalTrap2 = (tool.isForestWetlandTrap()&& this.hasTrap());
-                additionalTrap3 = (tool.isA24LandTrap()&& this.hasTrap());
-            }
                    
-            if (enoughRoom && notTooHeavy && !additionalTrap && !additionalTrap1 && !additionalTrap2 && !additionalTrap3)
+            if (enoughRoom && notTooHeavy /*&& !additionalTrap && !additionalTrap1 && !additionalTrap2 && !additionalTrap3*/)
             {
                 success = backpack.add(item);
                 // when item is collected, it is no longer "on the island"
