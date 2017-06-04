@@ -225,6 +225,27 @@ public class Player
         return found;
     }
     
+    public String specialTrap(){
+        String trap = "";
+        for ( Item item : backpack ) 
+        {
+            if(item instanceof Tool)
+            {
+                Tool tool = (Tool) item;
+                if(tool.isTrap()){
+                    trap = "General";
+                } else if(tool.isForestWetlandTrap()){
+                    trap = "ForestWetland";
+                } else if(tool.isWaterScrubTrap()){
+                    trap = "WaterScrub";
+                } else if(tool.isA24LandTrap()){ 
+                    trap = "A24Land"; 
+                } 
+            }
+        }
+        return trap;
+    }
+    
     /**
      * get a trap from player's backpack
      * @return trap or null if player has no trap
