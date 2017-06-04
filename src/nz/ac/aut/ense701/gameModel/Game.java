@@ -802,12 +802,12 @@ public class Game
         {
             Occupant occupant = island.getPredator(current);
             //Predator has been trapped so remove
-            System.out.println(island.getTerrain(current).name()+" type of terrain");
-            System.out.println(player.getTrap().getName() +" type of trap");
+            //System.out.println(island.getTerrain(current).name()+" type of terrain");
+            //System.out.println(player.getTrap().getName() +" type of trap");
             
              //By using the Trap
             if(predatorViaForestWetlandTrap(island.getTerrain(current).name(),player.getTrap().getName())){
-            System.out.println("Forest & Wetland Trap executed!");
+            //System.out.println("Forest & Wetland Trap executed!");
             island.removeOccupant(current, occupant); 
             predatorsTrapped++;
             //notify player that the predator is trapped
@@ -815,7 +815,7 @@ public class Game
             }
             
             else if(predatorViaWaterScrubTrap(island.getTerrain(current).name(),player.getTrap().getName())){
-            System.out.println("Water & Scrub trap executed!");
+            //System.out.println("Water & Scrub trap executed!");
              //By using the Trap    
             island.removeOccupant(current, occupant); 
             predatorsTrapped++;
@@ -825,7 +825,7 @@ public class Game
             }
             
             else if(predatorViaA24LandTrap(island.getTerrain(current).name(),player.getTrap().getName())){
-            System.out.println("A24 Land trap executed!");
+            //System.out.println("A24 Land trap executed!");
              //By using the Trap    
             island.removeOccupant(current, occupant); 
             predatorsTrapped++;
