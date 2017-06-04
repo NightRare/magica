@@ -246,6 +246,28 @@ public class GameTest extends junit.framework.TestCase
         assertFalse("Should not be able to use", game.canUse(tool));
     }
     
+     @Test 
+    public void testCountKiwi() 
+    { 
+        //Need to move to a place where there is a kiwi 
+        assertTrue (" This move valid", playerMoveEast(5)); 
+        //Test has been modified to set the turn to 12 so that the kiwi will be counted
+        //...this test broke when adding kiwi only at night functionality
+        game.setToFirstNightForTestingPurposes();
+        game.countKiwi(); 
+        assertEquals("Wrong count", game.getKiwiCount(), 1); 
+    }
+    
+    @Test 
+    public void testCountKiwiDuringDay() 
+    { 
+        //Need to move to a place where there is a kiwi 
+        assertTrue (" This move valid", playerMoveEast(5));
+        game.countKiwi(); 
+        //There should be no kiwi counted because they do not appear during the day
+        assertEquals("Wrong count", game.getKiwiCount(), 0); 
+    }
+    
     @Test
     public void testGetKiwiCountInitial()
     {

@@ -744,15 +744,47 @@ public class Game
                     return true;
                 continue;
             }
+            
+              if(predatorViaForestWetlandTrap(island.getTerrain(current).name(),player.getTrap().getName())){
+                    // if it's a neutral fauna, trap it
+                    if(island.removeOccupant(current, o)) {
+                        player.reduceStamina(STAMINA_PUNISH_CAP_FAUNA);
 
-            // if it's a neutral fauna, trap it
-            if(island.removeOccupant(current, o)) {
-                player.reduceStamina(STAMINA_PUNISH_CAP_FAUNA);
-                
-                this.playerMessage = o.getName() + " is not a predator. You trapped"
-                        + " the wrong fauna — costs you " + STAMINA_PUNISH_CAP_FAUNA
-                        + " stamina to take care of it.";
-            }
+                        this.playerMessage = o.getName() + " is not a predator. You trapped"
+                                + " the wrong fauna — costs you " + STAMINA_PUNISH_CAP_FAUNA
+                                + " stamina to take care of it.";
+                    }
+              }  else if(predatorViaWaterScrubTrap(island.getTerrain(current).name(),player.getTrap().getName())){
+                      // if it's a neutral fauna, trap it
+                    if(island.removeOccupant(current, o)) {
+                        player.reduceStamina(STAMINA_PUNISH_CAP_FAUNA);
+
+                        this.playerMessage = o.getName() + " is not a predator. You trapped"
+                                + " the wrong fauna — costs you " + STAMINA_PUNISH_CAP_FAUNA
+                                + " stamina to take care of it.";
+                    }
+              }   else if(predatorViaA24LandTrap(island.getTerrain(current).name(),player.getTrap().getName())){
+                     // if it's a neutral fauna, trap it
+                    if(island.removeOccupant(current, o)) {
+                        player.reduceStamina(STAMINA_PUNISH_CAP_FAUNA);
+
+                        this.playerMessage = o.getName() + " is not a predator. You trapped"
+                                + " the wrong fauna — costs you " + STAMINA_PUNISH_CAP_FAUNA
+                                + " stamina to take care of it.";
+                    }
+                  
+              }  else if(predatorViaGeneralTrap(player.getTrap().getName())){
+                      // if it's a neutral fauna, trap it
+                    if(island.removeOccupant(current, o)) {
+                        player.reduceStamina(STAMINA_PUNISH_CAP_FAUNA);
+
+                        this.playerMessage = o.getName() + " is not a predator. You trapped"
+                                + " the wrong fauna — costs you " + STAMINA_PUNISH_CAP_FAUNA
+                                + " stamina to take care of it.";
+                    }
+              } else {AudioPlayer.getSound("error_sound").play();
+                    //System.out.println("F A U N A  TRAP EXECUTED");
+              } 
         }
         
         return false;
@@ -775,7 +807,7 @@ public class Game
             
              //By using the Trap
             if(predatorViaForestWetlandTrap(island.getTerrain(current).name(),player.getTrap().getName())){
-             //System.out.println("Forest & Wetland Trap executed!");
+            //System.out.println("Forest & Wetland Trap executed!");
             island.removeOccupant(current, occupant); 
             predatorsTrapped++;
             //notify player that the predator is trapped
@@ -1112,18 +1144,23 @@ public class Game
             if ( occupant != null ) island.addOccupant(occPos, occupant);
         }
     }    
+    
+    public void setToFirstNightForTestingPurposes() {
+        this.time.turn = 12;
+    }
 
     /**
      * An overloading method to setup occupants by using IDataManager instead of 
      * the old txt file.
      */
     private void setUpOccupants() {
+        boolean validMap;
         
         if(island.getNumRows() == island.getNumColumns()) {
-            boolean validMap = true;
-            Set<Occupant>[][] oMap = null;
-            
-            do{            
+
+            Set<Occupant>[][] oMap = null;            
+            do{
+                validMap = true;
                 oMap = setUpOccupantsRandomiser().distributeOccupantsRandomly();            
                 // if a hazard spawned on the original square of the player, redo
                 // TODO this is a temporary fix for "player start on hazard" issue, will refactor later
