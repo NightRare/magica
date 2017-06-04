@@ -744,15 +744,47 @@ public class Game
                     return true;
                 continue;
             }
+            
+              if(predatorViaForestWetlandTrap(island.getTerrain(current).name(),player.getTrap().getName())){
+                    // if it's a neutral fauna, trap it
+                    if(island.removeOccupant(current, o)) {
+                        player.reduceStamina(STAMINA_PUNISH_CAP_FAUNA);
 
-            // if it's a neutral fauna, trap it
-            if(island.removeOccupant(current, o)) {
-                player.reduceStamina(STAMINA_PUNISH_CAP_FAUNA);
-                
-                this.playerMessage = o.getName() + " is not a predator. You trapped"
-                        + " the wrong fauna — costs you " + STAMINA_PUNISH_CAP_FAUNA
-                        + " stamina to take care of it.";
-            }
+                        this.playerMessage = o.getName() + " is not a predator. You trapped"
+                                + " the wrong fauna — costs you " + STAMINA_PUNISH_CAP_FAUNA
+                                + " stamina to take care of it.";
+                    }
+              }  else if(predatorViaWaterScrubTrap(island.getTerrain(current).name(),player.getTrap().getName())){
+                      // if it's a neutral fauna, trap it
+                    if(island.removeOccupant(current, o)) {
+                        player.reduceStamina(STAMINA_PUNISH_CAP_FAUNA);
+
+                        this.playerMessage = o.getName() + " is not a predator. You trapped"
+                                + " the wrong fauna — costs you " + STAMINA_PUNISH_CAP_FAUNA
+                                + " stamina to take care of it.";
+                    }
+              }   else if(predatorViaA24LandTrap(island.getTerrain(current).name(),player.getTrap().getName())){
+                     // if it's a neutral fauna, trap it
+                    if(island.removeOccupant(current, o)) {
+                        player.reduceStamina(STAMINA_PUNISH_CAP_FAUNA);
+
+                        this.playerMessage = o.getName() + " is not a predator. You trapped"
+                                + " the wrong fauna — costs you " + STAMINA_PUNISH_CAP_FAUNA
+                                + " stamina to take care of it.";
+                    }
+                  
+              }  else if(predatorViaGeneralTrap(player.getTrap().getName())){
+                      // if it's a neutral fauna, trap it
+                    if(island.removeOccupant(current, o)) {
+                        player.reduceStamina(STAMINA_PUNISH_CAP_FAUNA);
+
+                        this.playerMessage = o.getName() + " is not a predator. You trapped"
+                                + " the wrong fauna — costs you " + STAMINA_PUNISH_CAP_FAUNA
+                                + " stamina to take care of it.";
+                    }
+              } else {AudioPlayer.getSound("error_sound").play();
+                    //System.out.println("F A U N A  TRAP EXECUTED");
+              } 
         }
         
         return false;
@@ -770,12 +802,12 @@ public class Game
         {
             Occupant occupant = island.getPredator(current);
             //Predator has been trapped so remove
-            //System.out.println(island.getTerrain(current).name()+" type of terrain");
-            //System.out.println(player.getTrap().getName() +" type of trap");
+            System.out.println(island.getTerrain(current).name()+" type of terrain");
+            System.out.println(player.getTrap().getName() +" type of trap");
             
              //By using the Trap
             if(predatorViaForestWetlandTrap(island.getTerrain(current).name(),player.getTrap().getName())){
-             //System.out.println("Forest & Wetland Trap executed!");
+            System.out.println("Forest & Wetland Trap executed!");
             island.removeOccupant(current, occupant); 
             predatorsTrapped++;
             //notify player that the predator is trapped
@@ -783,7 +815,7 @@ public class Game
             }
             
             else if(predatorViaWaterScrubTrap(island.getTerrain(current).name(),player.getTrap().getName())){
-            //System.out.println("Water & Scrub trap executed!");
+            System.out.println("Water & Scrub trap executed!");
              //By using the Trap    
             island.removeOccupant(current, occupant); 
             predatorsTrapped++;
@@ -793,7 +825,7 @@ public class Game
             }
             
             else if(predatorViaA24LandTrap(island.getTerrain(current).name(),player.getTrap().getName())){
-            //System.out.println("A24 Land trap executed!");
+            System.out.println("A24 Land trap executed!");
              //By using the Trap    
             island.removeOccupant(current, occupant); 
             predatorsTrapped++;
