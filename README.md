@@ -1,6 +1,34 @@
 # magica
 
+## Getting started
 
+Please open the project with NetBeans on Windows (recommended) or Mac OS.
+
+If want to use another IDE, you need to:
+- import all the jars in "libs" dir
+- and import all the native library files in the root folder (.dll files for Windows, .jnilib and .dylib files for Mac OS)		
+
+## Download
+
+[Latest release](https://github.com/NightRare/magica/archive/a0.3.zip)
+
+## Tips for enjoying the game
+
+- Use keyboard shortcuts (case insensitive) to play like a pro:
+	○ "WASD", move the player
+	○ "C", collect item
+	○ "T", tag kiwi
+	○ "R", trap fauna
+	○ "ESC", exit game
+
+- Don't like keyboard? Click on a relative position of the player on map to move the player. You can always play the game with mouse only.
+
+- Traps does not work? Read the information of the trap carefully, not all traps are working on all types of terrains.
+
+- Running out of inventory space? Right click on an item to drop it on the floor.
+
+
+## Declaration of the use of resources
 
 The sound files used in this project are converted from the following resources and are only used for this **non-commercial** project on **educational** purpose, which is a component of the assessments of our Software Engineering paper and will **not** be published for any commercial use. 
 
