@@ -485,7 +485,6 @@ public class SidePanel {
                 || game.isUsable_WaterScrubTrap() || game.isUsable_GeneralTrap())
                 && (o instanceof Fauna && !(o instanceof Kiwi))){
                     trapIcon = assetManager.getActionTrap()[ACTIVE_BUTTON];
-                
             }
         }
         return trapIcon;
@@ -498,6 +497,9 @@ public class SidePanel {
                 collectIcon = assetManager.getActionCollect()[ACTIVE_BUTTON];
             }
         }
+        if(inventoryList().size() == 3){ 
+            collectIcon = assetManager.getActionCollect()[INACTIVE_BUTTON]; 
+        } 
         return collectIcon;
     }
     
