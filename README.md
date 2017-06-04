@@ -15,11 +15,11 @@ If want to use another IDE, you need to:
 ## Tips for enjoying the game
 
 - Use keyboard shortcuts (case insensitive) to play like a pro:
-	○ "WASD", move the player
-	○ "C", collect item
-	○ "T", tag kiwi
-	○ "R", trap fauna
-	○ "ESC", exit game
+	- "WASD", move the player
+	- "C", collect item
+	- "T", tag kiwi
+	- "R", trap fauna
+	- "ESC", exit game
 
 - Don't like keyboard? Click on a relative position of the player on map to move the player. You can always play the game with mouse only.
 
